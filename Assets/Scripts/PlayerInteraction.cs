@@ -20,6 +20,7 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField]
     private bool displayInteractionSphereGizmo = true;
 
+
     [SerializeField]
     private List<int> obtainedKeyIds;
 
@@ -38,7 +39,7 @@ public class PlayerInteraction : MonoBehaviour
 
     public bool HasKeyWithId(int value)
     {
-        throw new NotImplementedException();
+        return obtainedKeyIds.Contains(value);
     }
 
     private void ProcessInputs()
@@ -87,6 +88,17 @@ public class PlayerInteraction : MonoBehaviour
         numberOfBugs--;
     }
 
+    public void AddItem(TakeableItem.ItemType itemType, int id)
+    {
+        if (itemType == TakeableItem.ItemType.bug)
+        {
+            numberOfBugs++;
+        }
+        if (itemType == TakeableItem.ItemType.key)
+        {
+            obtainedKeyIds.Add(id);
+        }
+    }
 
 #if UNITY_EDITOR
 
