@@ -12,15 +12,15 @@ public class PlayerMovement : MonoBehaviour
 
     [Tooltip("How fast the player is by walking normally")]
     [SerializeField]
-    private float baseMovementSpeed = 14f;
+    private float baseMovementSpeed = 20f;
 
     [Tooltip("The factor how fast the player is when sneaking compared to walking")]
     [SerializeField]
-    float sneakMovementFactor = 0.8f;
+    float sneakMovementFactor = 0.7f;
 
     [Tooltip("The factor how fast the player is when running compared to walking")]
     [SerializeField]
-    float runMovementFactor = 1.5f;
+    float runMovementFactor = 1.3f;
 
     [Tooltip("The lowest input movement amount before it will be ignored")]
     [SerializeField]
@@ -28,15 +28,15 @@ public class PlayerMovement : MonoBehaviour
 
     [Tooltip("The fraction of the movement input that adds to the velocity")]
     [SerializeField]
-    float velocityBuildupFraction = 0.1f;
+    float velocityBuildupFraction = 0.0f;
 
     [Tooltip("The fraction of the velocity that is decreased from time to time")]
     [SerializeField]
-    float velocityDecreaseFraction = 0.25f;
+    float velocityDecreaseFraction = 1.0f;
 
     [Tooltip("The maximum velocity that can be build up")]
     [SerializeField]
-    float maxVelocity = 1f;
+    float maxVelocity = 0f;
 
     [Tooltip("The lowest velocity amount before it will be set to 0")]
     [SerializeField]
