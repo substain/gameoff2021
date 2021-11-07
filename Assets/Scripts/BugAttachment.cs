@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class BugAttachment : MonoBehaviour, IInteractable
 {
+    private AudioSource audioSource;
+
     [SerializeField]
     private List<AudioClip> activitySoundClips;
 
@@ -16,6 +18,11 @@ public class BugAttachment : MonoBehaviour, IInteractable
     private Timer activityTimer;
 
     private int activityIndex = 0;
+
+    void Start()
+    {
+        this.audioSource = GetComponent<AudioSource>();
+    }
 
     void Awake()
     {
@@ -53,6 +60,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
     {
         bugIsAttached = false;
         debugBug.SetActive(false);
+        this.audioSource.spatialBlend = 1;
     }
 
     public void AddBug(Vector3 fromPosition)
@@ -62,6 +70,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
         float xPos = fromPosition.x < transform.position.x ? -0.65f : 0.65f;
 
         debugBug.transform.position = transform.root.position + new Vector3(xPos, 0, 0);
+        this.audioSource.spatialBlend = 0.2f;
     }
 
     public void Interact(PlayerInteraction interactingPlayer)
