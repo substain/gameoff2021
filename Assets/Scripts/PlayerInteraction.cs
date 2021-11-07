@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,10 +15,13 @@ public class PlayerInteraction : MonoBehaviour
     private float interactionRadius = 2f;
 
     [SerializeField]
-    private int numberOfBugs = 3;
+    private int numberOfBugs = 2;
 
     [SerializeField]
     private bool displayInteractionSphereGizmo = true;
+
+    [SerializeField]
+    private List<int> obtainedKeyIds;
 
     void Awake()
     {
@@ -30,6 +34,11 @@ public class PlayerInteraction : MonoBehaviour
     void Update()
     {
         ProcessInputs();
+    }
+
+    public bool HasKeyWithId(int value)
+    {
+        throw new NotImplementedException();
     }
 
     private void ProcessInputs()
@@ -55,36 +64,27 @@ public class PlayerInteraction : MonoBehaviour
             {
                 continue;
             }
-
-            if(interactable.GetType() == typeof(BugAttachment))
-            {
-                InteractWithBugAttachment((BugAttachment)interactable);
-            }
+            interactable.Interact(this);
 
             return true;
         }
         return false;
     }
 
-    /// <summary>
-    /// Put bug on person or take it off, if it already is bugged
-    /// </summary>
-    private void InteractWithBugAttachment(BugAttachment bugAttachment)
+    public void RemoveBugFrom(BugAttachment bugAttachment)
     {
-        if (bugAttachment.HasBugAttached())
+        bugAttachment.RemoveBug();
+        numberOfBugs++;
+    }
+
+    public void PutBugOn(BugAttachment bugAttachment)
+    {
+        if (numberOfBugs <= 0)
         {
-            bugAttachment.RemoveBug();
-            numberOfBugs++;
+            return;
         }
-        else
-        {
-            if (numberOfBugs <= 0)
-            {
-                return;
-            }
-            bugAttachment.AddBug(transform.position);
-            numberOfBugs--;
-        }
+        bugAttachment.AddBug(transform.position);
+        numberOfBugs--;
     }
 
 

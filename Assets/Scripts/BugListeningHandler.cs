@@ -17,7 +17,7 @@ class BugListeningHandler: MonoBehaviour
     public void AddToList(BugAttachment bug)
     {
         attachedBugs.Add(bug);
-        //bug.SetId(attachedBugs.)
+        bug.SetId(attachedBugs.Count - 1);
     }
 
     public void RemoveFromList(int idToRemove)
@@ -33,7 +33,6 @@ class BugListeningHandler: MonoBehaviour
         }
 
         attachedBugs.RemoveAt(idToRemove);
-
     }
 
     public void StartListeningToChannel(int channel)

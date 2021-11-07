@@ -23,6 +23,11 @@ public class BugAttachment : MonoBehaviour, IInteractable
         debugBug.SetActive(bugIsAttached);
     }
 
+    internal void SetId(int v)
+    {
+        throw new NotImplementedException();
+    }
+
     public void StartActivity(int activityIndex, float activityDuration)
     {
         this.activityIndex = activityIndex;
@@ -59,4 +64,16 @@ public class BugAttachment : MonoBehaviour, IInteractable
         debugBug.transform.position = transform.root.position + new Vector3(xPos, 0, 0);
     }
 
+    public void Interact(PlayerInteraction interactingPlayer)
+    {
+        //go the extra tour around the player 
+        if (bugIsAttached)
+        {
+            interactingPlayer.RemoveBugFrom(this);
+        }
+        else
+        {
+            interactingPlayer.PutBugOn(this);
+        }
+    }
 }
