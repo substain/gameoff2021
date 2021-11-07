@@ -12,15 +12,15 @@ public class PlayerMovement : MonoBehaviour
 
     [Tooltip("How fast the player is by walking normally")]
     [SerializeField]
-    private float baseMovementSpeed = 20f;
+    private float baseMovementSpeed = 80f;
 
     [Tooltip("The factor how fast the player is when sneaking compared to walking")]
     [SerializeField]
-    float sneakMovementFactor = 0.7f;
+    float sneakMovementFactor = 0.5f;
 
     [Tooltip("The factor how fast the player is when running compared to walking")]
     [SerializeField]
-    float runMovementFactor = 1.3f;
+    float runMovementFactor = 1.75f;
 
     [Tooltip("The lowest input movement amount before it will be ignored")]
     [SerializeField]
@@ -28,19 +28,19 @@ public class PlayerMovement : MonoBehaviour
 
     [Tooltip("The fraction of the movement input that adds to the velocity")]
     [SerializeField]
-    float velocityBuildupFraction = 0.0f;
+    float velocityBuildupFraction = 0.3f;
 
     [Tooltip("The fraction of the velocity that is decreased from time to time")]
     [SerializeField]
-    float velocityDecreaseFraction = 1.0f;
+    float velocityDecreaseFraction = 0.1f;
 
     [Tooltip("The maximum velocity that can be build up")]
     [SerializeField]
-    float maxVelocity = 0f;
+    float maxVelocity = 50f;
 
     [Tooltip("The lowest velocity amount before it will be set to 0")]
     [SerializeField]
-    float velocityCutoff = 0.005f;
+    float velocityCutoff = 0.015f;
 
     private Vector3 velocity = Vector3.zero;
     private Vector3 currentMovement = Vector3.zero;
@@ -102,9 +102,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void ProcessMovement()
     {
-        //Sticky wall problem: https://answers.unity.com/questions/585877/rigidbody-sticks-to-walls.html
-
-        rigidBody.AddForce(currentMovement + velocity, ForceMode.VelocityChange);
+        rigidBody.velocity = currentMovement + velocity;
     }
 }
 
