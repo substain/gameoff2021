@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
 {
+    private const string INTERACTION_LMASK_NAME = "Interactable";
+
     [SerializeField]
     private KeyCode interactKey = KeyCode.E;
 
@@ -15,21 +17,33 @@ public class PlayerInteraction : MonoBehaviour
     private float interactionRadius = 2f;
 
     [SerializeField]
-    private int numberOfBugs = 2;
+    private int numberOfBugs = 0;
 
     [SerializeField]
     private bool displayInteractionSphereGizmo = true;
 
 
     [SerializeField]
-    private List<int> obtainedKeyIds;
+    private List<int> obtainedKeyIds = new List<int>();
 
+    private IInteractable currentInteractable;
+
+    private LayerMask layerToCheckFor;
     void Awake()
     {
         if(interactionPosition == null)
         {
             Debug.LogWarning("no interactionPosition assigned!");
         }
+
+        layerToCheckFor = LayerMask.GetMask(INTERACTION_LMASK_NAME);
+        HUDManager.Instance.SetNumberOfBugs(numberOfBugs);
+        HUDManager.Instance.SetObtainedKeys(obtainedKeyIds);
+    }
+
+    void Start()
+    {
+        InvokeRepeating("CheckForInteractables", 0.1f, 0.1f);
     }
 
     void Update()
@@ -37,9 +51,35 @@ public class PlayerInteraction : MonoBehaviour
         ProcessInputs();
     }
 
-    public bool HasKeyWithId(int value)
+    private void CheckForInteractables()
     {
-        return obtainedKeyIds.Contains(value);
+        IInteractable previousInteractable = currentInteractable;
+        Collider[] matchingColliders = Physics.OverlapSphere(interactionPosition.transform.position, interactionRadius, layerToCheckFor);
+        List<IInteractable> interactables = new List<IInteractable>();
+
+        foreach (Collider col in matchingColliders)
+        {
+            IInteractable interactable = col.gameObject.GetComponent<IInteractable>();
+            if(interactable != null)
+            {
+                interactables.Add(interactable);
+            }
+        }
+
+        if(interactables.Count > 0)
+        {
+            //TODO: which interactable should be priotized? - pick first from list atm
+            currentInteractable = interactables[0];
+            HUDManager.Instance.UpdateActionHintText("Press " + interactKey.ToString() + " to " + currentInteractable.GetInteractionTypeString());
+        }
+        else
+        {
+            currentInteractable = null;
+            if(previousInteractable != null)
+            {
+                HUDManager.Instance.UpdateActionHintText("");
+            }
+        }
     }
 
     private void ProcessInputs()
@@ -56,7 +96,17 @@ public class PlayerInteraction : MonoBehaviour
 
     private bool TryInteract()
     {
-        Collider[] matchingColliders = Physics.OverlapSphere(interactionPosition.transform.position, interactionRadius);
+        if (currentInteractable == null)
+        {
+            return false;
+        }
+
+        currentInteractable.Interact(this);
+
+        return true;
+        
+        /*
+        Collider[] matchingColliders = Physics.OverlapSphere(interactionPosition.transform.position, interactionRadius, );
 
         foreach (Collider col in matchingColliders)
         {
@@ -69,7 +119,7 @@ public class PlayerInteraction : MonoBehaviour
 
             return true;
         }
-        return false;
+        return false;*/
     }
 
     public void RemoveBugFrom(BugAttachment bugAttachment)
@@ -82,23 +132,42 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (numberOfBugs <= 0)
         {
+            HUDManager.Instance.DisplayMessage("You don't have a device to bug this person.");
             return;
         }
         bugAttachment.AddBug(transform.position);
-        numberOfBugs--;
+        ChangeNumBugs(-1);
     }
 
     public void AddItem(TakeableItem.ItemType itemType, int id)
     {
         if (itemType == TakeableItem.ItemType.bug)
         {
-            numberOfBugs++;
+            ChangeNumBugs(1);
         }
         if (itemType == TakeableItem.ItemType.key)
         {
-            obtainedKeyIds.Add(id);
+            AddKey(id);
         }
     }
+
+    public void ChangeNumBugs(int changeAmount)
+    {
+        numberOfBugs = Mathf.Max(numberOfBugs + changeAmount, 0);
+        HUDManager.Instance.SetNumberOfBugs(numberOfBugs);
+    }
+
+    public void AddKey(int keyId)
+    {
+        obtainedKeyIds.Add(keyId);
+        HUDManager.Instance.SetObtainedKeys(obtainedKeyIds);
+    }
+
+    public bool HasKeyWithId(int value)
+    {
+        return obtainedKeyIds.Contains(value);
+    }
+
 
 #if UNITY_EDITOR
 

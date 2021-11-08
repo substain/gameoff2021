@@ -31,6 +31,8 @@ public class Door : MonoBehaviour, IInteractable
     {
         if (isClosed && neededKeyId != -1 && !interactingPlayer.HasKeyWithId(neededKeyId))
         {
+            HUDManager.Instance.DisplayMessage("You need the " + HUDKeyDisplay.KeyIdToName(neededKeyId) + " to open this door.");
+
             //door is closed and needs a key, which the player doesnt have -> don't open the door
             return;
         }
@@ -60,5 +62,17 @@ public class Door : MonoBehaviour, IInteractable
     {
         isClosed = true;
         doorObject.SetActive(true);
+    }
+
+    public string GetInteractionTypeString()
+    {
+        if (isClosed)
+        {
+            return "open the door";
+        }
+        else
+        {
+            return "close the door";
+        }
     }
 }

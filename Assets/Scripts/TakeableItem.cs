@@ -23,4 +23,8 @@ public class TakeableItem : MonoBehaviour, IInteractable
         Destroy(this.gameObject);
     }
 
+    public string GetInteractionTypeString()
+    {
+        return "pick up the " + itemType.ToString();
+    }
 }

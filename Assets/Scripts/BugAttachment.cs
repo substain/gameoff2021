@@ -85,4 +85,16 @@ public class BugAttachment : MonoBehaviour, IInteractable
             interactingPlayer.PutBugOn(this);
         }
     }
+
+    public string GetInteractionTypeString()
+    {
+        if (bugIsAttached)
+        {
+            return "detach the bug";
+        }
+        else
+        {
+            return "attach a bug";
+        }
+    }
 }
