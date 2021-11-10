@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -46,16 +47,17 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 currentMovement = Vector3.zero;
     
     private Rigidbody rigidBody;
+    private SpriteRenderer spriteRenderer;
 
     void Awake()
     {
+        this.spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         this.rigidBody = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
     {
         ApplyVelocity();
-        ProcessMoveInput();
         ProcessMovement();
     }
 
@@ -70,9 +72,14 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void ProcessMoveInput()
+    public void Move(InputAction.CallbackContext context)
     {
-        Vector3 moveDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
+        ProcessMoveInput(context.ReadValue<Vector2>());
+    }
+
+    private void ProcessMoveInput(Vector2 direction)
+    {
+        Vector3 moveDirection = Util.ToVector3(direction).normalized;
         if(moveDirection.magnitude < movementInputCutoff)
         {
             currentMovement = Vector3.zero;
@@ -92,17 +99,24 @@ public class PlayerMovement : MonoBehaviour
         }
 
         float moveSpeed = baseMovementSpeed * movementModifier;
-        currentMovement = moveDirection * Time.fixedDeltaTime * moveSpeed;
+        currentMovement = moveDirection * moveSpeed;
+        UpdateSpriteByMoveVector(currentMovement);
 
         //add a fraction of the movement to the velocity
         velocity += velocityBuildupFraction * currentMovement;
 
-        Vector3.ClampMagnitude(velocity, maxVelocity * movementModifier);
+        velocity = Vector3.ClampMagnitude(velocity, maxVelocity * movementModifier);
+
+    }
+
+    private void UpdateSpriteByMoveVector(Vector3 moveVector)
+    {
+        //if(moveVector.)
     }
 
     private void ProcessMovement()
     {
-        rigidBody.velocity = currentMovement + velocity;
+        rigidBody.velocity = currentMovement;// + velocity;
     }
 }
 

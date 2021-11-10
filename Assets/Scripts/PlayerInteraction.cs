@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInteraction : MonoBehaviour
 {
@@ -21,7 +22,6 @@ public class PlayerInteraction : MonoBehaviour
 
     [SerializeField]
     private bool displayInteractionSphereGizmo = true;
-
 
     [SerializeField]
     private List<int> obtainedKeyIds = new List<int>();
@@ -44,11 +44,6 @@ public class PlayerInteraction : MonoBehaviour
     void Start()
     {
         InvokeRepeating("CheckForInteractables", 0.1f, 0.1f);
-    }
-
-    void Update()
-    {
-        ProcessInputs();
     }
 
     private void CheckForInteractables()
@@ -82,44 +77,18 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    private void ProcessInputs()
+    public void TryInteract(InputAction.CallbackContext context)
     {
-        if (Input.GetKeyDown(interactKey))
+        if (!context.performed)
         {
-            bool hasInteracted = TryInteract();
-            if (hasInteracted)
-            {
-                return;
-            }
+            return;
         }
-    }
-
-    private bool TryInteract()
-    {
         if (currentInteractable == null)
         {
-            return false;
+            return;
         }
 
         currentInteractable.Interact(this);
-
-        return true;
-        
-        /*
-        Collider[] matchingColliders = Physics.OverlapSphere(interactionPosition.transform.position, interactionRadius, );
-
-        foreach (Collider col in matchingColliders)
-        {
-            IInteractable interactable = col.gameObject.GetComponent<IInteractable>();
-            if (interactable == null)
-            {
-                continue;
-            }
-            interactable.Interact(this);
-
-            return true;
-        }
-        return false;*/
     }
 
     public void RemoveBugFrom(BugAttachment bugAttachment)
@@ -170,7 +139,6 @@ public class PlayerInteraction : MonoBehaviour
 
 
 #if UNITY_EDITOR
-
     private void OnDrawGizmos()
     {
         if (!displayInteractionSphereGizmo)
