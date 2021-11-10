@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 1781268067}
   - component: {fileID: 1781268069}
   - component: {fileID: 1781268068}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,6 +265,7 @@ MonoBehaviour:
   interactionRadius: 4
   numberOfBugs: 3
   displayInteractionSphereGizmo: 1
+  obtainedKeyIds: 
 --- !u!81 &1781268069
 AudioListener:
   m_ObjectHideFlags: 0
