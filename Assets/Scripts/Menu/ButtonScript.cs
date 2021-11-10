@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour
 {
-    private bool selected;
+    public bool selected;
     [SerializeField] ButtonScript[] otherButtonsInGroup;
     [SerializeField] Animator anim;
     [SerializeField] bool isStartButton = false;
@@ -38,6 +38,6 @@ public class ButtonScript : MonoBehaviour
 
     public void Activate() {
         anim.Play("Activated");
-        GlobalSound.Play("MenuButtonActivated.mp3");
+        //GlobalSound.Play("MenuButtonActivated.mp3");
     }
 }

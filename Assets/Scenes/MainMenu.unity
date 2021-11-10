@@ -229,6 +229,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 970773787}
     - target: {fileID: 515402565863774491, guid: 8cfb8fa2837494e47a0f10adc2428ee6, type: 3}
+      propertyPath: isStartButton
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 515402565863774491, guid: 8cfb8fa2837494e47a0f10adc2428ee6, type: 3}
       propertyPath: otherButtonsInGroup.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -577,6 +581,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameScene: Sandbox
   optionsScene: 
+  upKey1: 119
+  upKey2: 273
+  downKey1: 115
+  downKey2: 274
+  selectKey1: 271
+  selectKey2: 101
+  ButtonGroup:
+  - {fileID: 1896299780}
+  - {fileID: 1186593665}
+  - {fileID: 970773785}
 --- !u!1 &521433777
 GameObject:
   m_ObjectHideFlags: 0
