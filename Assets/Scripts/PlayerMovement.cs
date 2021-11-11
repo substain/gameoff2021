@@ -5,11 +5,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    [SerializeField]
-    private KeyCode runKey = KeyCode.LeftShift;
-
-    [SerializeField]
-    private KeyCode sneakKey = KeyCode.LeftControl;
 
     [Tooltip("How fast the player is by walking normally")]
     [SerializeField]
@@ -49,6 +44,9 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rigidBody;
     private SpriteRenderer spriteRenderer;
 
+    private bool isRunning = false;
+    private bool isSneaking = false;
+
     void Awake()
     {
         this.spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -72,6 +70,30 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public void SetRunning(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            isRunning = true;
+        }
+        if (context.canceled)
+        {
+            isRunning = false;
+        }
+    }
+
+    public void SetSneaking(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            isSneaking = true;
+        }
+        if (context.canceled)
+        {
+            isSneaking = false;
+        }
+    }
+
     public void Move(InputAction.CallbackContext context)
     {
         ProcessMoveInput(context.ReadValue<Vector2>());
@@ -88,12 +110,13 @@ public class PlayerMovement : MonoBehaviour
 
         float movementModifier = 1;
 
-        if (Input.GetKey(sneakKey)){
+        if (isSneaking)
+        {
             movementModifier = sneakMovementFactor;
         }
 
         //running overrides sneaking
-        if (Input.GetKey(runKey))
+        if (isRunning)
         {
             movementModifier = runMovementFactor;
         }

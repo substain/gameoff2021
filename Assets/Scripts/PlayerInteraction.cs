@@ -9,9 +9,6 @@ public class PlayerInteraction : MonoBehaviour
     private const string INTERACTION_LMASK_NAME = "Interactable";
 
     [SerializeField]
-    private KeyCode interactKey = KeyCode.E;
-
-    [SerializeField]
     private GameObject interactionPosition;
 
     [SerializeField]
@@ -63,9 +60,8 @@ public class PlayerInteraction : MonoBehaviour
 
         if(interactables.Count > 0)
         {
-            //TODO: which interactable should be priotized? - pick first from list atm
             currentInteractable = interactables[0];
-            HUDManager.Instance.UpdateActionHintText("Press " + interactKey.ToString() + " to " + currentInteractable.GetInteractionTypeString());
+            HUDManager.Instance.UpdateActionHintText("Press E to " + currentInteractable.GetInteractionTypeString());
         }
         else
         {
