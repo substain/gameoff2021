@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1436636083779400628}
-  - component: {fileID: 1436636083779400631}
   - component: {fileID: 1436636083779400635}
   - component: {fileID: 1436636083779400634}
   - component: {fileID: 3017547196685991694}
   - component: {fileID: 3017547196685991688}
   - component: {fileID: 3017547196685991689}
   - component: {fileID: 1436636083459962005}
+  - component: {fileID: 426187870}
   m_Layer: 0
   m_Name: Player2D
   m_TagString: Untagged
@@ -41,19 +41,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1436636083779400631
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1436636083779400629}
-  m_Material: {fileID: 13400000, guid: 431d0a8e4d96377418ce0a1f28f0cdef, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &1436636083779400635
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -276,6 +263,20 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!136 &426187870
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436636083779400629}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.4526896
+  m_Height: 1.5676513
+  m_Direction: 1
+  m_Center: {x: 0.024120778, y: 0.059973, z: 0.06189078}
 --- !u!1 &1436636084170459045
 GameObject:
   m_ObjectHideFlags: 0
@@ -423,7 +424,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 1924947367, guid: a167d7ee9f3ca2e42a4d4483b2dcb5d2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
