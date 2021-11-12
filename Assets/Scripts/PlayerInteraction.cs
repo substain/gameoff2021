@@ -73,7 +73,7 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    public void TryInteract(InputAction.CallbackContext context)
+    public void ProcessInteractInput(InputAction.CallbackContext context)
     {
         if (!context.performed)
         {
@@ -131,6 +131,16 @@ public class PlayerInteraction : MonoBehaviour
     public bool HasKeyWithId(int value)
     {
         return obtainedKeyIds.Contains(value);
+    }
+
+    public void ProcessHideInput(InputAction.CallbackContext context)
+    {
+
+    }
+
+    public void ProcessMenuButtonInput(InputAction.CallbackContext context)
+    {
+
     }
 
 

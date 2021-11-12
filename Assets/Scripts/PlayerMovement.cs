@@ -70,7 +70,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void SetRunning(InputAction.CallbackContext context)
+    public void ProcessRunInput(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -82,7 +82,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void SetSneaking(InputAction.CallbackContext context)
+    public void ProcessSneakInput(InputAction.CallbackContext context)
     {
         if (context.started)
         {
@@ -94,7 +94,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void Move(InputAction.CallbackContext context)
+    public void ProcessDashInput(InputAction.CallbackContext context)
+    {
+
+    }
+
+    public void ProcessMoveInput(InputAction.CallbackContext context)
     {
         ProcessMoveInput(context.ReadValue<Vector2>());
     }

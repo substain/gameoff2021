@@ -69,8 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14c2c59d0152f7a41bd871a3a69e6b7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runKey: 304
-  sneakKey: 306
   baseMovementSpeed: 8
   sneakMovementFactor: 0.5
   runMovementFactor: 1.75
@@ -229,7 +227,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1436636083779400634}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: Move
+        m_MethodName: ProcessMoveInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -245,7 +243,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3017547196685991694}
         m_TargetAssemblyTypeName: PlayerInteraction, Assembly-CSharp
-        m_MethodName: TryInteract
+        m_MethodName: ProcessInteractInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -261,7 +259,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1436636083779400634}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: SetRunning
+        m_MethodName: ProcessRunInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -277,7 +275,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1436636083779400634}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: SetSneaking
+        m_MethodName: ProcessSneakInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -289,6 +287,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 194d7f0b-6ca4-418f-96b0-739559656cbe
     m_ActionName: Gameplay/Sneak[/Keyboard/ctrl,/DualShock4GamepadHID/rightShoulder]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1436636083459962005}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f7fb7332-c3b8-4c99-a3b1-adc7414a79e6
+    m_ActionName: Gameplay/Dash[/Keyboard/space,/DualShock4GamepadHID/buttonSouth,/DualShock4GamepadHID1/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3017547196685991694}
+        m_TargetAssemblyTypeName: PlayerInteraction, Assembly-CSharp
+        m_MethodName: ProcessHideInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 85403f56-d720-42e4-b582-80dd758714c1
+    m_ActionName: Gameplay/Hide/Cancel[/Keyboard/c,/DualShock4GamepadHID/buttonEast,/DualShock4GamepadHID1/buttonEast]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3017547196685991694}
+        m_TargetAssemblyTypeName: PlayerInteraction, Assembly-CSharp
+        m_MethodName: ProcessMenuButtonInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: db875b64-67d6-4f4a-b633-b2fcd0737864
+    m_ActionName: Gameplay/OpenMenu[/Keyboard/escape,/DualShock4GamepadHID/start,/DualShock4GamepadHID1/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay
