@@ -26,6 +26,11 @@ public class PlayerInteraction : MonoBehaviour
     private IInteractable currentInteractable;
 
     private LayerMask layerToCheckFor;
+
+    private List<BugAttachment> attachedBugs = new List<BugAttachment>();
+
+    private int listenBugIndex = -1;
+
     void Awake()
     {
         if(interactionPosition == null)
@@ -34,12 +39,13 @@ public class PlayerInteraction : MonoBehaviour
         }
 
         layerToCheckFor = LayerMask.GetMask(INTERACTION_LMASK_NAME);
-        HUDManager.Instance.SetNumberOfBugs(numberOfBugs);
-        HUDManager.Instance.SetObtainedKeys(obtainedKeyIds);
     }
 
     void Start()
     {
+        HUDManager.Instance.SetNumberOfBugs(numberOfBugs);
+        HUDManager.Instance.SetObtainedKeys(obtainedKeyIds);
+        HUDManager.Instance.SetCurrentActiveBugId(listenBugIndex);
         InvokeRepeating("CheckForInteractables", 0.1f, 0.1f);
     }
 
@@ -91,6 +97,19 @@ public class PlayerInteraction : MonoBehaviour
     {
         bugAttachment.RemoveBug();
         numberOfBugs++;
+
+        for(int i = 0; i < attachedBugs.Count; i++)
+        {
+            if (bugAttachment == attachedBugs[i])
+            {
+                if (listenBugIndex > i)
+                {
+                    listenBugIndex--;
+                }
+                attachedBugs.RemoveAt(i);
+                break;
+            }
+        }
     }
 
     public void PutBugOn(BugAttachment bugAttachment)
@@ -100,6 +119,7 @@ public class PlayerInteraction : MonoBehaviour
             HUDManager.Instance.DisplayMessage("You don't have a device to bug this person.");
             return;
         }
+        attachedBugs.Add(bugAttachment);
         bugAttachment.AddBug(transform.position);
         ChangeNumBugs(-1);
     }
@@ -133,6 +153,33 @@ public class PlayerInteraction : MonoBehaviour
         return obtainedKeyIds.Contains(value);
     }
 
+    public void ProcessListenBugInput(InputAction.CallbackContext context)
+    {
+        //Stop previous bug
+        if (listenBugIndex > -1)
+        {
+            attachedBugs[listenBugIndex].StopListening();
+        }
+
+        //Cycle through attached bugs, stop listening if the end is reached (listenBugIndex == -1)
+        if (attachedBugs.Count > 0)
+        {
+            listenBugIndex++;
+            if(listenBugIndex >= attachedBugs.Count)
+            {
+                listenBugIndex = -1;
+            }
+        }
+    
+        //start current bug
+        if(listenBugIndex > -1)
+        {
+            attachedBugs[listenBugIndex].StartListening();
+        }
+        HUDManager.Instance.SetCurrentActiveBugId(listenBugIndex);
+    }
+
+
     public void ProcessHideInput(InputAction.CallbackContext context)
     {
 
@@ -142,7 +189,6 @@ public class PlayerInteraction : MonoBehaviour
     {
 
     }
-
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()

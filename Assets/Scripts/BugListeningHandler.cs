@@ -17,7 +17,7 @@ class BugListeningHandler: MonoBehaviour
     public void AddToList(BugAttachment bug)
     {
         attachedBugs.Add(bug);
-        bug.SetId(attachedBugs.Count - 1);
+        //bug.SetId(attachedBugs.Count - 1);
     }
 
     public void RemoveFromList(int idToRemove)

@@ -33,7 +33,11 @@ public class HUDKeyDisplay : MonoBehaviour
         {
             case 1:
                 {
-                    return "Red Key";
+                    return "Red";
+                }
+            case 2:
+                {
+                    return "Green";
                 }
             default:
                 {

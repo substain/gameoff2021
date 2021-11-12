@@ -228,7 +228,6 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        Debug.Log("dash performed");
         isDashing = true;
         dashTimer.Init(dashDuration, SetDashFinished);
         currentDashStrength = GetMovementModifier();

@@ -21,7 +21,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
     void Start()
     {
-        this.audioSource = GetComponent<AudioSource>();
+        this.audioSource = GetComponentInParent<AudioSource>();
     }
 
     void Awake()
@@ -29,11 +29,12 @@ public class BugAttachment : MonoBehaviour, IInteractable
         activityTimer = gameObject.AddComponent<Timer>();
         debugBug.SetActive(bugIsAttached);
     }
-
+    
+    /*
     internal void SetId(int v)
     {
         throw new NotImplementedException();
-    }
+    }*/
 
     public void StartActivity(int activityIndex, float activityDuration)
     {
@@ -60,7 +61,6 @@ public class BugAttachment : MonoBehaviour, IInteractable
     {
         bugIsAttached = false;
         debugBug.SetActive(false);
-        this.audioSource.spatialBlend = 1;
     }
 
     public void AddBug(Vector3 fromPosition)
@@ -70,7 +70,6 @@ public class BugAttachment : MonoBehaviour, IInteractable
         float xPos = fromPosition.x < transform.position.x ? -0.65f : 0.65f;
 
         debugBug.transform.position = transform.root.position + new Vector3(xPos, 0, 0);
-        this.audioSource.spatialBlend = 0.2f;
     }
 
     public void Interact(PlayerInteraction interactingPlayer)
@@ -96,5 +95,15 @@ public class BugAttachment : MonoBehaviour, IInteractable
         {
             return "attach a bug";
         }
+    }
+
+    public void StartListening()
+    {
+        this.audioSource.spatialBlend = 0.2f;
+    }
+
+    public void StopListening()
+    {
+        this.audioSource.spatialBlend = 1;
     }
 }
