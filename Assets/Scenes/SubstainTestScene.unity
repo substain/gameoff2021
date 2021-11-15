@@ -311,6 +311,17 @@ Transform:
   m_Father: {fileID: 350919317}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &557607257 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2433340498217669265, guid: 098ef39083ba89442b7c4b08258bfc3a, type: 3}
+  m_PrefabInstance: {fileID: 2987140076442337319}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 781fb67331543ae469dac03aed43d2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &749488084
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,7 +332,7 @@ GameObject:
   m_Component:
   - component: {fileID: 749488085}
   m_Layer: 0
-  m_Name: WestBehindDoor
+  m_Name: RestrictedArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,24 +346,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 749488084}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.2, y: 0, z: 2.2}
+  m_LocalPosition: {x: 7, y: 0, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 350919317}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &891830802 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2987140076906694279, guid: 098ef39083ba89442b7c4b08258bfc3a, type: 3}
-  m_PrefabInstance: {fileID: 2987140076442337319}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 781fb67331543ae469dac03aed43d2ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1031935237
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,7 +866,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4410598248881163366, guid: bf71440493073cb4f8543b55aae57edb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.9
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4410598248881163366, guid: bf71440493073cb4f8543b55aae57edb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -874,7 +874,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4410598248881163366, guid: bf71440493073cb4f8543b55aae57edb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 4
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4410598248881163366, guid: bf71440493073cb4f8543b55aae57edb, type: 3}
       propertyPath: m_LocalRotation.w
@@ -914,21 +914,65 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1550188013, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550188013, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
       propertyPath: targetPosition
       value: 
       objectReference: {fileID: 2113670677}
+    - target: {fileID: 1550188013, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
+      propertyPath: doorsToPass.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550188013, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
+      propertyPath: doorsToPass.Array.data[0]
+      value: 
+      objectReference: {fileID: 557607257}
+    - target: {fileID: 1550188014, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
+      propertyPath: order
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550188014, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
+      propertyPath: idleTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550188015, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
+      propertyPath: order
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1550188015, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1550188015, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
       propertyPath: targetPosition
       value: 
       objectReference: {fileID: 1031935238}
+    - target: {fileID: 1550188018, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
+      propertyPath: order
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418860876865487989, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
+      propertyPath: order
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418860876865487989, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
+      propertyPath: moveSpeed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4418860876865487989, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
       propertyPath: targetPosition
       value: 
       objectReference: {fileID: 749488085}
     - target: {fileID: 4418860876865487989, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
+      propertyPath: closeDoorAfterEnter
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418860876865487989, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
       propertyPath: doorsToPass.Array.data[0]
       value: 
-      objectReference: {fileID: 891830802}
+      objectReference: {fileID: 557607257}
     - target: {fileID: 8894588918249284106, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
       propertyPath: m_RootOrder
       value: 6

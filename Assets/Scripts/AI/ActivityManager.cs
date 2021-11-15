@@ -53,6 +53,7 @@ public class ActivityManager : MonoBehaviour
     {
         orderedActivities[currentActivityIndex].StopActivity();
         UpdateToNextActivityIndex();
+        Debug.Log("changing to activity #" + currentActivityIndex);
         orderedActivities[currentActivityIndex].StartActivity();
     }
 

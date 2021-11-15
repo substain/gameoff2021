@@ -28,7 +28,6 @@ public abstract class AbstractActivity : MonoBehaviour
     {
         controlledGameObject = controlledObject;
         audioSource = controlledGameObject.GetComponent<AudioSource>();
-
     }
 
     public void StartActivity()

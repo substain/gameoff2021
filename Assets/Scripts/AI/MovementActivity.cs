@@ -4,9 +4,11 @@ using UnityEngine.AI;
 
 public class MovementActivity : AbstractActivity
 {
-    private const float TARGET_REACHED_RANGE = 1.5f;
-    private const float KEEP_DOOR_OPEN_TIME = 0.75f; 
-    private int DOOR_RECHECK_AMOUNT = 2;
+    private const float TARGET_REACHED_RANGE = 1.0f; 
+    private const float DOOR_REACHED_RANGE = 2.0f;
+
+    private const float KEEP_DOOR_OPEN_TIME = 0.5f;
+    private const float PASS_DOOR_SPEED = 0.75f;
 
     [SerializeField]
     private Transform targetPosition;
@@ -17,25 +19,21 @@ public class MovementActivity : AbstractActivity
     [SerializeField]
     List<Door> doorsToPass = new List<Door>();
 
+    [SerializeField]
     private bool closeDoorAfterEnter = false;
 
     private NavMeshAgent navMeshAgent;
 
     private Vector3 closestPosition;
 
-    private Vector3 lastPos;
-
     private Timer timer;
-
-    private int doorRecheckCounter;
 
     void Start()
     {
         timer = GetComponent<Timer>();
-        lastPos = GetPos();
         navMeshAgent = controlledGameObject.GetComponent<NavMeshAgent>();
         SetClosestPosition();
-        InvokeRepeating("CheckForDoors", 1, 0.25f);
+        InvokeRepeating("CheckForDoors", 1, 0.1f);
     }
 
     void Update()
@@ -50,38 +48,23 @@ public class MovementActivity : AbstractActivity
             return;
         }
 
-        Vector3 currentPos = GetPos();
-        //No movement since last check -> maybe a door is in the way
-        if (lastPos.Equals(currentPos))
+        foreach (Door door in doorsToPass)
         {
-            doorRecheckCounter++;
-           
-            if(doorRecheckCounter >= DOOR_RECHECK_AMOUNT)
+            //check if there are any near doors from the ones in the list
+            if (Vector3.Distance(GetPos(), door.gameObject.transform.position) < DOOR_REACHED_RANGE)
             {
-                doorRecheckCounter = 0;
-                Debug.Log("lastPos:" + lastPos + ", currentPos = " + currentPos);
-                foreach (Door door in doorsToPass)
-                {
-                    //check if there are any near doors from the ones in the list
-                    if (Vector3.Distance(GetPos(), door.gameObject.transform.position) < 1f)
-                    {
-                        //open it 
-                        door.OpenDoor();
-
-                        //auto-close it after a fixed time
-                        if (closeDoorAfterEnter)
-                        {
-                            timer.Init(KEEP_DOOR_OPEN_TIME, () => door.CloseDoor());
-                        }
-                    }
-                }
+                //open it 
+                door.OpenDoor();
+                timer.Init(KEEP_DOOR_OPEN_TIME, delegate { PassDoor(door); });
             }
-
         }
-        else
+    }
+
+    private void PassDoor(Door currentDoor)
+    {
+        if (closeDoorAfterEnter)
         {
-            doorRecheckCounter = 0;
-            lastPos = currentPos;
+            currentDoor.CloseDoor();
         }
     }
 
@@ -113,7 +96,7 @@ public class MovementActivity : AbstractActivity
 
     private bool TargetIsReached()
     {
-        return Vector3.Distance(GetPos(), closestPosition) < TARGET_REACHED_RANGE;
+        return Vector3.Distance(GetPos(), closestPosition) <= TARGET_REACHED_RANGE;
     }
 
     public override void SetPaused(bool isPaused)
