@@ -179,7 +179,6 @@ public class PlayerInteraction : MonoBehaviour
         HUDManager.Instance.SetCurrentActiveBugId(listenBugIndex);
     }
 
-
     public void ProcessHideInput(InputAction.CallbackContext context)
     {
 
