@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WatcherNPC : MonoBehaviour {
 
+	[SerializeField] public Slider spottedIndicator;
+	[SerializeField] public GameObject alertIcon;
 	public float viewRadius = 4f;
 	[Range(0, 360)]
 	public float viewAngle = 45f;
@@ -12,14 +15,13 @@ public class WatcherNPC : MonoBehaviour {
 
 	public float watchDelay = 1f;
 	private float watchCounter = 0;
-	private bool playerSpotted = false;
+	public bool playerSpotted = false;
 	private float dstToTarget = 0;
 
 	private List<Collider> targetsInViewRadius = new List<Collider>();
 
 	[HideInInspector]
 	public List<Transform> visibleTargets = new List<Transform>();
-
 
 	void FixedUpdate() {
 		//Debug.Log("fixedUpdate watcherNPC");
@@ -29,6 +31,7 @@ public class WatcherNPC : MonoBehaviour {
 		if ( visibleTargets.Count != 0 ) {
 			//Debug.Log("Count down time " + watchCounter);
 			watchCounter += Time.deltaTime;
+			spottedIndicator.value = watchCounter;
 
 			//TODO maybe:  calculate spotting speed with dstToTarget and deltaTime
 
@@ -40,6 +43,8 @@ public class WatcherNPC : MonoBehaviour {
 	
 	private void spottedPlayer() {
 		Debug.Log("Player spotted");
+		spottedIndicator.gameObject.SetActive(false);
+		alertIcon.SetActive(true);
 		playerSpotted = true;
     }
 
@@ -79,15 +84,22 @@ public class WatcherNPC : MonoBehaviour {
 				// Check for Objects covering player from view
 				if ( Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) ) {
 					visibleTargets.Add(target);
-					Debug.Log("See target");
+					//Debug.Log("See target");
 				}
 			}
 		}
 
-		// Reset values if nobody is detected
+		// Reset values if nobody is in FoV
 		if ( visibleTargets.Count == 0 ) {
 			playerSpotted = false;
 			watchCounter = 0;
-        }
+			spottedIndicator.gameObject.SetActive(false);
+			alertIcon.SetActive(false);
+		} else { // player is in FoV
+			if (!playerSpotted) {
+				spottedIndicator.gameObject.SetActive(true);
+				alertIcon.SetActive(false);
+			}
+		}
 	}
 }
