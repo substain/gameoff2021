@@ -5,7 +5,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     [Tooltip("How fast the player is by walking normally")]
     [SerializeField]
     private float baseMovementSpeed = 4f;
@@ -57,7 +56,6 @@ public class PlayerMovement : MonoBehaviour
     [Tooltip("The time it takes to reload the dash after it was used")]
     [SerializeField]
     float dashReloadDuration = 0.8f;
-
 
     private Vector3 velocity = Vector3.zero;
     private Vector3 currentMovement = Vector3.zero;
@@ -134,8 +132,6 @@ public class PlayerMovement : MonoBehaviour
             isSneaking = false;
         }
     }
-
-
 
     public void ProcessMoveInput(InputAction.CallbackContext context)
     {
@@ -220,7 +216,6 @@ public class PlayerMovement : MonoBehaviour
 
         rigidBody.velocity = dashMovement;
     }
-
 
     public void ProcessDashInput(InputAction.CallbackContext context)
     {

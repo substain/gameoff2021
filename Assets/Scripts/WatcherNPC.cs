@@ -39,7 +39,7 @@ public class WatcherNPC : MonoBehaviour {
     }
 	
 	private void spottedPlayer() {
-		Debug.Log("Player spotted");
+		//Debug.Log("Player spotted");
 		playerSpotted = true;
     }
 
@@ -79,7 +79,7 @@ public class WatcherNPC : MonoBehaviour {
 				// Check for Objects covering player from view
 				if ( Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) ) {
 					visibleTargets.Add(target);
-					Debug.Log("See target");
+					//Debug.Log("See target");
 				}
 			}
 		}

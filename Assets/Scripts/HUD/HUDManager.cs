@@ -12,6 +12,7 @@ public class HUDManager : MonoBehaviour
     private HUDBugDisplay hudBugDisplay;
     private HUDKeyDisplay hudKeyDisplay;
     private HUDListenBugDisplay hudListenBugDisplay;
+    private HUDDialogueDisplay hudDialogueDisplay;
     void Awake()
     {
         if (Instance != null)
@@ -24,6 +25,7 @@ public class HUDManager : MonoBehaviour
         hudBugDisplay = GetComponentInChildren<HUDBugDisplay>();
         hudKeyDisplay = GetComponentInChildren<HUDKeyDisplay>();
         hudListenBugDisplay = GetComponentInChildren<HUDListenBugDisplay>();
+        hudDialogueDisplay = GetComponentInChildren<HUDDialogueDisplay>();
     }
 
     public void UpdateActionHintText(string hintText)
@@ -49,5 +51,15 @@ public class HUDManager : MonoBehaviour
     public void SetCurrentActiveBugId(int bugId)
     {
         hudListenBugDisplay.SetActiveBugId(bugId);
+    }
+
+    public void ShowDialog(DialogueLine dialogueLine, Transform playerPosition, Transform targetPosition)
+    {
+        hudDialogueDisplay.ShowDialogue(dialogueLine, playerPosition, targetPosition);
+    }
+
+    public void CloseDialogue()
+    {
+        hudDialogueDisplay.CloseDialogue();
     }
 }

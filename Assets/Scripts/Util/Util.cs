@@ -35,6 +35,22 @@ public static class Util
         }
     }
 
+    public static AudioClip GetRandomFromList(List<AudioClip> list)
+    {
+        if (list.Count == 0)
+        {
+            Debug.LogError("given list was too small");
+        }
+        return list[UnityEngine.Random.Range(0, list.Count)];
+    }
+
+    public static void PlayRandomFromList(List<AudioClip> list, AudioSource source, bool isLooping)
+    {
+        source.loop = isLooping;
+        source.clip = GetRandomFromList(list);
+        source.Play();
+    }
+
     public static Dir4 ToNorthSouthDir4(float yValue)
     {
         return yValue > 0 ? Dir4.North : Dir4.South;
@@ -42,5 +58,16 @@ public static class Util
     public static Dir4 ToEastWestDir4(float xValue)
     {
         return xValue > 0 ? Dir4.East : Dir4.West;
+    }
+
+    public static void ShuffleList<T>(List<T> input) 
+    {
+        for (int i = 0; i < input.Count; i++)
+        {
+            T temp = input[i];
+            int randomIndex = UnityEngine.Random.Range(i, input.Count);
+            input[i] = input[randomIndex];
+            input[randomIndex] = temp;
+        }
     }
 }

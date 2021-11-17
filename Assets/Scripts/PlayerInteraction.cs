@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -31,6 +32,9 @@ public class PlayerInteraction : MonoBehaviour
 
     private int listenBugIndex = -1;
 
+    private Dialogue currentDialogue = null;
+
+
     void Awake()
     {
         if(interactionPosition == null)
@@ -49,24 +53,33 @@ public class PlayerInteraction : MonoBehaviour
         InvokeRepeating("CheckForInteractables", 0.1f, 0.1f);
     }
 
-    private void CheckForInteractables()
+    public void StartDialogue(Dialogue dialogue)
     {
-        IInteractable previousInteractable = currentInteractable;
-        Collider[] matchingColliders = Physics.OverlapSphere(interactionPosition.transform.position, interactionRadius, layerToCheckFor);
-        List<IInteractable> interactables = new List<IInteractable>();
-
-        foreach (Collider col in matchingColliders)
+        if(currentDialogue != null)
         {
-            IInteractable interactable = col.gameObject.GetComponent<IInteractable>();
-            if(interactable != null)
-            {
-                interactables.Add(interactable);
-            }
+            Debug.LogWarning("The player already has an active dialogue.");
+            return;
         }
 
-        if(interactables.Count > 0)
+        currentDialogue = dialogue;
+    }
+
+    private void CheckForInteractables()
+    {
+        bool hasActiveDialogue = CheckForActiveDialogue();
+        if (hasActiveDialogue)
         {
-            currentInteractable = interactables[0];
+            return;
+        }
+
+        IInteractable previousInteractable = currentInteractable;
+
+        List<IInteractable> foundInteractables = FindInteractablesInRange();
+        List<IInteractable> orderedInteractables = SortAndFilterInteractables(foundInteractables);
+
+        if(orderedInteractables.Count > 0)
+        {
+            currentInteractable = orderedInteractables[0];
             HUDManager.Instance.UpdateActionHintText("Press E to " + currentInteractable.GetInteractionTypeString());
         }
         else
@@ -77,6 +90,55 @@ public class PlayerInteraction : MonoBehaviour
                 HUDManager.Instance.UpdateActionHintText("");
             }
         }
+    }
+
+    private List<IInteractable> FindInteractablesInRange()
+    {
+        List<IInteractable> allInteractables = new List<IInteractable>();
+        Collider[] matchingColliders = Physics.OverlapSphere(interactionPosition.transform.position, interactionRadius, layerToCheckFor);
+
+        foreach (Collider col in matchingColliders)
+        {
+            IInteractable[] foundInteractables = col.gameObject.GetComponents<IInteractable>();
+            if (foundInteractables != null)
+            {
+                allInteractables.AddRange(foundInteractables);
+            }
+        }
+        return allInteractables;
+    }
+
+    private bool CheckForActiveDialogue()
+    {
+        if (currentInteractable != null && IsDialogueHolder(currentInteractable))
+        {
+            //has active dialogue
+            DialogueHolder dialogueHolder = (DialogueHolder)currentInteractable;
+            if (dialogueHolder.HasActiveDialogue())
+            {
+                if (((DialogueHolder)currentInteractable).IsInRange(this.transform))
+                {
+                    return true;
+                }
+                else
+                {
+                    //player went out of range of the dialogue -> reset the dialogue
+                    dialogueHolder.CancelDialoge();
+                }
+            }
+        }
+        return false;
+    }
+
+    private List<IInteractable> SortAndFilterInteractables(List<IInteractable> unorderedInteractables)
+    {
+        //prioritize dialogues
+        List<IInteractable> sortedInteractables = unorderedInteractables.OrderByDescending(ia => IsDialogueHolder(ia)).ToList();
+
+        //remove dialogues without active dialog option
+        sortedInteractables.RemoveAll(ia => IsDialogueHolder(ia) && !((DialogueHolder)ia).HasValidNewDialogue());
+
+        return sortedInteractables;
     }
 
     public void ProcessInteractInput(InputAction.CallbackContext context)
@@ -181,13 +243,26 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessHideInput(InputAction.CallbackContext context)
     {
-
+        if (currentInteractable != null && IsDialogueHolder(currentInteractable))
+        {
+            DialogueHolder dialogueHolder = (DialogueHolder)currentInteractable;
+            dialogueHolder.CancelDialoge();
+            return;
+        }
     }
 
     public void ProcessMenuButtonInput(InputAction.CallbackContext context)
     {
-
+        ConstraintManager.Instance.SetSatisfied(ConstraintManager.GameConstraint.testConstraint);
+        Debug.Log("testConstraint satisfied");
     }
+
+    private static bool IsDialogueHolder(IInteractable interactable)
+    {
+        return interactable.GetType() == typeof(DialogueHolder);
+    }
+
+
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()

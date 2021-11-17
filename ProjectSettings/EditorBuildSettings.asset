@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Sandbox.unity
     guid: 0df44b45a4ab8aa40937776f7c3f095d
+  - enabled: 1
+    path: Assets/Scenes/SubstainTestScene.unity
+    guid: 6113f22054bdbf04f84eeb5a8a728505
   m_configObjects: {}

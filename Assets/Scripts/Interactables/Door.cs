@@ -16,23 +16,35 @@ public class Door : MonoBehaviour, IInteractable
     [SerializeField]
     private int neededKeyId = -1;
 
+    [SerializeField]
+    private List<AudioClip> doorOpenClips = new List<AudioClip>();
+
+    [SerializeField]
+    private List<AudioClip> doorCloseClips = new List<AudioClip>();
+
+    [SerializeField]
+    private List<AudioClip> doorTryLockedClips = new List<AudioClip>();
+
+    [SerializeField]
+    private List<AudioClip> doorUnlockClips = new List<AudioClip>();
 
     private bool isClosed = true;
 
     private Timer timer;
-
+    private AudioSource source;
 
     void Awake()
     {
         timer = gameObject.AddComponent<Timer>();
+        source = gameObject.AddComponent<AudioSource>();
     }
 
     public void Interact(PlayerInteraction interactingPlayer)
     {
-        if (isClosed && neededKeyId != -1 && !interactingPlayer.HasKeyWithId(neededKeyId))
+        if (isClosed && IsKeyProtected() && !interactingPlayer.HasKeyWithId(neededKeyId))
         {
             HUDManager.Instance.DisplayMessage("You need the " + HUDKeyDisplay.KeyIdToName(neededKeyId) + " to open this door.");
-
+            Util.PlayRandomFromList(doorTryLockedClips, source, false);
             //door is closed and needs a key, which the player doesnt have -> don't open the door
             return;
         }
@@ -44,11 +56,19 @@ public class Door : MonoBehaviour, IInteractable
         {
             CloseDoor();
         }
-
     }
 
     public void OpenDoor()
     {
+        if (IsKeyProtected())
+        {
+            Util.PlayRandomFromList(doorUnlockClips, source, false);
+        }
+        else
+        {
+            Util.PlayRandomFromList(doorOpenClips, source, false);
+        }
+
         isClosed = false;
         doorObject.SetActive(false);
 
@@ -60,6 +80,8 @@ public class Door : MonoBehaviour, IInteractable
 
     public void CloseDoor()
     {
+        Util.PlayRandomFromList(doorCloseClips, source, false);
+
         isClosed = true;
         doorObject.SetActive(true);
     }
@@ -74,5 +96,10 @@ public class Door : MonoBehaviour, IInteractable
         {
             return "close the door";
         }
+    }
+
+    public bool IsKeyProtected()
+    {
+        return neededKeyId != -1;
     }
 }

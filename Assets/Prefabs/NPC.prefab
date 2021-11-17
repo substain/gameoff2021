@@ -77,13 +77,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b8389e902dfccb4c96a9ca84223e808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  order: 0
+  order: 4
   baseAlert: 0.5
   audioClip: {fileID: 0}
   audioClipLoopable: 0
   targetPosition: {fileID: 0}
-  moveSpeed: 2
+  moveSpeed: 3
   doorsToPass: []
+  closeDoorAfterEnter: 0
 --- !u!114 &1550188014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -96,11 +97,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5785953d85ceb43a3f9654e5009bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  order: 1
+  order: 3
   baseAlert: 0.5
   audioClip: {fileID: 0}
   audioClipLoopable: 0
-  idleTime: 5
+  idleTime: 1
 --- !u!114 &1550188013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118,8 +119,10 @@ MonoBehaviour:
   audioClip: {fileID: 0}
   audioClipLoopable: 0
   targetPosition: {fileID: 0}
-  moveSpeed: 2
-  doorsToPass: []
+  moveSpeed: 3
+  doorsToPass:
+  - {fileID: 0}
+  closeDoorAfterEnter: 0
 --- !u!114 &4418860876865487989
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,14 +135,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b8389e902dfccb4c96a9ca84223e808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  order: 3
+  order: 0
   baseAlert: 0.5
   audioClip: {fileID: 0}
   audioClipLoopable: 0
   targetPosition: {fileID: 0}
-  moveSpeed: 2
+  moveSpeed: 3
   doorsToPass:
   - {fileID: 0}
+  closeDoorAfterEnter: 1
 --- !u!114 &1550188018
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5785953d85ceb43a3f9654e5009bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  order: 4
+  order: 1
   baseAlert: 0.5
   audioClip: {fileID: 0}
   audioClipLoopable: 0
@@ -251,8 +255,9 @@ GameObject:
   - component: {fileID: 4710873677815921613}
   - component: {fileID: 4710873677815921651}
   - component: {fileID: 4710873677815921612}
+  - component: {fileID: 1004427022}
   m_Layer: 10
-  m_Name: BugAttachment
+  m_Name: Interactables
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -300,6 +305,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activitySoundClips: []
   debugBug: {fileID: 3503998270239075948}
+--- !u!114 &1004427022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4710873677815921614}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a50c34e57e968c4ea640360ce6e4c85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subjectName: Npc
+  dialogueKeys: 0000000001000000
 --- !u!1 &8894588918249284107
 GameObject:
   m_ObjectHideFlags: 0

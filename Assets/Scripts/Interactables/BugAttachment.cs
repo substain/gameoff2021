@@ -29,12 +29,6 @@ public class BugAttachment : MonoBehaviour, IInteractable
         activityTimer = gameObject.AddComponent<Timer>();
         debugBug.SetActive(bugIsAttached);
     }
-    
-    /*
-    internal void SetId(int v)
-    {
-        throw new NotImplementedException();
-    }*/
 
     public void StartActivity(int activityIndex, float activityDuration)
     {

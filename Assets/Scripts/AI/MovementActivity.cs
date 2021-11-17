@@ -54,6 +54,7 @@ public class MovementActivity : AbstractActivity
             if (Vector3.Distance(GetPos(), door.gameObject.transform.position) < DOOR_REACHED_RANGE)
             {
                 //open it 
+
                 door.OpenDoor();
                 timer.Init(KEEP_DOOR_OPEN_TIME, delegate { PassDoor(door); });
             }
@@ -109,4 +110,5 @@ public class MovementActivity : AbstractActivity
     {
         return controlledGameObject.transform.position;
     }
+
 }

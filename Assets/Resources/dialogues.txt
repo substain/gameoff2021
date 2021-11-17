@@ -1,0 +1,45 @@
+// This is a comment. Comments are ignored 
+// Empty lines are ignored
+// "#" means a new dialogue starts
+// "*" means that a dialogue can be started again
+// "! abc" means that the constraint abc needs to be satisfied. These are set via code (see ConstraintManager.GameConstraint) 
+
+// all other lines displayed is parsed like this:
+// subject: content
+
+// or optionally like this
+// content
+
+// you may use %subject% as a placeholder for the NPCs
+
+# testDialogue1
+You hear somebody screaming
+%subject%: What was that noise?
+C.R. Piller: I have no idea, but we should ask Sting.
+%subject%: Who is Sting?
+C.R. Piller: I am Sting!
+%subject%: Whaaat?
+Sting: Whaaat?
+
+# testDialogue2
+*
+! testConstraint
+%subject%: Hello! 
+Sting: Oh, hello there!
+%subject%: What are you doing?
+Sting: Just listening to the radio.
+Sting: ... why do you ask?
+%subject%: I was just curious.
+
+
+# anyoneBusy
+*
+%subject%: I'm busy.
+
+# anyoneSpeechless
+*
+%subject%: ...
+
+# introMonologue
+Sting: The year is 2050 and I live in a world that many knew was coming but never believed. 
+Sting: My friends know me as Sting.
