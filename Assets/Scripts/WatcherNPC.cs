@@ -26,6 +26,7 @@ public class WatcherNPC : MonoBehaviour {
 	void FixedUpdate() {
 		//Debug.Log("fixedUpdate watcherNPC");
 		FindVisibleTargets();
+		AdjustRotation();
 
 		//if ( visibleTargets.Count != 0 ) {
 		if ( visibleTargets.Count != 0 ) {
@@ -40,6 +41,11 @@ public class WatcherNPC : MonoBehaviour {
             }
         }
     }
+
+	private void AdjustRotation() {
+		spottedIndicator.transform.rotation = Quaternion.identity;
+		alertIcon.transform.rotation = Quaternion.identity;
+	}
 
 	private void spottedPlayer() {
 		Debug.Log("Player spotted");
