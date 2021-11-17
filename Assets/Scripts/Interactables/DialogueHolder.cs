@@ -47,8 +47,6 @@ public class DialogueHolder : MonoBehaviour, IInteractable
                 }
             }
         }
-        Debug.Log("oneshots:" + oneShotDialogues.Count);
-        Debug.Log("repeatables:" + repeatableDialogues.Count);
     }
 
     public void Interact(PlayerInteraction interactingPlayer)

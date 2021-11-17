@@ -12,6 +12,8 @@ using static DialogueHolder;
 /// </summary>
 public class DialogueManager : MonoBehaviour 
 {
+	[SerializeField]
+	private bool useDebugOutput;
 	private const string DIALOGUES_FILENAME = "dialogues";
 	private const string DIALOGUE_INDICATOR = "#";
 	private const string COMMENT_INDICATOR = "//";
@@ -36,7 +38,7 @@ public class DialogueManager : MonoBehaviour
 
 	private void LoadDialogues()
 	{
-		Debug.Log("Loading dialogues...");
+		DebugPrintln("Start loading dialogs...");
 		TextAsset dialogTextAsset = (TextAsset)Resources.Load(DIALOGUES_FILENAME);
 		if (dialogTextAsset == null)
 		{
@@ -56,7 +58,6 @@ public class DialogueManager : MonoBehaviour
 
 		foreach (string line in lines)
 		{
-
 			if (line.Trim().Length == 0 || line.StartsWith(COMMENT_INDICATOR))
 			{
 				continue;
@@ -100,6 +101,7 @@ public class DialogueManager : MonoBehaviour
 				continue;
 			}
 		}
+		DebugPrintln("Finished loading dialogs. Added " + dialogueTemps.Count + " dialogues.");
 	}
 
 
@@ -158,5 +160,14 @@ public class DialogueManager : MonoBehaviour
 		Debug.LogWarning("Warning, constraint " + input + " unknown.");
 
 		return null;
+	}
+
+	private void DebugPrintln(string info)
+	{
+		if (!useDebugOutput)
+		{
+			return;
+		}
+		Debug.Log(info);
 	}
 }

@@ -595,6 +595,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: db875b64-67d6-4f4a-b633-b2fcd0737864
     m_ActionName: Gameplay/OpenMenu[/Keyboard/escape,/DualShock4GamepadHID/start,/DualShock4GamepadHID1/start]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1781268067}
+        m_TargetAssemblyTypeName: PlayerInteraction, Assembly-CSharp
+        m_MethodName: ProcessListenBugInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 926d94c6-34a7-442e-b14c-5227856cf6cd
+    m_ActionName: Gameplay/ListenBug[/DualShock4GamepadHID/buttonNorth,/DualShock4GamepadHID1/buttonNorth,/Keyboard/tab]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: Keyboard
   m_DefaultActionMap: Gameplay
