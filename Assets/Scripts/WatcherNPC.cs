@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WatcherNPC : MonoBehaviour {
 
+	[SerializeField] public Slider spottedIndicator;
+	[SerializeField] public GameObject alertIcon;
 	public float viewRadius = 4f;
 	[Range(0, 360)]
 	public float viewAngle = 45f;
@@ -12,14 +15,13 @@ public class WatcherNPC : MonoBehaviour {
 
 	public float watchDelay = 1f;
 	private float watchCounter = 0;
-	private bool playerSpotted = false;
+	public bool playerSpotted = false;
 	private float dstToTarget = 0;
 
 	private List<Collider> targetsInViewRadius = new List<Collider>();
 
 	[HideInInspector]
 	public List<Transform> visibleTargets = new List<Transform>();
-
 
 	void FixedUpdate() {
 		//Debug.Log("fixedUpdate watcherNPC");
@@ -29,6 +31,7 @@ public class WatcherNPC : MonoBehaviour {
 		if ( visibleTargets.Count != 0 ) {
 			//Debug.Log("Count down time " + watchCounter);
 			watchCounter += Time.deltaTime;
+			spottedIndicator.value = watchCounter;
 
 			//TODO maybe:  calculate spotting speed with dstToTarget and deltaTime
 
@@ -37,9 +40,11 @@ public class WatcherNPC : MonoBehaviour {
             }
         }
     }
-	
+
 	private void spottedPlayer() {
-		//Debug.Log("Player spotted");
+		Debug.Log("Player spotted");
+		spottedIndicator.gameObject.SetActive(false);
+		alertIcon.SetActive(true);
 		playerSpotted = true;
     }
 
@@ -56,9 +61,9 @@ public class WatcherNPC : MonoBehaviour {
 	/**
 	 * Checks if an Object of targetmask is within viewRadius and viewAngle, as well as not covered by Objects in obstacleMask
 	 * Updates visibleTargets to all those Objects
-	 * 
+	 *
 	 * Only the Player Object is supposed to be in targetMask.
-	 * 
+	 *
 	 * For more information, view https://www.youtube.com/watch?v=rQG9aUWarwE&t=1172s&ab_channel=SebastianLague and it's according github page
 	 */
 	void FindVisibleTargets() {
@@ -75,7 +80,7 @@ public class WatcherNPC : MonoBehaviour {
 			//Compare angles
 			if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2) {
 				dstToTarget = Vector3.Distance(transform.position, target.position);
-				
+
 				// Check for Objects covering player from view
 				if ( Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) ) {
 					visibleTargets.Add(target);
@@ -84,10 +89,17 @@ public class WatcherNPC : MonoBehaviour {
 			}
 		}
 
-		// Reset values if nobody is detected
+		// Reset values if nobody is in FoV
 		if ( visibleTargets.Count == 0 ) {
 			playerSpotted = false;
 			watchCounter = 0;
-        }
+			spottedIndicator.gameObject.SetActive(false);
+			alertIcon.SetActive(false);
+		} else { // player is in FoV
+			if (!playerSpotted) {
+				spottedIndicator.gameObject.SetActive(true);
+				alertIcon.SetActive(false);
+			}
+		}
 	}
 }
