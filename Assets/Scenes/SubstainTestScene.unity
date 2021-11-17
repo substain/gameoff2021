@@ -357,25 +357,6 @@ Transform:
   m_Father: {fileID: 350919317}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1004427018 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4710873677815921614, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
-  m_PrefabInstance: {fileID: 4710873679057097341}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1004427022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1004427018}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a50c34e57e968c4ea640360ce6e4c85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  subjectName: Npc
-  dialogueKeys: 0000000001000000
 --- !u!1 &1031935237
 GameObject:
   m_ObjectHideFlags: 0
@@ -1005,10 +986,6 @@ PrefabInstance:
       propertyPath: targetPosition
       value: 
       objectReference: {fileID: 1031935238}
-    - target: {fileID: 1695506968, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
-      propertyPath: dialogueKeys.Array.data[0]
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4418860876865487989, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
       propertyPath: targetPosition
       value: 
@@ -1017,10 +994,6 @@ PrefabInstance:
       propertyPath: doorsToPass.Array.data[0]
       value: 
       objectReference: {fileID: 557607257}
-    - target: {fileID: 4710873677815921614, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
-      propertyPath: m_Name
-      value: Interactables
-      objectReference: {fileID: 0}
     - target: {fileID: 8894588918249284106, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -1069,8 +1042,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: NPC
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 1695506968, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5cb311962cf6bc94a8cef367eff69925, type: 3}
 --- !u!1001 &6168161014950995410
 PrefabInstance:
