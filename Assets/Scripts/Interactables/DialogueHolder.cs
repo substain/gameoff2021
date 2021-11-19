@@ -9,7 +9,7 @@ public class DialogueHolder : MonoBehaviour, IInteractable
     public enum DialogueKey
     {
         testDialogue1, testDialogue2, testMonologue,    //only testDialogues.txt
-        testBlocking, testChoice,                   //only testDialogues.txt
+        testBlocking, testChoice,                       //only testDialogues.txt
         anyoneSpeechless, anyoneBusy,                   //everywhere
         introMonologue, introTutorial                   //only tutorialDialogues.txt
     }
