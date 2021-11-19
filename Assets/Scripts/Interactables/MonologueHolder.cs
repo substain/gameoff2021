@@ -44,7 +44,6 @@ public class MonologueHolder : DialogueHolder
 
     private void StartMonologue()
     {
-        Debug.Log("starting monologue...");
         isUsableMonologue = true;
         interactingPlayer.SetCurrentInteractable(this);
         Interact(interactingPlayer);
