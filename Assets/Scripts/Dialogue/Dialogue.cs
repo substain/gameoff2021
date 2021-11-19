@@ -9,20 +9,20 @@ public class Dialogue
 {
     public const float INTERACTION_RANGE = 6.0f;
 
-    private DialogueHolder.DialogueKey key;
-    private bool isOneShot = true;
-    private List<ConstraintManager.GameConstraint> constraints = new List<ConstraintManager.GameConstraint>();
-    private List<DialogueLine> dialogueLines = new List<DialogueLine>();
+    private readonly DialogueHolder.DialogueKey key;
+    private readonly bool isOneShot = true;
+    private readonly bool isBlocking = false;
+    private readonly List<ConstraintManager.GameConstraint> constraints = new List<ConstraintManager.GameConstraint>();
+    private readonly List<DialogueLine> dialogueLines = new List<DialogueLine>();
 
-    private bool wasUsed = false;
-
-    //private Transform dialogueTarget;
+    private bool wasCompleted = false;
     private int lineIndex = 0;
 
-    public Dialogue(DialogueHolder.DialogueKey key, bool isOneShot, List<ConstraintManager.GameConstraint> constraints, List<DialogueLine> dialogueLines)
+    public Dialogue(DialogueHolder.DialogueKey key, List<DialogueLine> dialogueLines, bool isOneShot, bool isBlocking, List<ConstraintManager.GameConstraint> constraints)
     {
         this.key = key;
         this.isOneShot = isOneShot;
+        this.isBlocking = isBlocking;
         this.constraints = constraints;
         this.dialogueLines = dialogueLines;
     }
@@ -35,17 +35,6 @@ public class Dialogue
         }
         dialogueLines.ForEach(dl => { dl.ReplaceSubjectPlaceholderWith(name); });
     }
-
-    /*
-    public void SetDialogueTarget(Transform dialogueTarget)
-    {
-        this.dialogueTarget = dialogueTarget;
-    }
-
-    public Transform GetDialogueTarget()
-    {
-        return dialogueTarget;
-    } */
 
     public DialogueLine GetNextLine()
     {
@@ -67,7 +56,7 @@ public class Dialogue
     {
         if (isOneShot)
         {
-            wasUsed = true;
+            wasCompleted = true;
         }
         Reset();
     }
@@ -80,11 +69,21 @@ public class Dialogue
     public bool IsAvailable()
     {
         bool constraintsSatisfied = ConstraintManager.Instance.AllConstraintsSatisfied(constraints);
-        return constraintsSatisfied && !wasUsed;
+        return constraintsSatisfied && !wasCompleted;
     }
 
     public bool IsOneShot()
     {
         return isOneShot;
+    }
+
+    public bool IsBlocking()
+    {
+        return isBlocking;
+    }
+
+    public DialogueHolder.DialogueKey GetKey()
+    {
+        return key;
     }
 }

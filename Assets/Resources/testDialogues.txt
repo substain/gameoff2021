@@ -1,0 +1,73 @@
+// This is a comment. Comments are ignored 
+// Empty lines are ignored
+// "#" means a new dialogue starts
+// "*" means that a dialogue can be started again. This can't be used on MonologueHolders (to avoid the player being stuck within repeating, autostarting monologues)
+// "!" means that a dialogue stops you from moving
+// "? abc" means that the constraint abc needs to be satisfied to enable this dialogue. These are set via code (see ConstraintManager.GameConstraint) 
+// "+ choiceKey choiceText" attaches a choice to the previous line (choiceKey is for logic implementation, choiceText will be visible). Not implemented yet.
+
+// all other lines displayed is parsed like this:
+// subject: content
+
+// or optionally like this
+// content
+
+// you may use %subject% as a placeholder for the NPCs
+
+# testDialogue1
+You hear somebody screaming
+%subject%: What was that noise?
+C.R. Piller: I have no idea, but we should ask Sting.
+%subject%: Who is Sting?
+C.R. Piller: I am Sting!
+%subject%: Whaaat?
+Sting: Whaaat?
+
+# testDialogue2
+*
+? testConstraint
+%subject%: Hello! 
+Sting: Oh, hello there!
+%subject%: What are you doing?
+Sting: Just listening to the radio.
+Sting: ... why do you ask?
+%subject%: I was just curious.
+
+//any npc can have the following ones as backup
+# anyoneBusy
+*
+%subject%: I'm busy.
+
+# anyoneSpeechless
+*
+%subject%: ...
+
+# testMonologue
+Sting: Hello!
+This is a monologue for testing.
+You can deactivate it by commenting it out
+in Resources/testDialogues.txt 
+//This is how to comment it out
+Or by removing the key (testMonologue)
+from the MonologueHolder component on Player/Interaction
+
+# testBlocking
+!
+This is a dialogue that stops you from moving
+You can't move until the dialogue is finished/canceled
+...
+See?
+
+# testChoice
+In the next line, you will presented a choice
+What is your favorite food?
++ testChoice1 Burger
++ testChoice2 Pizza
++ testChoice3 Salad
+(Unfortunately, choices are not implemented yet)
+
+# introMonologue
+This is a placeholder text for an unused dialogueKey in testDialogues.txt
+
+# introTutorial 
+This is a placeholder text for an unused dialogueKey in testDialogues.txt

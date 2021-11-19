@@ -7,43 +7,30 @@ using UnityEngine;
 
 public class DialogueTemplate
 {
-    public readonly struct DialogueTemplateLine
-    {
-        public DialogueTemplateLine(string subject, string content)
-        {
-            this.content = content;
-            this.subject = subject;
-        }
-
-        private string subject { get; }
-        private string content { get; }
-
-        public DialogueLine GetDialogueLine()
-        {
-            return new DialogueLine(subject, content);
-        }
-    }
-
-    private List<DialogueTemplateLine> dialogueTemplateLines = new List<DialogueTemplateLine>();
+    private List<DialogueLine> dialogueLines = new List<DialogueLine>();
     private DialogueHolder.DialogueKey key;
     private bool isOneShot = true;
+    private bool isBlocking = false;
     private List<ConstraintManager.GameConstraint> constraints = new List<ConstraintManager.GameConstraint>();
-
 
     public Dialogue ToDialogue()
     {
-        List<DialogueLine> dialogueLines = dialogueTemplateLines.Select(dtl => dtl.GetDialogueLine()).ToList();
-        return new Dialogue(key, isOneShot, new List<ConstraintManager.GameConstraint>(constraints), dialogueLines);
+        return new Dialogue(key, dialogueLines, isOneShot, isBlocking, new List<ConstraintManager.GameConstraint>(constraints));
     }
 
     public void AddLine(string subject, string content)
     {
-        dialogueTemplateLines.Add(new DialogueTemplateLine(subject, content));
+        dialogueLines.Add(new DialogueLine(subject, content));
     }
 
     public void AddLine(string line)
     {
-        dialogueTemplateLines.Add(new DialogueTemplateLine("", line));
+        dialogueLines.Add(new DialogueLine("", line));
+    }
+
+    public void AddChoiceToLastLine(ConstraintManager.Choice choice)
+    {
+        dialogueLines[dialogueLines.Count - 1].AddChoice(choice);
     }
 
     public void SetKey(DialogueHolder.DialogueKey key)
@@ -54,6 +41,11 @@ public class DialogueTemplate
     public void SetIsOneShot(bool isOneShot)
     {
         this.isOneShot = isOneShot;
+    }
+
+    public void SetIsBlocking(bool isBlocking)
+    {
+        this.isBlocking = isBlocking;
     }
 
     public void AddConstraint(ConstraintManager.GameConstraint constraint)

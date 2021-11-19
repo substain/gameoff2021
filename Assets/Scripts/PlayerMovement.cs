@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -77,6 +78,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector3 lastMoveDir = new Vector3(1, 0, 0);
 
+    private bool isInBlockingDialogue = false;
+
     void Awake()
     {
         this.spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -107,6 +110,11 @@ public class PlayerMovement : MonoBehaviour
             velocity = Vector3.zero;
             return;
         }
+    }
+
+    public void SetBlockingDialogueActive(bool isBlocked)
+    {
+        this.isInBlockingDialogue = isBlocked;
     }
 
     public void ProcessRunInput(InputAction.CallbackContext context)
@@ -145,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
     private void ProcessMoveInput(Vector2 direction)
     {
         Vector3 moveDirection = Util.ToVector3(direction);
-        if (moveDirection.magnitude < movementInputCutoff)
+        if (isInBlockingDialogue || moveDirection.magnitude < movementInputCutoff)
         {
             currentMovement = Vector3.zero;
             return;
@@ -219,13 +227,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void ProcessDashInput(InputAction.CallbackContext context)
     {
-        if (isPaused || isDashing || dashTimer.IsRunning())
+        if (isInBlockingDialogue || isPaused || isDashing || dashTimer.IsRunning())
         {
             return;
         }
         isDashing = true;
         dashTimer.Init(dashDuration, SetDashFinished);
-        currentDashStrength = GetMovementModifier();
+        currentDashStrength = 1; //GetMovementModifier() was making dashes too far
     }
 
     public void SetDashFinished()

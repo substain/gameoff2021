@@ -8,17 +8,26 @@ using static ConstraintManager;
 using static DialogueHolder;
 
 /// <summary>
-/// Loads dialogues from the DIALOGUES_FILENAME file and provides them via GetDialogueTemplate(key)
+/// Loads dialogues from the specified file key and provides them via GetDialogueTemplate(key)
 /// </summary>
 public class DialogueManager : MonoBehaviour 
 {
+	public enum FileKey
+	{
+		testDialogues, tutorialDialogues, gameDialogues
+	}
+
+	[SerializeField]
+	private FileKey fileToLoad;
+
 	[SerializeField]
 	private bool useDebugOutput;
-	private const string DIALOGUES_FILENAME = "dialogues";
 	private const string DIALOGUE_INDICATOR = "#";
 	private const string COMMENT_INDICATOR = "//";
-	private const string CONSTRAINT_INDICATOR = "!";
+	private const string CONSTRAINT_INDICATOR = "?";
 	private const string REPEATABLE_INDICATOR = "*";
+	private const string BLOCKING_INDICATOR = "!";
+	private const string CHOICE_INDICATOR = "+"; //choices are always blocking
 	private const string NAME_SEPARATOR = ":";
 	public const string SUBJECT_PLACEHOLDER = "%subject%";
 
@@ -38,8 +47,8 @@ public class DialogueManager : MonoBehaviour
 
 	private void LoadDialogues()
 	{
-		DebugPrintln("Start loading dialogs...");
-		TextAsset dialogTextAsset = (TextAsset)Resources.Load(DIALOGUES_FILENAME);
+		DebugPrintln("Start loading dialogues from " + fileToLoad.ToString() + " ...");
+		TextAsset dialogTextAsset = (TextAsset)Resources.Load(fileToLoad.ToString());
 		if (dialogTextAsset == null)
 		{
 			Debug.LogWarning("Could not load dialogs file. File was not found");
@@ -47,14 +56,20 @@ public class DialogueManager : MonoBehaviour
 		}
 		if (dialogTextAsset.text.Length == 0)
 		{
-			Debug.LogWarning("Dialogues file was empty");
+			Debug.LogWarning("dialogues file was empty");
 			return;
 		}
-
+		
 		string[] lines = dialogTextAsset.text.Split('\n');
+		//do the actual processing here
+		ProcessLines(lines);
+
+		DebugPrintln("Finished loading dialogues. Added " + dialogueTemps.Count + " dialogues.");
+	}
+
+	private void ProcessLines(string[] lines) {
 		DialogueKey? key = null;
 		DialogueTemplate currentDialogue = null;
-
 
 		foreach (string line in lines)
 		{
@@ -89,10 +104,34 @@ public class DialogueManager : MonoBehaviour
 				}
 				continue;
 			}
-
+			if (line.StartsWith(BLOCKING_INDICATOR))
+			{
+				currentDialogue.SetIsBlocking(true);
+				continue;
+			}
 			if (line.StartsWith(REPEATABLE_INDICATOR))
 			{
 				currentDialogue.SetIsOneShot(false);
+				continue;
+			}
+			if (line.StartsWith(CHOICE_INDICATOR))
+			{
+				string linecontent = line.Substring(2);
+				int spaceIndex = linecontent.IndexOf(" ");
+				if(spaceIndex < 0)
+				{
+					Debug.LogWarning("could not find a second entry for the key/text pair required for a choice. " +
+						"This should be provided in the format [" + CHOICE_INDICATOR + " choiceKey choiceText]. Ignoring this choice.");
+					continue;
+				}
+				ChoiceType? choiceType = ToChoiceType(linecontent.Substring(0, spaceIndex));
+				if(choiceType.HasValue)
+				{
+
+					string choiceText = linecontent.Substring(spaceIndex);
+					Choice choice = new Choice(choiceType.Value, choiceText);
+					currentDialogue.AddChoiceToLastLine(choice);
+				}
 				continue;
 			}
 			if (key.HasValue && dialogueTemps.ContainsKey(key.Value))
@@ -101,9 +140,7 @@ public class DialogueManager : MonoBehaviour
 				continue;
 			}
 		}
-		DebugPrintln("Finished loading dialogs. Added " + dialogueTemps.Count + " dialogues.");
 	}
-
 
 	private static void AddLineTo(string line, DialogueTemplate dialogue)
 	{
@@ -128,7 +165,7 @@ public class DialogueManager : MonoBehaviour
 	{
 		if (!dialogueTemps.ContainsKey(dialogueKey))
 		{
-			Debug.Log("Warning, dialogue doesn't exist for key " + dialogueKey);
+			Debug.LogWarning("Requested dialogue with key " + dialogueKey + " does not exist");
 			return null;
 		}
 		return dialogueTemps[dialogueKey];
@@ -162,6 +199,20 @@ public class DialogueManager : MonoBehaviour
 		return null;
 	}
 
+	public static ChoiceType? ToChoiceType(string input)
+	{
+		foreach (ChoiceType choice in Enum.GetValues(typeof(ChoiceType)))
+		{
+			if (choice.ToString().ToLower().Equals(input.ToLower()))
+			{
+				return choice;
+			}
+		}
+		Debug.LogWarning("Warning, choice " + input + " unknown.");
+
+		return null;
+	}
+
 	private void DebugPrintln(string info)
 	{
 		if (!useDebugOutput)
@@ -169,5 +220,10 @@ public class DialogueManager : MonoBehaviour
 			return;
 		}
 		Debug.Log(info);
+	}
+
+	void OnDestroy()
+	{
+		Instance = null;
 	}
 }

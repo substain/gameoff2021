@@ -1,0 +1,44 @@
+# introTutorial
+I was told to make my way onto the cruise ship avoiding detection. 
+Once aboard I am to rendezvous with Agent Scarlet Beetle 
+as she has been tracking the target for some time 
+and will provide me with everything I need. 
+I will work with the Green Order for now, but once I know where the weapon is I will destroy it for Rise
+I have listening devices that can help me locate objects. 
+//possible controls: Interact, Move, Dash, Sneak, Run, Back, ListenBug, OpenMenu
+I can use %interact% to interact with people or objects.
+I can use %dash% to dash.
+I can use %move% to move around. 
+I can use %run% to run and %sneak% to sneak. 
+To listen to a placed bug, I can use %listenbug%
+I can use %back% for canceling dialogues. 
+
+
+# introMonologue
+Sting: The year is 2050 and I live in a world that many knew was coming but never believed. 
+Sting: My friends know me as Sting.
+
+//any npc can have the following ones as backup
+# anyoneBusy
+*
+%subject%: I'm busy.
+
+# anyoneSpeechless
+*
+%subject%: ...
+
+
+# testDialogue1 
+This is a placeholder text in tutorialDialogues. This key should not be used.
+
+# testDialogue2 
+This is a placeholder text in tutorialDialogues. This key should not be used.
+
+# testMonologue 
+This is a placeholder text in tutorialDialogues. This key should not be used.
+
+# testBlocking 
+This is a placeholder text in tutorialDialogues. This key should not be used.
+
+# testChoice 
+This is a placeholder text in tutorialDialogues. This key should not be used.

@@ -8,7 +8,10 @@ public class DialogueHolder : MonoBehaviour, IInteractable
 {
     public enum DialogueKey
     {
-        testDialogue1, testDialogue2, introMonologue, anyoneSpeechless, anyoneBusy
+        testDialogue1, testDialogue2, testMonologue,    //only testDialogues.txt
+        testBlocking, testChoice,                   //only testDialogues.txt
+        anyoneSpeechless, anyoneBusy,                   //everywhere
+        introMonologue, introTutorial                   //only tutorialDialogues.txt
     }
 
     [SerializeField]
@@ -17,18 +20,27 @@ public class DialogueHolder : MonoBehaviour, IInteractable
     [SerializeField]
     private List<DialogueKey> dialogueKeys;
 
-    private List<Dialogue> oneShotDialogues = new List<Dialogue>();
-    private List<Dialogue> repeatableDialogues = new List<Dialogue>();
+    protected List<Dialogue> oneShotDialogues = new List<Dialogue>();
+    protected List<Dialogue> repeatableDialogues = new List<Dialogue>();
 
+    protected List<Dialogue> availableOneshots = new List<Dialogue>();
+    protected List<Dialogue> availableRepeatables = new List<Dialogue>();
 
-    private Dialogue currentDialogue = null;
+    protected Dialogue currentDialogue = null;
 
     void Start()
     {
-        foreach(DialogueKey dk in dialogueKeys)
+        CollectDialogues();
+        ConstraintManager.OnChangeConstraints += CheckAvailableDialogues;
+        CheckAvailableDialogues();
+    }
+
+    protected void CollectDialogues()
+    {
+        foreach (DialogueKey dk in dialogueKeys)
         {
             Dialogue dialogue = DialogueManager.Instance.GetDialogueTemplate(dk).ToDialogue();
-            if(dialogue != null)
+            if (dialogue != null)
             {
                 if (subjectName.Length > 0)
                 {
@@ -61,7 +73,11 @@ public class DialogueHolder : MonoBehaviour, IInteractable
             Debug.LogWarning("Trying to interact with a dialogue that has no next dialogue!");
             return;
         }
-        ProgressDialogue(interactingPlayer.transform);
+        if (currentDialogue.IsBlocking())
+        {
+            interactingPlayer.SetBlockingDialogueActive(true);
+        }
+        ProgressDialogue(interactingPlayer);
     }
 
     public bool HasActiveDialogue()
@@ -72,64 +88,90 @@ public class DialogueHolder : MonoBehaviour, IInteractable
     /// <summary>
     /// Progresses the current dialogue. Returns true, if the dialogue is finished after this.
     /// </summary>
-    public bool ProgressDialogue(Transform playerTransform)
+    public bool ProgressDialogue(PlayerInteraction interactingPlayer)
     {
         DialogueLine nextLine = currentDialogue.GetNextLine();
         if (nextLine == null)
         {
-            currentDialogue.SetFinished();
-            currentDialogue = null;
-            HUDManager.Instance.CloseDialogue();
+            FinishDialogue(interactingPlayer);
             return true;
         }
-        HUDManager.Instance.ShowDialog(nextLine, playerTransform, transform);
+        HUDManager.Instance.ShowDialog(nextLine, interactingPlayer.transform, transform);
         return false;
     }
 
-    public bool HasValidNewDialogue()
+    protected virtual void FinishDialogue(PlayerInteraction interactingPlayer)
     {
-        bool hasNextDialogue = GetNextDialogue() != null;
-        return hasNextDialogue;
+        currentDialogue.SetFinished();
+        if (currentDialogue.IsOneShot())
+        {
+            interactingPlayer.SetBlockingDialogueActive(false);
+            oneShotDialogues.RemoveAll(d => d == currentDialogue);
+            availableOneshots.RemoveAll(d => d == currentDialogue);
+        }
+        currentDialogue = null;
+
+        HUDManager.Instance.CloseDialogue();
+    }
+
+    public virtual bool HasValidNewDialogue()
+    {
+        return GetNextDialogue() != null;
     }
 
     private Dialogue GetNextDialogue()
     {
+        if(availableOneshots.Count > 0)
+        {
+            return availableOneshots[0];
+        }
+
+        if (availableRepeatables.Count > 0)
+        {        
+            //repeatable dialogs can be used in random order
+            Util.ShuffleList(repeatableDialogues);
+
+            return repeatableDialogues[0];
+        }
+        return null;
+    }
+
+    protected virtual void CheckAvailableDialogues()
+    {
+        availableOneshots.Clear();
+        availableRepeatables.Clear();
         //prefer oneshot dialogues because they are probably for the story
         foreach (Dialogue dialogue in oneShotDialogues)
         {
             if (dialogue.IsAvailable())
             {
-                return dialogue;
+                availableOneshots.Add(dialogue);
             }
         }
-
-        //repeatable dialogs can be used in random order
-        Util.ShuffleList(repeatableDialogues);
 
         foreach (Dialogue dialogue in repeatableDialogues)
         {
             if (dialogue.IsAvailable())
             {
-                return dialogue;
+                availableRepeatables.Add(dialogue);
             }
         }
-        return null;
     }
 
-    public bool IsInRange(Transform playerTransform)
+    public virtual bool IsInRange(Transform playerTransform)
     {
         //Debug.Log("isinrange:" + (Vector3.Distance(this.transform.position, playerTransform.position) < Dialogue.INTERACTION_RANGE));
         return Vector3.Distance(this.transform.position, playerTransform.position) < Dialogue.INTERACTION_RANGE;
     }
 
-    public void CancelDialoge()
+    public virtual void CancelDialogue()
     {
         HUDManager.Instance.CloseDialogue();
         currentDialogue?.Reset();
         currentDialogue = null;
     }
 
-    public string GetInteractionTypeString()
+    public virtual string GetInteractionTypeString()
     {
         return "talk";
     }

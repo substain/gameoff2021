@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 813864161}
+  - component: {fileID: 1088432076}
   m_Layer: 6
   m_Name: InteractionPosition
   m_TagString: Untagged
@@ -31,6 +32,20 @@ Transform:
   m_Father: {fileID: 4183720738613080793}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1088432076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 813864160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bb4ceb9990ea954bb06673724282f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subjectName: Sting
+  dialogueKeys: 
 --- !u!1 &991747829
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +216,7 @@ GameObject:
   - component: {fileID: 4183720738613080793}
   - component: {fileID: 4183720738613080788}
   - component: {fileID: 4183720738613080795}
-  - component: {fileID: 4183720738613080794}
+  - component: {fileID: 3870137670450706626}
   - component: {fileID: 4183720738613080790}
   - component: {fileID: 4183720738613080791}
   - component: {fileID: 1781268067}
@@ -283,8 +298,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &4183720738613080794
-BoxCollider:
+--- !u!136 &3870137670450706626
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -293,8 +308,9 @@ BoxCollider:
   m_Material: {fileID: 13400000, guid: 431d0a8e4d96377418ce0a1f28f0cdef, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &4183720738613080790
 Rigidbody:
@@ -333,10 +349,10 @@ MonoBehaviour:
   maxVelocity: 2
   velocityCutoff: 0.005
   dashDuration: 0.17
-  dashForce: 35
+  dashForce: 28
   dashCutoffPoint: 0.9
   dashDecreaseFraction: 0.85
-  dashReloadDuration: 0.8
+  dashReloadDuration: 1
 --- !u!114 &1781268067
 MonoBehaviour:
   m_ObjectHideFlags: 0

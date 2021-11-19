@@ -51,7 +51,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Hide/Cancel",
+                    "name": "Back",
                     "type": "Button",
                     "id": "85403f56-d720-42e4-b582-80dd758714c1",
                     "expectedControlType": "Button",
@@ -136,61 +136,6 @@
                 },
                 {
                     "name": "2D Vector",
-                    "id": "b73763c2-248b-4d6a-837c-20c34d58eb5e",
-                    "path": "2DVector",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Move",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "up",
-                    "id": "3eb181c4-2520-45c4-b140-f5c4530f9c83",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "down",
-                    "id": "120ef2c3-73bc-474f-a1b5-da34823c2b77",
-                    "path": "<Gamepad>/dpad/down",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "left",
-                    "id": "2f10210b-e23b-4797-aabf-05e771dcb70b",
-                    "path": "<Gamepad>/dpad/left",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "right",
-                    "id": "4a8db80d-cd84-4e24-985b-8e29d72ecc98",
-                    "path": "<Gamepad>/dpad/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Joystick",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "2D Vector",
                     "id": "1491d941-c2d5-45d6-b63d-ed0807678620",
                     "path": "2DVector",
                     "interactions": "",
@@ -206,7 +151,7 @@
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "KeyboardAlt",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -217,7 +162,7 @@
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "KeyboardAlt",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -228,7 +173,7 @@
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "KeyboardAlt",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -239,7 +184,7 @@
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "KeyboardAlt",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -327,7 +272,7 @@
                     "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "KeyboardAlt",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -338,7 +283,7 @@
                     "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard;KeyboardAlt",
                     "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -360,7 +305,7 @@
                     "path": "<Keyboard>/ctrl",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard;KeyboardAlt",
                     "action": "Sneak",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -382,7 +327,7 @@
                     "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard;KeyboardAlt",
                     "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -405,7 +350,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
-                    "action": "Hide/Cancel",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -416,7 +361,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
-                    "action": "Hide/Cancel",
+                    "action": "Back",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c8239fe2-34fc-4d0b-8a5e-b044904c7fb5",
+                    "path": "<Keyboard>/backspace",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAlt",
+                    "action": "Back",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -426,7 +382,7 @@
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Keyboard",
+                    "groups": "Keyboard;KeyboardAlt",
                     "action": "OpenMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -463,6 +419,17 @@
                     "action": "ListenBug",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6e6f3c38-7511-48b4-90e1-9dc5c601a286",
+                    "path": "<Keyboard>/alt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAlt",
+                    "action": "ListenBug",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
@@ -489,6 +456,11 @@
                     "isOR": false
                 }
             ]
+        },
+        {
+            "name": "KeyboardAlt",
+            "bindingGroup": "KeyboardAlt",
+            "devices": []
         }
     ]
 }

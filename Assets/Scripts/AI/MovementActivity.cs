@@ -110,5 +110,4 @@ public class MovementActivity : AbstractActivity
     {
         return controlledGameObject.transform.position;
     }
-
 }

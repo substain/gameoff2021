@@ -24,16 +24,16 @@ public class PlayerInteraction : MonoBehaviour
     [SerializeField]
     private List<int> obtainedKeyIds = new List<int>();
 
-    private IInteractable currentInteractable;
-
     private LayerMask layerToCheckFor;
+    private PlayerMovement playerMovement;
 
     private List<BugAttachment> attachedBugs = new List<BugAttachment>();
 
     private int listenBugIndex = -1;
 
-    private Dialogue currentDialogue = null;
+    private IInteractable currentInteractable;
 
+    private bool isInBlockingDialogue;
 
     void Awake()
     {
@@ -43,6 +43,7 @@ public class PlayerInteraction : MonoBehaviour
         }
 
         layerToCheckFor = LayerMask.GetMask(INTERACTION_LMASK_NAME);
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     void Start()
@@ -50,18 +51,8 @@ public class PlayerInteraction : MonoBehaviour
         HUDManager.Instance.SetNumberOfBugs(numberOfBugs);
         HUDManager.Instance.SetObtainedKeys(obtainedKeyIds);
         HUDManager.Instance.SetCurrentActiveBugId(listenBugIndex);
+        InputKeyHelper.Instance.SetPlayerInput(GetComponent<PlayerInput>());
         InvokeRepeating("CheckForInteractables", 0.1f, 0.1f);
-    }
-
-    public void StartDialogue(Dialogue dialogue)
-    {
-        if(currentDialogue != null)
-        {
-            Debug.LogWarning("The player already has an active dialogue.");
-            return;
-        }
-
-        currentDialogue = dialogue;
     }
 
     private void CheckForInteractables()
@@ -80,7 +71,8 @@ public class PlayerInteraction : MonoBehaviour
         if(orderedInteractables.Count > 0)
         {
             currentInteractable = orderedInteractables[0];
-            HUDManager.Instance.UpdateActionHintText("Press E to " + currentInteractable.GetInteractionTypeString());
+            string keyname = InputKeyHelper.Instance.GetNameForKey(InputKeyHelper.ControlType.Interact);
+            HUDManager.Instance.UpdateActionHintText("Press "+ keyname + " to " + currentInteractable.GetInteractionTypeString());
         }
         else
         {
@@ -90,6 +82,12 @@ public class PlayerInteraction : MonoBehaviour
                 HUDManager.Instance.UpdateActionHintText("");
             }
         }
+    }
+
+    public void SetBlockingDialogueActive(bool isBlocked)
+    {
+        this.isInBlockingDialogue = isBlocked;
+        playerMovement.SetBlockingDialogueActive(isBlocked);
     }
 
     private List<IInteractable> FindInteractablesInRange()
@@ -123,7 +121,7 @@ public class PlayerInteraction : MonoBehaviour
                 else
                 {
                     //player went out of range of the dialogue -> reset the dialogue
-                    dialogueHolder.CancelDialoge();
+                    dialogueHolder.CancelDialogue();
                 }
             }
         }
@@ -132,11 +130,15 @@ public class PlayerInteraction : MonoBehaviour
 
     private List<IInteractable> SortAndFilterInteractables(List<IInteractable> unorderedInteractables)
     {
+        //TODO: prio bugs, if enemies are not looking in your direction
+        //Then: prio dialogues
+        //Then: bugs, when they are looking in your direction?
+        unorderedInteractables.RemoveAll(ia => IsDialogueHolder(ia) && !((DialogueHolder)ia).HasValidNewDialogue());
+
         //prioritize dialogues
         List<IInteractable> sortedInteractables = unorderedInteractables.OrderByDescending(ia => IsDialogueHolder(ia)).ToList();
 
         //remove dialogues without active dialog option
-        sortedInteractables.RemoveAll(ia => IsDialogueHolder(ia) && !((DialogueHolder)ia).HasValidNewDialogue());
 
         return sortedInteractables;
     }
@@ -217,6 +219,10 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessListenBugInput(InputAction.CallbackContext context)
     {
+        if (isInBlockingDialogue)
+        {
+            return;
+        }
         //Stop previous bug
         if (listenBugIndex > -1)
         {
@@ -243,12 +249,21 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessHideInput(InputAction.CallbackContext context)
     {
+        if (isInBlockingDialogue)
+        {
+            return;
+        }
         if (currentInteractable != null && IsDialogueHolder(currentInteractable))
         {
             DialogueHolder dialogueHolder = (DialogueHolder)currentInteractable;
-            dialogueHolder.CancelDialoge();
+            dialogueHolder.CancelDialogue();
             return;
         }
+    }
+
+    public void SetCurrentInteractable(IInteractable interactable)
+    {
+        currentInteractable = interactable;
     }
 
     public void ProcessMenuButtonInput(InputAction.CallbackContext context)
@@ -259,10 +274,8 @@ public class PlayerInteraction : MonoBehaviour
 
     private static bool IsDialogueHolder(IInteractable interactable)
     {
-        return interactable.GetType() == typeof(DialogueHolder);
+        return (interactable.GetType() == typeof(DialogueHolder) || interactable.GetType().IsSubclassOf(typeof(DialogueHolder)));
     }
-
-
 
 #if UNITY_EDITOR
     private void OnDrawGizmos()
@@ -274,6 +287,5 @@ public class PlayerInteraction : MonoBehaviour
         Gizmos.color = new Color(0, 1, 1, 0.25f);
         Gizmos.DrawSphere(interactionPosition.transform.position, interactionRadius);
     }
-
 #endif
 }
