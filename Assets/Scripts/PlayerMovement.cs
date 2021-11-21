@@ -63,6 +63,7 @@ public class PlayerMovement : MonoBehaviour
     
     private Rigidbody rigidBody;
     private SpriteRenderer spriteRenderer;
+    private Animator animator;
 
     private bool isRunning = false;
     private bool isSneaking = false;
@@ -85,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
         this.spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         this.rigidBody = GetComponent<Rigidbody>();
         this.dashTimer = gameObject.AddComponent<Timer>();
+        this.animator = GetComponentInChildren<Animator>();
     }
 
     void FixedUpdate()
@@ -155,6 +157,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = Util.ToVector3(direction);
         if (isInBlockingDialogue || moveDirection.magnitude < movementInputCutoff)
         {
+            animator.SetBool("isWalking", false);
             currentMovement = Vector3.zero;
             return;
         }
@@ -164,11 +167,13 @@ public class PlayerMovement : MonoBehaviour
             //cant move while dashing
             return;
         }
+        animator.SetBool("isWalking", true);
 
         moveDirection = moveDirection.normalized;
         lastMoveDir = moveDirection;
 
         movementModifier = GetMovementModifier();
+        animator.speed = movementModifier;
 
         float moveSpeed = baseMovementSpeed * movementModifier;
         currentMovement = moveDirection * moveSpeed;
@@ -189,13 +194,15 @@ public class PlayerMovement : MonoBehaviour
         {
             movementModifier = runMovementFactor;
         }
+
         return movementModifier;
     }
 
     private void UpdateSpriteByMoveVector(Vector3 moveVector)
     {
-        //spriteRenderer.flipX = moveVector.x > 0;
-        //if(moveVector.)
+        spriteRenderer.flipX = moveVector.x < 0;
+        animator.SetBool("isBack", moveVector.z > 0);
+
     }
 
     private void ProcessMovement()
@@ -226,18 +233,24 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void ProcessDashInput(InputAction.CallbackContext context)
-    {
+    {            
+
         if (isInBlockingDialogue || isPaused || isDashing || dashTimer.IsRunning())
         {
             return;
         }
-        isDashing = true;
+        isDashing = true; 
         dashTimer.Init(dashDuration, SetDashFinished);
         currentDashStrength = 1; //GetMovementModifier() was making dashes too far
+        animator.speed = 1.0f;
+        animator.SetBool("isWalking", false);
+        animator.SetTrigger("dash");
     }
 
     public void SetDashFinished()
     {
+        animator.SetBool("isWalking", currentMovement.magnitude >= movementInputCutoff);
+
         isDashing = false;
         dashTimer.Init(dashReloadDuration);
         currentDashStrength = 0;
