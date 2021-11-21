@@ -10,6 +10,7 @@ public class WatcherNPC : MonoBehaviour {
 	public float viewRadius = 4f;
 	[Range(0, 360)]
 	public float viewAngle = 45f;
+	public float spottingSpeed = 4;
 
 	public LayerMask obstacleMask;
 
@@ -31,7 +32,7 @@ public class WatcherNPC : MonoBehaviour {
 		//if ( visibleTargets.Count != 0 ) {
 		if ( visibleTargets.Count != 0 ) {
 			//Debug.Log("Count down time " + watchCounter);
-			watchCounter += Time.deltaTime;
+			watchCounter += Time.deltaTime * spottingSpeed * (1 / dstToTarget);
 			spottedIndicator.value = watchCounter;
 
 			//TODO maybe:  calculate spotting speed with dstToTarget and deltaTime
