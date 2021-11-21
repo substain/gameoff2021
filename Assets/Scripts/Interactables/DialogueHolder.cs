@@ -97,6 +97,7 @@ public class DialogueHolder : MonoBehaviour, IInteractable
             return true;
         }
         HUDManager.Instance.ShowDialog(nextLine, interactingPlayer.transform, transform);
+
         return false;
     }
 
@@ -135,6 +136,7 @@ public class DialogueHolder : MonoBehaviour, IInteractable
         }
         return null;
     }
+
 
     protected virtual void CheckAvailableDialogues()
     {
