@@ -89,9 +89,9 @@ public class WatcherNPC : MonoBehaviour {
 				dstToTarget = Vector3.Distance(transform.position, target.position);
 
 				// Check for Objects covering player from view
-				if ( Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) ) {
+				if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) ) {
 					visibleTargets.Add(target);
-					//Debug.Log("See target");
+					Debug.Log("See target");
 				}
 			}
 		}
@@ -109,4 +109,43 @@ public class WatcherNPC : MonoBehaviour {
 			}
 		}
 	}
+
+
+#if UNITY_EDITOR
+
+	[SerializeField]
+	private bool displayWatcherGizmo = true;
+	private void OnDrawGizmos()
+	{
+		if (!displayWatcherGizmo)
+		{
+			return;
+		}
+		Gizmos.color = Color.red;
+
+		foreach (Transform tr in visibleTargets)
+		{
+			Gizmos.DrawSphere(tr.position, 1.0f);
+		}
+		for (int i = 0; i < targetsInViewRadius.Count; i++)
+		{
+			Transform target = targetsInViewRadius[i].transform;
+			Vector3 dirToTarget = (target.position - transform.position).normalized;
+
+			if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
+			{
+				Gizmos.color = Color.blue;
+
+				Gizmos.DrawLine(transform.position, targetsInViewRadius[i].transform.position);
+			}
+			else
+			{
+				Gizmos.color = Color.grey;
+
+				Gizmos.DrawLine(transform.position, targetsInViewRadius[i].transform.position);
+			}
+
+		}
+	}
+#endif
 }
