@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 // author: Witchhat
 
 public class MainMenuFunctions : MonoBehaviour {
-    private const float NAV_THRESHOLD = 0.5f;
+    public const float NAV_THRESHOLD = 0.5f;
 
     [SerializeField] private string gameScene;
     [SerializeField] private string optionsScene;
@@ -79,7 +79,7 @@ public class MainMenuFunctions : MonoBehaviour {
     }
 
     public void ProcessInputs(Util.Dir4 dir) {
-        Debug.Log(dir.ToString());
+        //Debug.Log(dir.ToString());
         bool up = false;
         bool down = false;
         if (dir == Util.Dir4.North) {

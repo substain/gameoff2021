@@ -74,12 +74,11 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isDashing;
     private Timer dashTimer;
-
-    private bool isPaused = false;
-
     private Vector3 lastMoveDir = new Vector3(1, 0, 0);
 
     private bool isInBlockingDialogue = false;
+    private bool isInMenu = false;
+    private bool selectionFinished = true;
 
     void Awake()
     {
@@ -114,11 +113,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    public void SetBlockingDialogueActive(bool isBlocked)
-    {
-        this.isInBlockingDialogue = isBlocked;
-    }
-
     public void ProcessRunInput(InputAction.CallbackContext context)
     {
         if (context.started)
@@ -145,16 +139,46 @@ public class PlayerMovement : MonoBehaviour
 
     public void ProcessMoveInput(InputAction.CallbackContext context)
     {
-        if (isPaused)
+        if (isInMenu)
         {
+            UseMenuInputs(context);
+            animator.SetBool("isWalking", false);
             return;
         }
         ProcessMoveInput(context.ReadValue<Vector2>());
     }
 
+    private void UseMenuInputs(InputAction.CallbackContext context)
+    {
+        Vector2 direction = context.ReadValue<Vector2>();
+        if (direction.magnitude > MainMenuFunctions.NAV_THRESHOLD)
+        {
+            if (selectionFinished)
+            {
+                Util.Dir4 dir = Util.ToDir4(direction);
+                if (dir == Util.Dir4.North)
+                {
+                    HUDManager.Instance.IngameMenuSelectPrevious();
+                }
+
+                if (dir == Util.Dir4.South)
+                {
+                    HUDManager.Instance.IngameMenuSelectNext();
+                }
+                selectionFinished = false;
+            }
+        }
+        else
+        {
+            selectionFinished = true;
+        }
+        return;
+    }
+
     private void ProcessMoveInput(Vector2 direction)
     {
         Vector3 moveDirection = Util.ToVector3(direction);
+
         if (isInBlockingDialogue || moveDirection.magnitude < movementInputCutoff)
         {
             animator.SetBool("isWalking", false);
@@ -202,7 +226,6 @@ public class PlayerMovement : MonoBehaviour
     {
         spriteRenderer.flipX = moveVector.x < 0;
         animator.SetBool("isBack", moveVector.z > 0);
-
     }
 
     private void ProcessMovement()
@@ -213,6 +236,25 @@ public class PlayerMovement : MonoBehaviour
 
         //execute movement
         rigidBody.velocity = currentMovement + velocity;
+    }
+
+    public void ProcessDashInput(InputAction.CallbackContext context)
+    {
+        if (isInMenu)
+        {
+            HUDManager.Instance.IngameMenuUseSelected();
+            return;
+        }
+        if (isInBlockingDialogue || isDashing || dashTimer.IsRunning())
+        {
+            return;
+        }
+        isDashing = true;
+        dashTimer.Init(dashDuration, SetDashFinished);
+        currentDashStrength = 1; //GetMovementModifier() was making dashes too far
+        animator.speed = 1.0f;
+        animator.SetBool("isWalking", false);
+        animator.SetTrigger("dash");
     }
 
     private void ProcessDashMovement()
@@ -232,21 +274,6 @@ public class PlayerMovement : MonoBehaviour
         rigidBody.velocity = dashMovement;
     }
 
-    public void ProcessDashInput(InputAction.CallbackContext context)
-    {            
-
-        if (isInBlockingDialogue || isPaused || isDashing || dashTimer.IsRunning())
-        {
-            return;
-        }
-        isDashing = true; 
-        dashTimer.Init(dashDuration, SetDashFinished);
-        currentDashStrength = 1; //GetMovementModifier() was making dashes too far
-        animator.speed = 1.0f;
-        animator.SetBool("isWalking", false);
-        animator.SetTrigger("dash");
-    }
-
     public void SetDashFinished()
     {
         animator.SetBool("isWalking", currentMovement.magnitude >= movementInputCutoff);
@@ -256,16 +283,15 @@ public class PlayerMovement : MonoBehaviour
         currentDashStrength = 0;
     }
 
-    public void Pause()
+    public void SetMenuActive(bool isInMenu)
     {
-        isPaused = true;
-        dashTimer.SetPaused(true);
+        this.isInMenu = isInMenu;
+        dashTimer.SetPaused(isInMenu);
     }
 
-    public void Unpause()
+    public void SetBlockingDialogueActive(bool isBlocked)
     {
-        isPaused = false;
-        dashTimer.SetPaused(false);
+        this.isInBlockingDialogue = isBlocked;
     }
 }
 

@@ -26,9 +26,9 @@ public class ButtonScript : MonoBehaviour
         anim.Play("Selected");
         //GlobalSound.Play("MenuButtonSelectionChanged.mp3");
 
-        foreach (ButtonScript otherButton in otherButtonsInGroup) {
+        /*foreach (ButtonScript otherButton in otherButtonsInGroup) {
             otherButton.Deselect();
-        }
+        }*/
     }
 
     public void Deselect() {

@@ -91,7 +91,7 @@ public class WatcherNPC : MonoBehaviour {
 				// Check for Objects covering player from view
 				if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) ) {
 					visibleTargets.Add(target);
-					Debug.Log("See target");
+					//Debug.Log("See target");
 				}
 			}
 		}

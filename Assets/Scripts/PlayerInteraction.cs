@@ -34,6 +34,7 @@ public class PlayerInteraction : MonoBehaviour
     private IInteractable currentInteractable;
 
     private bool isInBlockingDialogue;
+    private bool isInMenu;
 
     void Awake()
     {
@@ -53,6 +54,13 @@ public class PlayerInteraction : MonoBehaviour
         HUDManager.Instance.SetCurrentActiveBugId(listenBugIndex);
         InputKeyHelper.Instance.SetPlayerInput(GetComponent<PlayerInput>());
         InvokeRepeating("CheckForInteractables", 0.1f, 0.1f);
+
+        HUDManager.OnCloseIngameMenu += SetMenuClosed;
+    }
+
+    private void Init()
+    {
+        GameManager.Instance.SetPlayer(gameObject);
     }
 
     private void CheckForInteractables()
@@ -82,12 +90,6 @@ public class PlayerInteraction : MonoBehaviour
                 HUDManager.Instance.UpdateActionHintText("");
             }
         }
-    }
-
-    public void SetBlockingDialogueActive(bool isBlocked)
-    {
-        this.isInBlockingDialogue = isBlocked;
-        playerMovement.SetBlockingDialogueActive(isBlocked);
     }
 
     private List<IInteractable> FindInteractablesInRange()
@@ -145,6 +147,12 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessInteractInput(InputAction.CallbackContext context)
     {
+        if (isInMenu)
+        {
+            HUDManager.Instance.IngameMenuUseSelected();
+            return;
+        }
+
         if (!context.performed)
         {
             return;
@@ -219,7 +227,8 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessListenBugInput(InputAction.CallbackContext context)
     {
-        if (isInBlockingDialogue)
+
+        if (isInBlockingDialogue || isInMenu)
         {
             return;
         }
@@ -249,6 +258,10 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessHideInput(InputAction.CallbackContext context)
     {
+        if (isInMenu)
+        {
+            HUDManager.Instance.IngameMenuUseBack();
+        }
         if (isInBlockingDialogue)
         {
             return;
@@ -260,6 +273,17 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
     }
+    public void SetBlockingDialogueActive(bool isBlocked)
+    {
+        this.isInBlockingDialogue = isBlocked;
+        playerMovement.SetBlockingDialogueActive(isBlocked);
+    }
+
+    public void SetMenuActive(bool isInMenu)
+    {
+        this.isInMenu = isInMenu;
+        playerMovement.SetMenuActive(isInMenu);
+    }
 
     public void SetCurrentInteractable(IInteractable interactable)
     {
@@ -268,8 +292,18 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessMenuButtonInput(InputAction.CallbackContext context)
     {
-        ConstraintManager.Instance.SetSatisfied(ConstraintManager.GameConstraint.testConstraint);
-        Debug.Log("testConstraint satisfied");
+        if (isInMenu)
+        {
+            HUDManager.Instance.IngameMenuUseExit();
+            return;
+        }
+        SetMenuActive(true);
+        HUDManager.Instance.ShowIngameMenu(IngameOverlayMenu.IngameMenuType.pause);
+    }
+
+    private void SetMenuClosed()
+    {
+        SetMenuActive(false);
     }
 
     private static bool IsDialogueHolder(IInteractable interactable)

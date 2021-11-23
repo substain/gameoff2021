@@ -62,7 +62,7 @@ public class ConstraintManager : MonoBehaviour
 	public void SetSatisfied(GameConstraint constraint)
 	{
 		satisfiedConstraints.Add(constraint);
-		OnChangeConstraints.Invoke();
+		OnChangeConstraints?.Invoke();
 	}
 
 	public void ApplyChoice(Choice choice)

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static IngameOverlayMenu;
 
 public class HUDManager : MonoBehaviour
 {
@@ -13,6 +14,13 @@ public class HUDManager : MonoBehaviour
     private HUDKeyDisplay hudKeyDisplay;
     private HUDListenBugDisplay hudListenBugDisplay;
     private HUDDialogueDisplay hudDialogueDisplay;
+
+    private List<IngameOverlayMenu> ingameMenus;
+    private IngameOverlayMenu activeMenu = null;
+
+    public delegate void IngameMenuClosed();
+    public static event IngameMenuClosed OnCloseIngameMenu;
+
     void Awake()
     {
         if (Instance != null)
@@ -26,6 +34,13 @@ public class HUDManager : MonoBehaviour
         hudKeyDisplay = GetComponentInChildren<HUDKeyDisplay>();
         hudListenBugDisplay = GetComponentInChildren<HUDListenBugDisplay>();
         hudDialogueDisplay = GetComponentInChildren<HUDDialogueDisplay>();
+
+        ingameMenus = new List<IngameOverlayMenu>(GetComponentsInChildren<IngameOverlayMenu>());
+    }
+
+    void Start()
+    {
+        HideIngameMenu();
     }
 
     public void UpdateActionHintText(string hintText)
@@ -61,5 +76,65 @@ public class HUDManager : MonoBehaviour
     public void CloseDialogue()
     {
         hudDialogueDisplay.CloseDialogue();
+    }
+
+    public void IngameMenuUseExit()
+    {
+        activeMenu.UseBack();
+    }
+    
+    public void IngameMenuUseBack()
+    {
+        activeMenu.UseBack();
+    }
+
+    public void IngameMenuSelectNext()
+    {
+        activeMenu.SelectNextButton();
+    }
+
+    public void IngameMenuSelectPrevious()
+    {
+        activeMenu.SelectPreviousButton();
+    }
+
+    public void IngameMenuUseSelected()
+    {
+        activeMenu.UseSelectedButton();
+    }
+
+    public void ShowIngameMenu(IngameMenuType menuType, IngameMenuType? parentType = null)
+    {
+        foreach(IngameOverlayMenu iom in ingameMenus)
+        {
+            if(iom.GetMenuType() == menuType)
+            {
+                iom.gameObject.SetActive(true);
+                activeMenu = iom;
+                if (parentType.HasValue)
+                {
+                    iom.SetParent(parentType.Value);
+                }
+            }
+            else
+            {
+                iom.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void HideIngameMenu()
+    {
+        activeMenu = null;
+        foreach (IngameOverlayMenu iom in ingameMenus)
+        {
+            iom.gameObject.SetActive(false);
+        }
+        OnCloseIngameMenu?.Invoke();
+    }
+
+    void OnDestroy()
+    {
+        Instance = null;
     }
 }
