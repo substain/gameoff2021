@@ -621,7 +621,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1898
+  m_Name: pb_Mesh-4110
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2445,6 +2445,71 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8212696521260573820, guid: c43bf93e1c2ec8844aa0c1cb8b5d393b, type: 3}
   m_PrefabInstance: {fileID: 1004421797}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &898412487
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1726270311405079859}
+    m_Modifications:
+    - target: {fileID: 1993278409012286368, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: ObjectToHide
+      value: 
+      objectReference: {fileID: 1726270311405079860}
+    - target: {fileID: 1993278409012286369, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_Size.z
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993278409012286371, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_Name
+      value: HideRoofZone
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993278409012286374, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993278409012286374, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993278409012286374, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993278409012286374, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993278409012286374, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993278409012286374, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993278409012286374, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993278409012286374, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993278409012286374, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993278409012286374, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1993278409012286374, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d4c6598df3c66064ca8953c4d2d65e29, type: 3}
 --- !u!4 &916744520 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8212696521260573820, guid: c43bf93e1c2ec8844aa0c1cb8b5d393b, type: 3}
@@ -7306,6 +7371,11 @@ PrefabInstance:
 --- !u!4 &1726270311405079859 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3779532810219228754, guid: 325f9f789760eb24bb8c874f7f99c033, type: 3}
+  m_PrefabInstance: {fileID: 1726270311405079858}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1726270311405079860 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3821293982938761968, guid: 325f9f789760eb24bb8c874f7f99c033, type: 3}
   m_PrefabInstance: {fileID: 1726270311405079858}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2698093536986030312
