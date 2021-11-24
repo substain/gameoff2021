@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
 		CoverBlown, WentSwimming, TooMuchCheese
 	}
 
+	private bool gameOver = false;
+
 	public static GameManager Instance = null;
 
 	[SerializeField]
@@ -46,6 +48,11 @@ public class GameManager : MonoBehaviour
 
 	public void SetGameOver(GameOverReason gameOverReason)
 	{
+		if (gameOver)
+		{
+			return;
+		}
+		gameOver = true;
 		player.SetMenuActive(true);
 		HUDManager.Instance.ShowIngameMenu(IngameOverlayMenu.IngameMenuType.gameover, GameOverReasonToString(gameOverReason));
 	}

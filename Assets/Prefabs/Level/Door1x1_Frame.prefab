@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    rid: 2996503924722630869
+    rid: 2996503999658590997
   m_Size: {x: 1, y: 3, z: 1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 1
@@ -278,7 +278,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2996503924722630869
+    - rid: 2996503999658590997
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
 --- !u!23 &38648671617134028
 MeshRenderer:
@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    rid: 2996503924722630895
+    rid: 2996503999658591027
   m_Size: {x: 1, y: 3, z: 1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 1
@@ -625,7 +625,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2996503924722630895
+    - rid: 2996503999658591027
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
 --- !u!33 &7555607272187216060
 MeshFilter:

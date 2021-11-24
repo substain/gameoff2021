@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public abstract class AbstractActivity : MonoBehaviour
 {
@@ -63,4 +64,14 @@ public abstract class AbstractActivity : MonoBehaviour
     }
 
     public abstract void SetPaused(bool isPaused);
+
+    /// <summary>
+    /// make sure the pos to walk to is on the navmesh
+    /// </summary>
+    public static Vector3 GetClosestPositionFor(Vector3 targetPos)
+    {
+        NavMeshHit closestNavMeshPosition;
+        NavMesh.SamplePosition(targetPos, out closestNavMeshPosition, 2.0f, NavMesh.AllAreas);
+        return closestNavMeshPosition.position;
+    }
 }

@@ -19,19 +19,30 @@ public class ActivityManager : MonoBehaviour
 
     private int currentActivityIndex = -1;
 
+    private PursuePlayerActivity pursuePlayerActivity;
+    private bool pursuingPlayer = false;
+
     void Awake()
     {
         AbstractActivity[] activities = GetComponents<AbstractActivity>();
 
-        if (activities.Length == 0)
+        //search for pursue player activities
+
+        pursuePlayerActivity = (PursuePlayerActivity) activities.FirstOrDefault(activity => activity.GetType() == typeof(PursuePlayerActivity));
+        pursuePlayerActivity.Init(controlledObject);
+
+        orderedActivities = activities.OrderBy(activity => activity.GetOrder())
+                                        .Where(activity => activity.GetType() != typeof(PursuePlayerActivity))
+                                        .ToList();
+
+        orderedActivities.ForEach(x => x.Init(controlledObject));
+
+        if (orderedActivities.Count == 0)
         {
             Debug.LogWarning("no activities to do");
             return;
         }
 
-        orderedActivities = activities.OrderBy(activity => activity.GetOrder()).ToList();
-
-        orderedActivities.ForEach(x => x.Init(controlledObject));
         currentActivityIndex = initialActivityIndex;
     }
 
@@ -43,6 +54,11 @@ public class ActivityManager : MonoBehaviour
 
     private void CheckActivityStatus()
     {
+        if (pursuingPlayer && pursuePlayerActivity.IsFinished())
+        {
+            StopFollowingPlayer();
+            return;
+        }
         if (orderedActivities[currentActivityIndex].IsFinished())
         {
             UpdateActiveActivity();
@@ -68,6 +84,40 @@ public class ActivityManager : MonoBehaviour
         {
             currentActivityIndex = (currentActivityIndex + 1) % orderedActivities.Count;
         }
+    }
+
+    public void UpdatePlayerPosition(Transform targetTransform)
+    {
+        if (!pursuePlayerActivity)
+        {
+            return;
+        }
+        pursuePlayerActivity.SetTargetPosition(targetTransform.position);
+    }
+
+    public void StartPursuePlayer(Transform targetTransform)
+    {
+        if(!pursuingPlayer)
+        {
+            pursuingPlayer = true;
+            pursuePlayerActivity.SetPlayer(targetTransform);
+            pursuePlayerActivity.StartActivity();
+        }
+    }
+
+    public void StopFollowingPlayer()
+    {
+        Debug.Log("stop following player");
+        pursuingPlayer = false;
+
+        /*        if (orderedActivities[currentActivityIndex].GetType() == typeof(IdleActivity))
+                {
+                    UpdateActiveActivity();
+                }*/
+        //      else
+        //    {
+        orderedActivities[currentActivityIndex].StartActivity();
+      //  }
     }
 
     private void SetPaused(bool isPaused)

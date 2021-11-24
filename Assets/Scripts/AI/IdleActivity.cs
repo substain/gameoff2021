@@ -7,6 +7,7 @@ public class IdleActivity : AbstractActivity
 
     private Timer timer;
 
+    private float currentTime;
     void Awake()
     {
         timer = GetComponent<Timer>();
@@ -28,6 +29,6 @@ public class IdleActivity : AbstractActivity
 
     public override void SetPaused(bool isPaused)
     {
-        timer.SetPaused();
+        timer.SetPaused(isPaused);
     }
 }

@@ -141,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isInMenu)
         {
+            currentMovement = Vector3.zero;
             UseMenuInputs(context);
             animator.SetBool("isWalking", false);
             return;

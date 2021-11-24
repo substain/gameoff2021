@@ -24,6 +24,12 @@ public class WatcherNPC : MonoBehaviour {
 	[HideInInspector]
 	public List<Transform> visibleTargets = new List<Transform>();
 
+	private ActivityManager activityManager;
+
+	void Start()
+	{
+		activityManager = GetComponentInChildren<ActivityManager>();
+	}
 	void FixedUpdate() {
 		//Debug.Log("fixedUpdate watcherNPC");
 		FindVisibleTargets();
@@ -48,8 +54,11 @@ public class WatcherNPC : MonoBehaviour {
 		alertIcon.transform.rotation = Quaternion.identity;
 	}
 
-	private void spottedPlayer() {
-		Debug.Log("Player spotted");
+	private void spottedPlayer()
+	{
+		GetComponentInChildren<ActivityManager>().StartPursuePlayer(visibleTargets[0]);
+
+		//Debug.Log("Player spotted");
 		spottedIndicator.gameObject.SetActive(false);
 		alertIcon.SetActive(true);
 		playerSpotted = true;
@@ -103,6 +112,8 @@ public class WatcherNPC : MonoBehaviour {
 			spottedIndicator.gameObject.SetActive(false);
 			alertIcon.SetActive(false);
 		} else { // player is in FoV
+			activityManager.UpdatePlayerPosition(visibleTargets[0]);
+
 			if (!playerSpotted) {
 				spottedIndicator.gameObject.SetActive(true);
 				alertIcon.SetActive(false);
