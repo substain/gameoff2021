@@ -6,24 +6,35 @@ public class ButtonScript : MonoBehaviour
 {
     public bool selected;
     [SerializeField] ButtonScript[] otherButtonsInGroup;
-    [SerializeField] Animator anim;
-    [SerializeField] bool isStartButton = false;
+    [SerializeField] Animator anim = null;
+    [SerializeField] protected bool isStartButton = false;
 
-    void Start() {
+    protected virtual void Start() {
+
         if (anim == null) {
             GetComponent<Animator>();
         }
+        InitSelection();
+    }
 
-        if (isStartButton) {
+    public virtual void InitSelection()
+    {
+        if (isStartButton)
+        {
             Select();
-        } else {
+        }
+        else
+        {
             Deselect();
         }
     }
 
-    public void Select() {
+    public virtual void Select() {
         selected = true;
-        anim.Play("Selected");
+        if (anim != null)
+        {
+            anim.Play("Selected");
+        }
         //GlobalSound.Play("MenuButtonSelectionChanged.mp3");
 
         /*foreach (ButtonScript otherButton in otherButtonsInGroup) {
@@ -31,13 +42,19 @@ public class ButtonScript : MonoBehaviour
         }*/
     }
 
-    public void Deselect() {
+    public virtual void Deselect() {
         selected = false;
-        anim.Play("Deselected");
+        if (anim != null)
+        {
+            anim.Play("Deselected");
+        }
     }
 
     public void Activate() {
-        anim.Play("Activated");
+        if (anim != null)
+        {
+            anim.Play("Activated");
+        }
         //GlobalSound.Play("MenuButtonActivated.mp3");
     }
 }

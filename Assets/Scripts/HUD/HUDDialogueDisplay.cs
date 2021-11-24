@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -85,7 +86,7 @@ public class HUDDialogueDisplay : MonoBehaviour
         return allSubjectPictures[(int)person];
     }
 
-    private Color GetPersonColor(Person person)
+    public static Color GetPersonColor(Person person)
     {
         switch(person){
             case Person.Sting:
@@ -102,7 +103,6 @@ public class HUDDialogueDisplay : MonoBehaviour
                 {
                     return new Color(0.81f, 0.81f, 0.81f);
                 }
-
         }
     }
 }

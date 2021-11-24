@@ -20,6 +20,11 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
     private int selectedButtonIndex = 0;
     private List<IngameButton> childrenButtons;
 
+    [SerializeField]
+    private Text titleText;
+
+    private CanvasGroup canvasGroup;
+
     void Awake()
     {
         //order children buttons by y value
@@ -29,12 +34,31 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
         for(int i = 0; i < childrenButtons.Count; i++)
         {
             childrenButtons[i].SetIndex(i);
+            childrenButtons[i].GetComponent<Button>().interactable = false;
         }
 
         //no buttons
         if (childrenButtons.Count <= 0)
         {
             gameObject.SetActive(false);
+        }
+
+        canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.alpha = 0;
+    }
+
+    public void SetEnabled(bool isEnabled)
+    {
+        childrenButtons.ForEach(button => button.GetComponent<Button>().interactable = isEnabled);
+        canvasGroup.alpha = isEnabled ? 1 : 0;
+    }
+
+    private void SetChildrenActive(bool childrenActive)
+    {
+        foreach (Transform child in transform)
+        {
+            Debug.Log("child:" + child.name);
+            child.gameObject.SetActive(childrenActive);
         }
     }
 
@@ -53,15 +77,6 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
     public void UseBack()
     {
         UseNavigationTarget(MenuNavigationTarget.Back);
-    }
-
-    public void UseExit()
-    {
-        if (parent == IngameMenuType.pause)
-        {
-            UseNavigationTarget(MenuNavigationTarget.HideMenu);
-        }
-        UseBack();
     }
 
     public void SelectNextButton()
@@ -94,6 +109,11 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
         return menuType;
     }
 
+    public void SetTitle(string title)
+    {
+        this.titleText.text = title;
+    }
+
     public void SetParent(IngameMenuType parent)
     {
         this.parent = parent;
@@ -110,7 +130,7 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
                 }
             case MenuNavigationTarget.Options:
                 {
-                    HUDManager.Instance.ShowIngameMenu(IngameMenuType.options, menuType);
+                    HUDManager.Instance.ShowIngameMenu(IngameMenuType.options, null, menuType);
                     return;
                 }
             case MenuNavigationTarget.MainMenu:
@@ -147,7 +167,7 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
                 }
             case MenuNavigationTarget.HideMenu:
                 {
-                    HUDManager.Instance.HideIngameMenu();
+                    GameManager.Instance.HideIngameMenu();
                     return;
                 }
         }

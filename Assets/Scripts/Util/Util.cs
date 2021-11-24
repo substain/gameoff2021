@@ -35,11 +35,11 @@ public static class Util
         }
     }
 
-    public static AudioClip GetRandomFromList(List<AudioClip> list)
+    public static T ChooseRandomFromList<T>(List<T> list)
     {
-        if (list.Count == 0)
+        if (list == null || list.Count == 0)
         {
-            Debug.LogError("given list was too small");
+            Debug.LogError("Could not get random value from this list:" + list.ToString());
         }
         return list[UnityEngine.Random.Range(0, list.Count)];
     }
@@ -47,7 +47,7 @@ public static class Util
     public static void PlayRandomFromList(List<AudioClip> list, AudioSource source, bool isLooping)
     {
         source.loop = isLooping;
-        source.clip = GetRandomFromList(list);
+        source.clip = ChooseRandomFromList(list);
         source.Play();
     }
 
@@ -69,5 +69,10 @@ public static class Util
             input[i] = input[randomIndex];
             input[randomIndex] = temp;
         }
+    }
+
+    public static Vector3 CombineVectorsXZandY(Vector3 xzValueVec, Vector3 yValueVec)
+    {
+        return new Vector3(xzValueVec.x, yValueVec.y, xzValueVec.z);
     }
 }

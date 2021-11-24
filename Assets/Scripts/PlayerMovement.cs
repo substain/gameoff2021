@@ -235,11 +235,15 @@ public class PlayerMovement : MonoBehaviour
         velocity = Vector3.ClampMagnitude(velocity, maxVelocity * movementModifier);
 
         //execute movement
-        rigidBody.velocity = currentMovement + velocity;
+        rigidBody.velocity = Util.CombineVectorsXZandY(currentMovement + velocity, rigidBody.velocity);
     }
 
     public void ProcessDashInput(InputAction.CallbackContext context)
     {
+        if (!context.performed)
+        {
+            return;
+        }
         if (isInMenu)
         {
             HUDManager.Instance.IngameMenuUseSelected();

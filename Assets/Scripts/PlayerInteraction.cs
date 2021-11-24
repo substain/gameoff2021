@@ -34,7 +34,7 @@ public class PlayerInteraction : MonoBehaviour
     private IInteractable currentInteractable;
 
     private bool isInBlockingDialogue;
-    private bool isInMenu;
+    private bool isInMenu = false;
 
     void Awake()
     {
@@ -54,13 +54,7 @@ public class PlayerInteraction : MonoBehaviour
         HUDManager.Instance.SetCurrentActiveBugId(listenBugIndex);
         InputKeyHelper.Instance.SetPlayerInput(GetComponent<PlayerInput>());
         InvokeRepeating("CheckForInteractables", 0.1f, 0.1f);
-
-        HUDManager.OnCloseIngameMenu += SetMenuClosed;
-    }
-
-    private void Init()
-    {
-        GameManager.Instance.SetPlayer(gameObject);
+        GameManager.Instance.SetPlayer(this);
     }
 
     private void CheckForInteractables()
@@ -147,14 +141,13 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessInteractInput(InputAction.CallbackContext context)
     {
+        if (!context.performed)
+        {
+            return;
+        }
         if (isInMenu)
         {
             HUDManager.Instance.IngameMenuUseSelected();
-            return;
-        }
-
-        if (!context.performed)
-        {
             return;
         }
         if (currentInteractable == null)
@@ -258,6 +251,10 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessHideInput(InputAction.CallbackContext context)
     {
+        if (!context.performed)
+        {
+            return;
+        }
         if (isInMenu)
         {
             HUDManager.Instance.IngameMenuUseBack();
@@ -292,18 +289,16 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessMenuButtonInput(InputAction.CallbackContext context)
     {
-        if (isInMenu)
+        if (!context.performed)
         {
-            HUDManager.Instance.IngameMenuUseExit();
             return;
         }
-        SetMenuActive(true);
-        HUDManager.Instance.ShowIngameMenu(IngameOverlayMenu.IngameMenuType.pause);
-    }
-
-    private void SetMenuClosed()
-    {
-        SetMenuActive(false);
+        if (isInMenu)
+        {
+            HUDManager.Instance.IngameMenuUseBack();
+            return;
+        }
+        GameManager.Instance.StartPauseMenu();
     }
 
     private static bool IsDialogueHolder(IInteractable interactable)

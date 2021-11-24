@@ -18,9 +18,6 @@ public class HUDManager : MonoBehaviour
     private List<IngameOverlayMenu> ingameMenus;
     private IngameOverlayMenu activeMenu = null;
 
-    public delegate void IngameMenuClosed();
-    public static event IngameMenuClosed OnCloseIngameMenu;
-
     void Awake()
     {
         if (Instance != null)
@@ -78,39 +75,54 @@ public class HUDManager : MonoBehaviour
         hudDialogueDisplay.CloseDialogue();
     }
 
-    public void IngameMenuUseExit()
-    {
-        activeMenu.UseBack();
-    }
-    
     public void IngameMenuUseBack()
     {
+        if(activeMenu == null)
+        {
+            return;
+        }
         activeMenu.UseBack();
     }
 
     public void IngameMenuSelectNext()
     {
+        if (activeMenu == null)
+        {
+            return;
+        }
         activeMenu.SelectNextButton();
     }
 
     public void IngameMenuSelectPrevious()
     {
+        if (activeMenu == null)
+        {
+            return;
+        }
         activeMenu.SelectPreviousButton();
     }
 
     public void IngameMenuUseSelected()
     {
+        if (activeMenu == null)
+        {
+            return;
+        }
         activeMenu.UseSelectedButton();
     }
 
-    public void ShowIngameMenu(IngameMenuType menuType, IngameMenuType? parentType = null)
+    public void ShowIngameMenu(IngameMenuType menuType, string title = null, IngameMenuType? parentType = null)
     {
         foreach(IngameOverlayMenu iom in ingameMenus)
         {
             if(iom.GetMenuType() == menuType)
             {
-                iom.gameObject.SetActive(true);
+                iom.SetEnabled(true);
                 activeMenu = iom;
+                if(title != null)
+                {
+                    iom.SetTitle(title);
+                }
                 if (parentType.HasValue)
                 {
                     iom.SetParent(parentType.Value);
@@ -118,7 +130,7 @@ public class HUDManager : MonoBehaviour
             }
             else
             {
-                iom.gameObject.SetActive(false);
+                iom.SetEnabled(false);
             }
         }
     }
@@ -128,9 +140,8 @@ public class HUDManager : MonoBehaviour
         activeMenu = null;
         foreach (IngameOverlayMenu iom in ingameMenus)
         {
-            iom.gameObject.SetActive(false);
+            iom.SetEnabled(false);
         }
-        OnCloseIngameMenu?.Invoke();
     }
 
     void OnDestroy()
