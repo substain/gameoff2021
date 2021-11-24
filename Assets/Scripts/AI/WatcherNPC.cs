@@ -29,6 +29,10 @@ public class WatcherNPC : MonoBehaviour {
 	void Start()
 	{
 		activityManager = GetComponentInChildren<ActivityManager>();
+
+		GameObject canvas = gameObject.transform.Find("Canvas").gameObject;
+		GameObject slider = canvas.transform.Find("Slider").gameObject;
+		slider.GetComponent<Slider>().maxValue = watchDelay;
 	}
 	void FixedUpdate() {
 		//Debug.Log("fixedUpdate watcherNPC");
