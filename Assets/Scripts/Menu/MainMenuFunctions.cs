@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 // author: Witchhat
 
@@ -101,7 +102,7 @@ public class MainMenuFunctions : MonoBehaviour {
 
     private void select() {
         //Debug.Log("select func");
-        ButtonGroup[currentButton].Activate();
+        ButtonGroup[currentButton].GetComponent<Button>().onClick.Invoke();
     }
 
     private void goUp() {
