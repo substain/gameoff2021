@@ -291,7 +291,7 @@ public class PlayerMovement : MonoBehaviour
     public void SetMenuActive(bool isInMenu)
     {
         this.isInMenu = isInMenu;
-        dashTimer.SetPaused(isInMenu);
+        //dashTimer.SetPaused(isInMenu);
     }
 
     public void SetBlockingDialogueActive(bool isBlocked)

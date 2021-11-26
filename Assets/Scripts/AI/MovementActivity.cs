@@ -22,7 +22,7 @@ public class MovementActivity : AbstractActivity
     [SerializeField]
     private bool closeDoorAfterEnter = false;
 
-    private NavMeshAgent navMeshAgent;
+    private NPCMovement npcMovement;
 
     private Vector3 closestPosition;
 
@@ -31,8 +31,7 @@ public class MovementActivity : AbstractActivity
     void Start()
     {
         timer = GetComponent<Timer>();
-        navMeshAgent = controlledGameObject.GetComponent<NavMeshAgent>();
-        SetClosestPosition();
+        npcMovement = controlledGameObject.GetComponent<NPCMovement>();
         InvokeRepeating("CheckForDoors", 1, 0.1f);
     }
 
@@ -69,41 +68,25 @@ public class MovementActivity : AbstractActivity
         }
     }
 
-    /// <summary>
-    /// make sure the pos to walk to is on the navmesh
-    /// </summary>
-    private void SetClosestPosition()
-    {
-        NavMeshHit closestNavMeshPosition;
-        NavMesh.SamplePosition(targetPosition.position, out closestNavMeshPosition, 2.0f, NavMesh.AllAreas);
-        closestPosition = closestNavMeshPosition.position;
-    }
-
     protected override void DoStartActivity()
     {
-        navMeshAgent.isStopped = false;
-        navMeshAgent.SetDestination(closestPosition);
-        navMeshAgent.speed = moveSpeed;
+        npcMovement.SetMoveTarget(targetPosition.position);
+        npcMovement.StartMovement(moveSpeed);
     }
+
     protected override void DoStopActivity()
     {
-        navMeshAgent.isStopped = true;
+        npcMovement.StopMovement();
     }
 
     public override bool IsFinished()
     {
-        return TargetIsReached();
-    }
-
-    private bool TargetIsReached()
-    {
-        return Vector3.Distance(GetPos(), closestPosition) <= TARGET_REACHED_RANGE;
+        return npcMovement.IsWithinDistance(closestPosition, TARGET_REACHED_RANGE);
     }
 
     public override void SetPaused(bool isPaused)
     {
-        this.navMeshAgent.speed = isPaused ? 0 : moveSpeed;
-        //navMeshAgent.isStopped = false;
+        npcMovement.SetPaused(isPaused);
     }
 
     private Vector3 GetPos()

@@ -25,11 +25,15 @@ public class WatcherNPC : MonoBehaviour {
 	public List<Transform> visibleTargets = new List<Transform>();
 
 	private ActivityManager activityManager;
+	private Vector3 lookDirection = Vector3.zero;
+
+	void Awake()
+	{
+		activityManager = GetComponentInChildren<ActivityManager>();
+	}
 
 	void Start()
 	{
-		activityManager = GetComponentInChildren<ActivityManager>();
-
 		GameObject canvas = gameObject.transform.Find("Canvas").gameObject;
 		GameObject slider = canvas.transform.Find("Slider").gameObject;
 		slider.GetComponent<Slider>().maxValue = watchDelay;
@@ -52,6 +56,11 @@ public class WatcherNPC : MonoBehaviour {
             }
         }
     }
+
+	public void SetLookDirection(Vector3 lookDirection)
+	{
+		this.lookDirection = lookDirection;
+	}
 
 	private void AdjustRotation() {
 		spottedIndicator.transform.rotation = Quaternion.identity;
@@ -98,7 +107,7 @@ public class WatcherNPC : MonoBehaviour {
 			Vector3 dirToTarget = (target.position - transform.position).normalized;
 
 			//Compare angles
-			if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2) {
+			if (Vector3.Angle(lookDirection, dirToTarget) < viewAngle / 2) {
 				dstToTarget = Vector3.Distance(transform.position, target.position);
 
 				// Check for Objects covering player from view

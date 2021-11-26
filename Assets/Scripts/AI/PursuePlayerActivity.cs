@@ -15,7 +15,7 @@ public class PursuePlayerActivity : AbstractActivity
     [SerializeField]
     private float playerPosUpdateRate = 0.75f;
 
-    private NavMeshAgent navMeshAgent;
+    private NPCMovement npcMovement;
 
     private Vector3? updatedPos = null;
     private Vector3 nextPosition;
@@ -30,20 +30,19 @@ public class PursuePlayerActivity : AbstractActivity
         this.baseAlert = 1; //not needed
 
         timer = GetComponent<Timer>();
-        navMeshAgent = controlledGameObject.GetComponent<NavMeshAgent>();
+        npcMovement = controlledGameObject.GetComponent<NPCMovement>();
     }
 
     protected override void DoStartActivity()
     {
-        navMeshAgent.isStopped = false; 
         UpdateDestinationFromTargetPosition();
-        navMeshAgent.speed = moveSpeed;
+        npcMovement.StartMovement(moveSpeed);
         lostPlayer = false;
     }
 
     protected override void DoStopActivity()
     {
-        navMeshAgent.isStopped = true;
+        npcMovement.StopMovement();
     }
 
     public void SetPlayer(Transform player)
@@ -64,7 +63,7 @@ public class PursuePlayerActivity : AbstractActivity
             timer.Stop();
             return;
         }
-        navMeshAgent.SetDestination(GetClosestPositionFor(updatedPos.Value));
+        npcMovement.SetMoveTarget(updatedPos.Value);
         updatedPos = null;
         timer.Init(playerPosUpdateRate, UpdateDestinationFromTargetPosition);
     }
@@ -81,35 +80,30 @@ public class PursuePlayerActivity : AbstractActivity
         {
             if (updatedPos.HasValue)
             {
-                navMeshAgent.SetDestination(GetClosestPositionFor(updatedPos.Value));
+                npcMovement.SetMoveTarget(updatedPos.Value);
             }
         }
 
         /*if (lostPlayer)
         {
-
+            //Wait and look around for a short while?
         }*/
         
         return lostPlayer;
     }
 
-    private Vector3 GetPos()
-    {
-        return controlledGameObject.transform.position;
-    }
-
     private bool TargetIsReached()
     {
-        return Vector3.Distance(GetPos(), nextPosition) <= TARGET_REACHED_RANGE;
+        return npcMovement.IsWithinDistance(nextPosition, TARGET_REACHED_RANGE);
     }
 
     private bool PlayerIsReached()
     {
-        return Vector3.Distance(GetPos(), playerTransform.position) <= playerReachedRange;
+        return npcMovement.IsWithinDistance(playerTransform.position, playerReachedRange);
     }
 
     public override void SetPaused(bool isPaused)
     {
-        this.navMeshAgent.speed = isPaused ? 0 : moveSpeed;
+        npcMovement.SetPaused(true);
     }
 }

@@ -101,6 +101,7 @@ public class ActivityManager : MonoBehaviour
         {
             pursuingPlayer = true;
             pursuePlayerActivity.SetPlayer(targetTransform);
+            pursuePlayerActivity.SetTargetPosition(targetTransform.position);
             pursuePlayerActivity.StartActivity();
         }
     }

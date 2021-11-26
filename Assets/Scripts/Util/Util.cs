@@ -17,7 +17,7 @@ public static class Util
         return new Vector3(xzVector.x, y, xzVector.y);
     }
 
-    public static Vector2 ToVector2(Vector3 vector)
+    public static Vector2 ToVector2XZ(Vector3 vector)
     {
         return new Vector2(vector.x, vector.z);
     }
