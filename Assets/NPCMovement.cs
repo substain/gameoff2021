@@ -20,12 +20,11 @@ public class NPCMovement : MonoBehaviour
         animator = GetComponentInChildren<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         watcherNpc = GetComponent<WatcherNPC>();
-        SetLookDirection(lookDirection);
     }
 
     void Start()
     {
-
+        SetLookDirection(lookDirection);
     }
 
     void FixedUpdate()
@@ -35,13 +34,15 @@ public class NPCMovement : MonoBehaviour
 
     public void StartMovement(float? speed = null)
     {
+        animator.SetBool("isWalking", true);
+
         navMeshAgent.isStopped = false;
         if (speed.HasValue)
         {
             currentSpeed = speed.Value;
             navMeshAgent.speed = currentSpeed;
         }
-        animator.SetBool("isWalking", true);
+        //animator.SetBool("isWalking", true);
     }
 
     public void SetMoveTarget(Vector3 target)
@@ -85,7 +86,7 @@ public class NPCMovement : MonoBehaviour
         Vector2 velo2D = Util.ToVector2XZ(navMeshAgent.velocity);
         animator.speed = velo2D.magnitude / navMeshAgent.speed;
 
-        if (velo2D.magnitude > 0.25f)
+        if (velo2D.magnitude > 0.1f)
         {
             SetLookDirection(Util.ToVector3(velo2D));
         }
