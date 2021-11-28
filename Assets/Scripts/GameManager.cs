@@ -20,7 +20,9 @@ public class GameManager : MonoBehaviour
 	[SerializeField]
 	private GameScene thisScene;
 
-	private PlayerInteraction player; 
+	private PlayerInteraction player;
+
+	private bool hideMenuOnStart = true;
 
 	void Awake()
 	{
@@ -29,6 +31,18 @@ public class GameManager : MonoBehaviour
 			Debug.LogWarning("There is more than one GameManager in this scene.");
 		}
 		Instance = this;
+	}
+
+	void Start()
+	{
+		if (hideMenuOnStart)
+		{
+			HideIngameMenu();
+		}
+	}
+	public void DontHideMenuOnStart()
+	{
+		hideMenuOnStart = false;
 	}
 
 	public void ReloadCurrentScene()
@@ -64,9 +78,17 @@ public class GameManager : MonoBehaviour
 		HUDManager.Instance.ShowIngameMenu(IngameOverlayMenu.IngameMenuType.pause, GetRandomPauseMenuTitle());
 	}
 
+	public void StartOptionsMenu()
+	{
+		player?.SetMenuActive(true);
+		SetPaused(true);
+		HUDManager.Instance.ShowIngameMenu(IngameOverlayMenu.IngameMenuType.options, "Options");
+	}
+	
+
 	public void HideIngameMenu()
 	{
-		player.SetMenuActive(false);
+		player?.SetMenuActive(false);
 		SetPaused(false);
 		HUDManager.Instance.HideIngameMenu();
 	}

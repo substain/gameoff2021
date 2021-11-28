@@ -11,11 +11,15 @@ public class DialogueHolder : MonoBehaviour, IInteractable
         testDialogue1, testDialogue2, testMonologue,    //only testDialogues.txt
         testBlocking, testChoice,                       //only testDialogues.txt
         anyoneSpeechless, anyoneBusy,                   //everywhere
-        introMonologue, introTutorial                   //only tutorialDialogues.txt
+        introMonologue, introTutorial,                  //only tutorialDialogues.txt
+        useTutorialMono, dashTutorialMono,              //only tutorialDialogues.txt
     }
 
     [SerializeField]
     private string subjectName = "";
+
+    [SerializeField]
+    private string interactionString = "talk";
 
     [SerializeField]
     private List<DialogueKey> dialogueKeys;
@@ -27,6 +31,7 @@ public class DialogueHolder : MonoBehaviour, IInteractable
     protected List<Dialogue> availableRepeatables = new List<Dialogue>();
 
     protected Dialogue currentDialogue = null;
+
 
     void Start()
     {
@@ -175,6 +180,6 @@ public class DialogueHolder : MonoBehaviour, IInteractable
 
     public virtual string GetInteractionTypeString()
     {
-        return "talk";
+        return interactionString;
     }
 }

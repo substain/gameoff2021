@@ -1,4 +1,4 @@
 ﻿public enum GameScene
 {
-    mainMenu, tutorial, chapterOne, chapterTwo, chapterThree
+    mainMenu, tutorial, chapterOne, chapterTwo, chapterThree, options
 }

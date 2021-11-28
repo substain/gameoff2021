@@ -86,6 +86,7 @@ public class PlayerMovement : MonoBehaviour
         this.rigidBody = GetComponent<Rigidbody>();
         this.dashTimer = gameObject.AddComponent<Timer>();
         this.animator = GetComponentInChildren<Animator>();
+
     }
 
     void FixedUpdate()
@@ -291,12 +292,14 @@ public class PlayerMovement : MonoBehaviour
     public void SetMenuActive(bool isInMenu)
     {
         this.isInMenu = isInMenu;
+        currentMovement = Vector3.zero;
         //dashTimer.SetPaused(isInMenu);
     }
 
     public void SetBlockingDialogueActive(bool isBlocked)
     {
         this.isInBlockingDialogue = isBlocked;
+        currentMovement = Vector3.zero;
     }
 }
 

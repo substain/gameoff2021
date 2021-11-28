@@ -10,7 +10,7 @@ public class ConstraintManager : MonoBehaviour
 { 
 	public enum GameConstraint
 	{
-		testConstraint, ch1Finished, ch2Finished
+		testConstraint, ch1Finished, ch2Finished, startUseTutorial, startDashTutorial
 	}
 
 	public enum ChoiceType
@@ -31,7 +31,7 @@ public class ConstraintManager : MonoBehaviour
 		}
 	}
 
-	private List<GameConstraint> satisfiedConstraints = new List<GameConstraint>();
+	private HashSet<GameConstraint> satisfiedConstraints = new HashSet<GameConstraint>();
 
 	public static ConstraintManager Instance = null;
 
@@ -59,8 +59,29 @@ public class ConstraintManager : MonoBehaviour
 		return true;
 	}
 
+	public bool AnyConstraintsSatisfied(List<GameConstraint> constraints)
+	{
+		foreach (GameConstraint gc in constraints)
+		{
+			if (satisfiedConstraints.Contains(gc))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public bool IsSatisfied(GameConstraint constraint)
+	{
+		return satisfiedConstraints.Contains(constraint);
+	}
+
 	public void SetSatisfied(GameConstraint constraint)
 	{
+		if (satisfiedConstraints.Contains(constraint))
+		{
+			return;
+		}
 		satisfiedConstraints.Add(constraint);
 		OnChangeConstraints?.Invoke();
 	}

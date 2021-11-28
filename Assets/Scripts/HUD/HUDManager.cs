@@ -17,7 +17,6 @@ public class HUDManager : MonoBehaviour
 
     private List<IngameOverlayMenu> ingameMenus;
     private IngameOverlayMenu activeMenu = null;
-
     void Awake()
     {
         if (Instance != null)
@@ -35,10 +34,6 @@ public class HUDManager : MonoBehaviour
         ingameMenus = new List<IngameOverlayMenu>(GetComponentsInChildren<IngameOverlayMenu>());
     }
 
-    void Start()
-    {
-        HideIngameMenu();
-    }
 
     public void UpdateActionHintText(string hintText)
     {
