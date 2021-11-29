@@ -62,6 +62,12 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     float dashReloadDuration = 0.8f;
 
+    [SerializeField]
+    private List<AudioClip> footstepClips;
+
+    [SerializeField]
+    private List<AudioClip> dashClips;
+
     private Vector3 velocity = Vector3.zero;
     private Vector3 currentMovement = Vector3.zero;
     
@@ -78,6 +84,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isDashing;
     private Timer dashTimer;
+    private Timer footstepTimer;
     private Timer hideSliderTimer;
     private Vector3 lastMoveDir = new Vector3(1, 0, 0);
     private CanvasGroup dashSliderGroup;
@@ -86,16 +93,21 @@ public class PlayerMovement : MonoBehaviour
     private bool isInBlockingDialogue = false;
     private bool isInMenu = false;
     private bool selectionFinished = true;
+    private bool playFootsteps = false;
+
+    private AudioSource playerSource;
 
     void Awake()
     {
         this.spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         this.rigidBody = GetComponent<Rigidbody>();
         this.dashTimer = gameObject.AddComponent<Timer>();
+        this.footstepTimer = gameObject.AddComponent<Timer>();
         this.hideSliderTimer = gameObject.AddComponent<Timer>();
         this.animator = GetComponentInChildren<Animator>();
         this.dashSlider = GetComponentInChildren<Slider>();
         this.dashSliderGroup = GetComponentInChildren<CanvasGroup>();
+        playerSource = GetComponent<AudioSource>();
     }
 
     void Start()
@@ -160,6 +172,7 @@ public class PlayerMovement : MonoBehaviour
             currentMovement = Vector3.zero;
             UseMenuInputs(context);
             animator.SetBool("isWalking", false);
+            playFootsteps = false;
             return;
         }
         ProcessMoveInput(context.ReadValue<Vector2>());
@@ -199,6 +212,7 @@ public class PlayerMovement : MonoBehaviour
         if (isInBlockingDialogue || moveDirection.magnitude < movementInputCutoff)
         {
             animator.SetBool("isWalking", false);
+            playFootsteps = false;
             currentMovement = Vector3.zero;
             return;
         }
@@ -209,6 +223,7 @@ public class PlayerMovement : MonoBehaviour
             return;
         }
         animator.SetBool("isWalking", true);
+        StartPlayingFootsteps();
 
         moveDirection = moveDirection.normalized;
         lastMoveDir = moveDirection;
@@ -253,6 +268,7 @@ public class PlayerMovement : MonoBehaviour
 
         //execute movement
         rigidBody.velocity = Util.Vector3MinY(0.15f, Util.CombineVectorsXZandY(currentMovement + velocity, rigidBody.velocity));
+
     }
 
     public void ProcessDashInput(InputAction.CallbackContext context)
@@ -274,8 +290,18 @@ public class PlayerMovement : MonoBehaviour
         dashTimer.Init(dashDuration, SetDashFinished);
         currentDashStrength = 1; //GetMovementModifier() was making dashes too far
         animator.speed = 1.0f;
-        animator.SetBool("isWalking", false);
+        animator.SetBool("isWalking", false); 
+        playFootsteps = false;
         animator.SetTrigger("dash");
+
+        if (dashClips.Count > 0)
+        {
+            playerSource.PlayOneShot(Util.ChooseRandomFromList(dashClips));
+        }
+        else
+        {
+            playerSource.Stop();
+        }
     }
 
     private void ProcessDashMovement()
@@ -297,7 +323,13 @@ public class PlayerMovement : MonoBehaviour
 
     public void SetDashFinished()
     {
-        animator.SetBool("isWalking", currentMovement.magnitude >= movementInputCutoff);
+        bool isWalking = currentMovement.magnitude >= movementInputCutoff;
+        animator.SetBool("isWalking", isWalking);
+
+        if (isWalking)
+        {
+            StartPlayingFootsteps();
+        }
 
         isDashing = false;
         hideSliderTimer.Stop();
@@ -342,5 +374,25 @@ public class PlayerMovement : MonoBehaviour
         dashSliderGroup.alpha = 0;
     }
 
+    private void StartPlayingFootsteps()
+    {
+        playFootsteps = true;
+        PlayFootstepsRepeated();
+    }
+
+    private void PlayFootstepsRepeated()
+    {
+        if (!playFootsteps)
+        {
+            return;
+        }
+        playerSource.PlayOneShot(Util.ChooseRandomFromList(footstepClips));
+        float delay = 0.2f;
+        if (isSneaking)
+        {
+            delay = 0.4f;
+        }
+        footstepTimer.Init(delay, PlayFootstepsRepeated);
+    }
 }
 
