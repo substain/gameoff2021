@@ -22,12 +22,15 @@ public class ActivityManager : MonoBehaviour
     private PursuePlayerActivity pursuePlayerActivity;
     private bool pursuingPlayer = false;
 
+    [SerializeField]
+    private BugAttachment bugAttachment;
+
     void Awake()
     {
-        AbstractActivity[] activities = GetComponents<AbstractActivity>();
+        AbstractActivity[] activities = GetComponents<AbstractActivity>(); 
+        currentActivityIndex = initialActivityIndex;
 
         //search for pursue player activities
-
         pursuePlayerActivity = (PursuePlayerActivity) activities.FirstOrDefault(activity => activity.GetType() == typeof(PursuePlayerActivity));
         pursuePlayerActivity.Init(controlledObject);
 
@@ -43,13 +46,13 @@ public class ActivityManager : MonoBehaviour
             return;
         }
 
-        currentActivityIndex = initialActivityIndex;
     }
 
     void Start()
     {
         InvokeRepeating("CheckActivityStatus", 0.11f, 0.11f);
         orderedActivities[currentActivityIndex].StartActivity();
+        bugAttachment.SetCurrentActivity(orderedActivities[currentActivityIndex]);
     }
 
     private void CheckActivityStatus()
@@ -70,6 +73,7 @@ public class ActivityManager : MonoBehaviour
         orderedActivities[currentActivityIndex].StopActivity();
         UpdateToNextActivityIndex();
         orderedActivities[currentActivityIndex].StartActivity();
+        bugAttachment.SetCurrentActivity(orderedActivities[currentActivityIndex]);
     }
 
     private void UpdateToNextActivityIndex()
@@ -103,6 +107,7 @@ public class ActivityManager : MonoBehaviour
             pursuePlayerActivity.SetPlayer(targetTransform);
             pursuePlayerActivity.SetTargetPosition(targetTransform.position);
             pursuePlayerActivity.StartActivity();
+            bugAttachment.SetCurrentActivity(pursuePlayerActivity);
         }
     }
 
@@ -118,7 +123,8 @@ public class ActivityManager : MonoBehaviour
         //      else
         //    {
         orderedActivities[currentActivityIndex].StartActivity();
-      //  }
+        bugAttachment.SetCurrentActivity(orderedActivities[currentActivityIndex]);
+        //  }
     }
 
     private void SetPaused(bool isPaused)

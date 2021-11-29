@@ -8,16 +8,15 @@ public class BugAttachment : MonoBehaviour, IInteractable
     private AudioSource audioSource;
 
     [SerializeField]
-    private List<AudioClip> activitySoundClips;
-
-    [SerializeField]
     private GameObject debugBug;
 
     private bool bugIsAttached = false;
 
     private Timer activityTimer;
 
-    private int activityIndex = 0;
+    private AbstractActivity currentActivity;
+
+    private AudioSource targetAudioSource = null;
 
     void Start()
     {
@@ -30,15 +29,13 @@ public class BugAttachment : MonoBehaviour, IInteractable
         debugBug.SetActive(bugIsAttached);
     }
 
-    public void StartActivity(int activityIndex, float activityDuration)
+    public void SetCurrentActivity(AbstractActivity activity)
     {
-        this.activityIndex = activityIndex;
-        activityTimer.Init(activityDuration);
-    }
-
-    public AudioClip GetCurrentAudioClip()
-    {
-        return activitySoundClips[activityIndex];
+        currentActivity = activity;
+        if (targetAudioSource != null)
+        {
+            //StartPlayingSoundAt(targetAudioSource, activity.GetAudioClip(), 0f, activity.IsContinuous());
+        }
     }
 
     public float GetCurrentAudioClipPos()
@@ -91,8 +88,10 @@ public class BugAttachment : MonoBehaviour, IInteractable
         }
     }
 
-    public void StartListening()
+    public void StartListening(AudioSource source)
     {
+        this.audioSource = source;
+        currentActivity.GetAudioClip();
         this.audioSource.spatialBlend = 0.2f;
     }
 
@@ -100,4 +99,13 @@ public class BugAttachment : MonoBehaviour, IInteractable
     {
         this.audioSource.spatialBlend = 1;
     }
+
+    public void StartPlayingSoundAt(AudioSource source, AudioClip clip, float clipTimePosition, bool looping)
+    {
+        source.clip = clip;
+        source.loop = looping;
+        source.time = clipTimePosition;
+        source.Play();
+    }
+
 }

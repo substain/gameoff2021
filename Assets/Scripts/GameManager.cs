@@ -24,6 +24,11 @@ public class GameManager : MonoBehaviour
 
 	private bool hideMenuOnStart = true;
 
+	private AudioSource musicAudioSource;
+
+	[SerializeField]
+	private AudioClip backGroundClip;
+
 	void Awake()
 	{
 		if (Instance != null)
@@ -37,8 +42,20 @@ public class GameManager : MonoBehaviour
 	{
 		if (hideMenuOnStart)
 		{
-			HideIngameMenu();
+			HideIngameMenu(playSound: false);
 		}
+		AudioSource[] audioSources = GetComponents<AudioSource>();
+		if (audioSources.Length < 2)
+		{
+			Debug.LogWarning("Warning: less than 2 audio sources were found.");
+		}
+		musicAudioSource = audioSources[0];
+		HUDManager.Instance.SetMenuAudioSource(audioSources[1]);
+		/*
+		musicAudioSource.loop = true;
+		musicAudioSource.clip = backGroundClip;
+		musicAudioSource.Play();
+		*/
 	}
 	public void DontHideMenuOnStart()
 	{
@@ -86,11 +103,11 @@ public class GameManager : MonoBehaviour
 	}
 	
 
-	public void HideIngameMenu()
+	public void HideIngameMenu(bool playSound = true)
 	{
 		player?.SetMenuActive(false);
 		SetPaused(false);
-		HUDManager.Instance.HideIngameMenu();
+		HUDManager.Instance.HideIngameMenu(playSound);
 	}
 
 	public void SetPaused(bool isPaused)

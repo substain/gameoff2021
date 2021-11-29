@@ -9,7 +9,7 @@ using UnityEngine;
 /// </summary>
 public class MonologueHolder : DialogueHolder
 {
-    private const int SECONDS_TO_WAIT = 1;
+    private const int SECONDS_TO_WAIT = 0;
 
     private bool isUsableMonologue = false;
 

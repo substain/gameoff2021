@@ -13,6 +13,7 @@ public class DialogueHolder : MonoBehaviour, IInteractable
         anyoneSpeechless, anyoneBusy,                   //everywhere
         introMonologue, introTutorial,                  //only tutorialDialogues.txt
         useTutorialMono, dashTutorialMono,              //only tutorialDialogues.txt
+        avoidTutorialMono, bugTutorialMono, listenTutorialMono              //only tutorialDialogues.txt
     }
 
     [SerializeField]
@@ -181,5 +182,10 @@ public class DialogueHolder : MonoBehaviour, IInteractable
     public virtual string GetInteractionTypeString()
     {
         return interactionString;
+    }
+
+    void OnDestroy()
+    {
+        ConstraintManager.OnChangeConstraints -= CheckAvailableDialogues;
     }
 }

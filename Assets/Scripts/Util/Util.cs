@@ -75,4 +75,9 @@ public static class Util
     {
         return new Vector3(xzValueVec.x, yValueVec.y, xzValueVec.z);
     }
+
+    public static Vector3 Vector3MinY(float yCompare, Vector3 targetVector)
+    {
+        return new Vector3(targetVector.x, Mathf.Min(yCompare, targetVector.y), targetVector.z);
+    }
 }

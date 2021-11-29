@@ -25,10 +25,22 @@ public abstract class AbstractActivity : MonoBehaviour
     protected GameObject controlledGameObject;
 
     private AudioSource audioSource;
+
+    protected BugAttachment bugAttachment;
     public void Init(GameObject controlledObject)
     {
         controlledGameObject = controlledObject;
         audioSource = controlledGameObject.GetComponent<AudioSource>();
+    }
+
+    public AudioClip GetAudioClip()
+    {
+        return audioClip;
+    }
+
+    public void SetBugAttachment(BugAttachment bugAttachment)
+    {
+        this.bugAttachment = bugAttachment;
     }
 
     public void StartActivity()

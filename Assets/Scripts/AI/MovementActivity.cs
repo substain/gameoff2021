@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class MovementActivity : AbstractActivity
 {
-    private const float TARGET_REACHED_RANGE = 1.0f; 
+    private const float TARGET_REACHED_RANGE = 0.5f; 
     private const float DOOR_REACHED_RANGE = 2.0f;
 
     private const float KEEP_DOOR_OPEN_TIME = 0.3f;

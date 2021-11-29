@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -26,6 +28,12 @@ public class MainMenuFunctions : MonoBehaviour {
     [SerializeField] ButtonScript[] ButtonGroup;
     private int currentButton;
 
+    [SerializeField]
+    AudioClip selectClip;
+
+    [SerializeField]
+    AudioClip useSelectedClip;
+
     public void QuitGame() {
         Application.Quit();
     }
@@ -44,6 +52,10 @@ public class MainMenuFunctions : MonoBehaviour {
         }
         currentButton = ButtonGroup.Length - 1;
         ButtonGroup[currentButton].Select();
+        Array.ForEach(ButtonGroup, button => {
+            button.SetAudioSource(GetComponent<AudioSource>());
+            button.SetAudioClips(selectClip, useSelectedClip);
+            });
     }
 
     public void ProvideDirectionalInput(InputAction.CallbackContext context)

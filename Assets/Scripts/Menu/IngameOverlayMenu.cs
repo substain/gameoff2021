@@ -25,6 +25,9 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
 
     private CanvasGroup canvasGroup;
 
+    private AudioSource menuSfxAudioSource;
+    private AudioClip backMenuClip;
+
     void Awake()
     {
         //order children buttons by y value
@@ -119,6 +122,16 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
         this.parent = parent;
     }
 
+    public void SetMenuAudio(AudioSource audioSource, AudioClip selectClip, AudioClip useSelectedClip, AudioClip backMenuClip)
+    {
+        this.menuSfxAudioSource = audioSource;
+        this.backMenuClip = backMenuClip;
+        childrenButtons.ForEach(button => {
+            button.SetAudioSource(audioSource);
+            button.SetAudioClips(selectClip, useSelectedClip);
+        });
+    }
+
     private void UseNavigationTarget(MenuNavigationTarget navTarget)
     {
         switch (navTarget)
@@ -147,6 +160,7 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
                 {
                     if(parent != null)
                     {
+                        menuSfxAudioSource.PlayOneShot(backMenuClip);
                         HUDManager.Instance.ShowIngameMenu(parent.Value);
                         return;
                     }
@@ -173,4 +187,5 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
         }
         Debug.LogWarning("could not determine a navigation function for " + navTarget.ToString() + " on a " + menuType.ToString() + " menu.");
     }
+
 }

@@ -3,9 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    private const float DASH_SLIDER_FADOUT_TIME = 0.35f;
+
     [Tooltip("How fast the player is by walking normally")]
     [SerializeField]
     private float baseMovementSpeed = 4f;
@@ -74,7 +78,10 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isDashing;
     private Timer dashTimer;
+    private Timer hideSliderTimer;
     private Vector3 lastMoveDir = new Vector3(1, 0, 0);
+    private CanvasGroup dashSliderGroup;
+    private Slider dashSlider;
 
     private bool isInBlockingDialogue = false;
     private bool isInMenu = false;
@@ -85,13 +92,21 @@ public class PlayerMovement : MonoBehaviour
         this.spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         this.rigidBody = GetComponent<Rigidbody>();
         this.dashTimer = gameObject.AddComponent<Timer>();
+        this.hideSliderTimer = gameObject.AddComponent<Timer>();
         this.animator = GetComponentInChildren<Animator>();
+        this.dashSlider = GetComponentInChildren<Slider>();
+        this.dashSliderGroup = GetComponentInChildren<CanvasGroup>();
+    }
 
+    void Start()
+    {
+        HideDashSlider();
     }
 
     void FixedUpdate()
     {
         ApplyVelocity();
+        UpdateDashSlider();
 
         if (isDashing)
         {
@@ -237,7 +252,7 @@ public class PlayerMovement : MonoBehaviour
         velocity = Vector3.ClampMagnitude(velocity, maxVelocity * movementModifier);
 
         //execute movement
-        rigidBody.velocity = Util.CombineVectorsXZandY(currentMovement + velocity, rigidBody.velocity);
+        rigidBody.velocity = Util.Vector3MinY(0.15f, Util.CombineVectorsXZandY(currentMovement + velocity, rigidBody.velocity));
     }
 
     public void ProcessDashInput(InputAction.CallbackContext context)
@@ -285,7 +300,8 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("isWalking", currentMovement.magnitude >= movementInputCutoff);
 
         isDashing = false;
-        dashTimer.Init(dashReloadDuration);
+        hideSliderTimer.Stop();
+        dashTimer.Init(dashReloadDuration, HideDashSliderSlow);
         currentDashStrength = 0;
     }
 
@@ -293,7 +309,6 @@ public class PlayerMovement : MonoBehaviour
     {
         this.isInMenu = isInMenu;
         currentMovement = Vector3.zero;
-        //dashTimer.SetPaused(isInMenu);
     }
 
     public void SetBlockingDialogueActive(bool isBlocked)
@@ -301,5 +316,31 @@ public class PlayerMovement : MonoBehaviour
         this.isInBlockingDialogue = isBlocked;
         currentMovement = Vector3.zero;
     }
+
+    private void UpdateDashSlider()
+    {
+        if (!isDashing && dashTimer.IsRunning())
+        {
+            dashSlider.value = dashTimer.GetRelativeProgress();
+            dashSliderGroup.alpha = dashTimer.GetRelativeProgress();
+        }
+
+        if (hideSliderTimer.IsRunning())
+        {
+            dashSliderGroup.alpha = 1-hideSliderTimer.GetRelativeProgress();
+        }
+    }
+
+    private void HideDashSliderSlow()
+    {
+        hideSliderTimer.Init(DASH_SLIDER_FADOUT_TIME, HideDashSlider);
+    }
+
+    private void HideDashSlider()
+    {
+        dashSlider.value = 0;
+        dashSliderGroup.alpha = 0;
+    }
+
 }
 

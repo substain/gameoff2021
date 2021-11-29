@@ -220,7 +220,6 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessListenBugInput(InputAction.CallbackContext context)
     {
-
         if (isInBlockingDialogue || isInMenu)
         {
             return;
@@ -244,7 +243,7 @@ public class PlayerInteraction : MonoBehaviour
         //start current bug
         if(listenBugIndex > -1)
         {
-            attachedBugs[listenBugIndex].StartListening();
+            //attachedBugs[listenBugIndex].StartListening();
         }
         HUDManager.Instance.SetCurrentActiveBugId(listenBugIndex);
     }

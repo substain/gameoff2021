@@ -10,7 +10,9 @@ public class ConstraintManager : MonoBehaviour
 { 
 	public enum GameConstraint
 	{
-		testConstraint, ch1Finished, ch2Finished, startUseTutorial, startDashTutorial
+		testConstraint, ch1Finished, ch2Finished, 
+		startUseTutorial, startDashTutorial, startAvoidTutorial, 
+		startBugTutorial, startListenTutorial
 	}
 
 	public enum ChoiceType

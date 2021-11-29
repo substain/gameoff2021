@@ -4,10 +4,18 @@ using UnityEngine;
 
 public class ButtonScript : MonoBehaviour
 {
+    public enum MenuSound
+    {
+        select, useSelected
+    }
+
     public bool selected;
     [SerializeField] ButtonScript[] otherButtonsInGroup;
     [SerializeField] Animator anim = null;
     [SerializeField] protected bool isStartButton = false;
+    private AudioSource audioSource;
+    private AudioClip selectAudioClip;
+    private AudioClip useSelectedAudioClip;
 
     protected virtual void Start() {
 
@@ -21,7 +29,7 @@ public class ButtonScript : MonoBehaviour
     {
         if (isStartButton)
         {
-            Select();
+            Select(playSound: false);
         }
         else
         {
@@ -29,11 +37,16 @@ public class ButtonScript : MonoBehaviour
         }
     }
 
-    public virtual void Select() {
+    public virtual void Select(bool playSound = true) {
         selected = true;
         if (anim != null)
         {
             anim.Play("Selected");
+        }
+
+        if (playSound)
+        {
+            audioSource?.PlayOneShot(selectAudioClip);
         }
         //GlobalSound.Play("MenuButtonSelectionChanged.mp3");
 
@@ -55,6 +68,19 @@ public class ButtonScript : MonoBehaviour
         {
             anim.Play("Activated");
         }
+        audioSource?.PlayOneShot(useSelectedAudioClip);
+
         //GlobalSound.Play("MenuButtonActivated.mp3");
+    }
+
+    public void SetAudioSource(AudioSource audioSource)
+    {
+        this.audioSource = audioSource;
+    }
+
+    public void SetAudioClips(AudioClip selectClip, AudioClip useSelectedClip)
+    {
+        this.selectAudioClip = selectClip;
+        this.useSelectedAudioClip = useSelectedClip;
     }
 }

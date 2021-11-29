@@ -17,6 +17,24 @@ public class HUDManager : MonoBehaviour
 
     private List<IngameOverlayMenu> ingameMenus;
     private IngameOverlayMenu activeMenu = null;
+
+    private AudioSource audioSource;
+
+    [SerializeField]
+    private AudioClip openMenuClip;
+
+    [SerializeField]
+    private AudioClip closeMenuClip;
+
+    [SerializeField]
+    private AudioClip selectMenuClip;
+
+    [SerializeField]
+    private AudioClip useSelectedMenuClip;
+
+    [SerializeField]
+    private AudioClip backMenuClip;
+
     void Awake()
     {
         if (Instance != null)
@@ -112,6 +130,11 @@ public class HUDManager : MonoBehaviour
         {
             if(iom.GetMenuType() == menuType)
             {
+                if(openMenuClip != null)
+                {
+                    audioSource.PlayOneShot(openMenuClip);
+                }
+
                 iom.SetEnabled(true);
                 activeMenu = iom;
                 if(title != null)
@@ -130,13 +153,20 @@ public class HUDManager : MonoBehaviour
         }
     }
 
-    public void HideIngameMenu()
+    public void HideIngameMenu(bool playSound = true)
     {
         activeMenu = null;
-        foreach (IngameOverlayMenu iom in ingameMenus)
+        if (playSound)
         {
-            iom.SetEnabled(false);
+            audioSource?.PlayOneShot(closeMenuClip);
         }
+        ingameMenus.ForEach(iom => iom.SetEnabled(false));
+    }
+
+    public void SetMenuAudioSource(AudioSource audioSource)
+    {
+        this.audioSource = audioSource;
+        ingameMenus.ForEach(iom => iom.SetMenuAudio(audioSource, selectMenuClip, useSelectedMenuClip, backMenuClip));
     }
 
     void OnDestroy()

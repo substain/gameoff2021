@@ -189,7 +189,7 @@ Animator:
   m_GameObject: {fileID: 1153385347}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3ef399b54321605449c1c177518e0314, type: 2}
+  m_Controller: {fileID: 9100000, guid: d6ff1eb0bfaa3ff408a42fa89fb135a0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -334,7 +334,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35b478f2625ed8f4ba68e1e8b99fbb6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  activitySoundClips: []
   debugBug: {fileID: 8196781644536266431}
 --- !u!114 &1758105493995981394
 MonoBehaviour:
@@ -349,6 +348,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   subjectName: Npc
+  interactionString: talk
   dialogueKeys: 0000000001000000
 --- !u!1 &2948747038909544267
 GameObject:
@@ -928,7 +928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eafa02389cd6e734abb438a67137c77c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookDirection: {x: 0, y: 0, z: -1}
+  lookDirection: {x: -1, y: 0, z: 0}
 --- !u!1 &4687886978027953553
 GameObject:
   m_ObjectHideFlags: 0
@@ -1056,6 +1056,8 @@ GameObject:
   - component: {fileID: 3575738107469679887}
   - component: {fileID: 870786513258800841}
   - component: {fileID: 1792200066}
+  - component: {fileID: 982068115}
+  - component: {fileID: 982068116}
   m_Layer: 0
   m_Name: ActivityManager
   m_TagString: Untagged
@@ -1103,8 +1105,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlledObject: {fileID: 4183720738613080792}
-  useRandomOrder: 0
+  useRandomOrder: 1
   initialActivityIndex: 0
+  bugAttachment: {fileID: 2910381797590504270}
 --- !u!114 &3575738107469679887
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1117,11 +1120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5785953d85ceb43a3f9654e5009bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  order: 3
+  order: 0
   baseAlert: 0.5
   audioClip: {fileID: 0}
   audioClipLoopable: 0
-  idleTime: 10
+  idleTime: 4
 --- !u!114 &870786513258800841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1134,11 +1137,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5785953d85ceb43a3f9654e5009bd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  order: 1
+  order: 2
   baseAlert: 0.5
   audioClip: {fileID: 8300000, guid: 06924a0df3667804d92929db42033a0c, type: 3}
   audioClipLoopable: 0
-  idleTime: 4
+  idleTime: 3
 --- !u!114 &1792200066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1151,13 +1154,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d029ce2c61a21e14d9082b31d4c4cf1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  order: 0
-  baseAlert: 0.5
+  order: -1
+  baseAlert: -1
   audioClip: {fileID: 0}
   audioClipLoopable: 0
   playerReachedRange: 2
-  moveSpeed: 7
+  moveSpeed: 6
   playerPosUpdateRate: 0.25
+--- !u!114 &982068115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8149315412953787710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b8389e902dfccb4c96a9ca84223e808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  order: 3
+  baseAlert: 0.5
+  audioClip: {fileID: 0}
+  audioClipLoopable: 0
+  targetPosition: {fileID: 0}
+  moveSpeed: 2
+  doorsToPass: []
+  closeDoorAfterEnter: 0
+--- !u!114 &982068116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8149315412953787710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b8389e902dfccb4c96a9ca84223e808, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  order: 1
+  baseAlert: 0.5
+  audioClip: {fileID: 0}
+  audioClipLoopable: 0
+  targetPosition: {fileID: 0}
+  moveSpeed: 2
+  doorsToPass: []
+  closeDoorAfterEnter: 0
 --- !u!1 &8196781644536266431
 GameObject:
   m_ObjectHideFlags: 0

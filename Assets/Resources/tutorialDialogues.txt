@@ -13,18 +13,33 @@ C.R. Piller: and will provide me with everything I need.
 //Sting: I can use %back% for canceling dialogues. 
 
 # useTutorialMono
-//! 
 ? startUseTutorial
-C.R. Piller: I can use %interact% to interact with people or objects.
+C.R. Piller: I should get going. Scarlet waits for me.
+C.R. Piller: I can use %interact% to interact with people or objects. Or this door.
 
 # dashTutorialMono
-//! 
+! 
 ? startDashTutorial
-C.R. Piller: I can use %dash% to dash.
+C.R. Piller: Maybe I can dash over this gap...
+C.R. Piller: I can use %dash% to dash. 
 
+# avoidTutorialMono
+!
+? startAvoidTutorial
+C.R. Piller: I've done it! Now I have to get on this ship.
+C.R. Piller: First, I should get past this guard.
+C.R. Piller: Maybe it helps if I sneak by using %sneak%.
+Dev Note: This should be more of a challenge, lol.
 
+# bugTutorialMono
+!
+? startBugTutorial
+Dev Note: This is where the tutorial for bugging starts.
+Dev Note: This is not finished yet.
 
-
+# listenTutorialMono
+? startListenTutorial
+Dev Note: Here is a placeholder for the tutorial for listening to people.
 
 //any npc can have the following ones as backup
 # anyoneBusy

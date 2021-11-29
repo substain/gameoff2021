@@ -55,10 +55,11 @@ public class IngameButton: ButtonScript
 
     }
 
-    public override void Select()
+    public override void Select(bool playSound = true)
     {
         SetSelected(true);
-        base.Select();
+
+        base.Select(playSound);
     }
 
     public override void Deselect()
