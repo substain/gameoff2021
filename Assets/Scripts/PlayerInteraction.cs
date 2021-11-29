@@ -22,7 +22,7 @@ public class PlayerInteraction : MonoBehaviour
     private bool displayInteractionSphereGizmo = true;
 
     [SerializeField]
-    private List<int> obtainedKeyIds = new List<int>();
+    private HashSet<int> obtainedKeyIds = new HashSet<int>();
 
     private LayerMask layerToCheckFor;
     private PlayerMovement playerMovement;
@@ -55,6 +55,16 @@ public class PlayerInteraction : MonoBehaviour
         InputKeyHelper.Instance.SetPlayerInput(GetComponent<PlayerInput>());
         InvokeRepeating("CheckForInteractables", 0.1f, 0.1f);
         GameManager.Instance.SetPlayer(this);
+        ConstraintManager.OnChangeConstraints += UpdateAvailableKeys;
+    }
+
+    private void UpdateAvailableKeys()
+    {
+        HashSet<int> availableKeys = ConstraintManager.Instance.GetKeyConstraints()
+            .Select(gc => Convert.ToInt32(gc.ToString().Replace(ConstraintManager.KEY_PREFIX, ""))).ToHashSet();
+
+        obtainedKeyIds.UnionWith(availableKeys);
+        HUDManager.Instance.SetObtainedKeys(obtainedKeyIds);
     }
 
     private void CheckForInteractables()

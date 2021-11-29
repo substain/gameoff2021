@@ -68,7 +68,7 @@ public class HUDManager : MonoBehaviour
         hudBugDisplay.SetNumberOfBugs(numBugs);
     }
 
-    public void SetObtainedKeys(List<int> obtainedKeyIds)
+    public void SetObtainedKeys(HashSet<int> obtainedKeyIds)
     {
         hudKeyDisplay.SetObtainedKeys(obtainedKeyIds);
     }

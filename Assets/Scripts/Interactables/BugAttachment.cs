@@ -12,7 +12,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
     private bool bugIsAttached = false;
 
-    private Timer activityTimer;
+    private Timer listenTimer;
 
     private AbstractActivity currentActivity;
 
@@ -25,7 +25,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
     void Awake()
     {
-        activityTimer = gameObject.AddComponent<Timer>();
+        listenTimer = gameObject.AddComponent<Timer>();
         debugBug.SetActive(bugIsAttached);
     }
 
@@ -40,7 +40,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
     public float GetCurrentAudioClipPos()
     {
-        return activityTimer.GetTimePassed();
+        return listenTimer.GetTimePassed();
     }
 
     public bool HasBugAttached()

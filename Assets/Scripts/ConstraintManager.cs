@@ -7,12 +7,14 @@ using UnityEngine;
 using static DialogueHolder;
 
 public class ConstraintManager : MonoBehaviour
-{ 
+{
+	public const string KEY_PREFIX = "gotKey";
 	public enum GameConstraint
 	{
 		testConstraint, ch1Finished, ch2Finished, 
 		startUseTutorial, startDashTutorial, startAvoidTutorial, 
-		startBugTutorial, startListenTutorial
+		startBugTutorial, startListenTutorial,
+		gotKey1, gotKey2, gotKey3, gotKey4, gotKey5, gotKey6, gotKey7, gotKey8
 	}
 
 	public enum ChoiceType
@@ -91,6 +93,11 @@ public class ConstraintManager : MonoBehaviour
 	public void ApplyChoice(Choice choice)
 	{
 		Debug.Log("Used choice '" + choice.choiceText + "' (" + choice.choiceType.ToString() + "). Choices are not fully implemented yet.");
+	}
+
+	public List<GameConstraint> GetKeyConstraints()
+	{
+		return satisfiedConstraints.Where(sc => sc.ToString().StartsWith("gotKey")).ToList();		
 	}
 
 	void OnDestroy()
