@@ -15,11 +15,17 @@ public class IdleActivity : AbstractActivity
 
     protected override void DoStartActivity()
     {
+        Debug.Log("starting movement activity");
         timer.Init(idleTime);
     }
     protected override void DoStopActivity()
     {
         timer.Finish();
+    }
+
+    public override bool IsContinuous()
+    {
+        return false;
     }
 
     public override bool IsFinished()

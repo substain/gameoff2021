@@ -106,4 +106,9 @@ public class PursuePlayerActivity : AbstractActivity
     {
         npcMovement.SetPaused(true);
     }
+
+    public override bool IsContinuous()
+    {
+        return true;
+    }
 }

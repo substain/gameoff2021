@@ -43,7 +43,7 @@ public class Door : MonoBehaviour, IInteractable
     {
         if (isClosed && IsKeyProtected() && !interactingPlayer.HasKeyWithId(neededKeyId))
         {
-            HUDManager.Instance.DisplayMessage("You need the " + HUDKeyDisplay.KeyIdToName(neededKeyId) + " to open this door.");
+            HUDManager.Instance.DisplayMessage("You don't have the key to open this door.");
             Util.PlayRandomFromList(doorTryLockedClips, source, false);
             //door is closed and needs a key, which the player doesnt have -> don't open the door
             return;

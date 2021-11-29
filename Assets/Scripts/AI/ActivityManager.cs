@@ -28,7 +28,6 @@ public class ActivityManager : MonoBehaviour
     void Awake()
     {
         AbstractActivity[] activities = GetComponents<AbstractActivity>(); 
-        currentActivityIndex = initialActivityIndex;
 
         //search for pursue player activities
         pursuePlayerActivity = (PursuePlayerActivity) activities.FirstOrDefault(activity => activity.GetType() == typeof(PursuePlayerActivity));
@@ -39,6 +38,7 @@ public class ActivityManager : MonoBehaviour
                                         .ToList();
 
         orderedActivities.ForEach(x => x.Init(controlledObject));
+        currentActivityIndex = Mathf.Min(initialActivityIndex, orderedActivities.Count-1);
 
         if (orderedActivities.Count == 0)
         {
@@ -51,6 +51,10 @@ public class ActivityManager : MonoBehaviour
     void Start()
     {
         InvokeRepeating("CheckActivityStatus", 0.11f, 0.11f);
+        if(orderedActivities.Count == 0 || currentActivityIndex < 0)
+        {
+            return;
+        }
         orderedActivities[currentActivityIndex].StartActivity();
         bugAttachment.SetCurrentActivity(orderedActivities[currentActivityIndex]);
     }
@@ -60,6 +64,10 @@ public class ActivityManager : MonoBehaviour
         if (pursuingPlayer && pursuePlayerActivity.IsFinished())
         {
             StopFollowingPlayer();
+            return;
+        }
+        if (orderedActivities.Count == 0 || currentActivityIndex < 0)
+        {
             return;
         }
         if (orderedActivities[currentActivityIndex].IsFinished())
@@ -78,10 +86,14 @@ public class ActivityManager : MonoBehaviour
 
     private void UpdateToNextActivityIndex()
     {
+        Debug.Log("updating to next activity...");
         if (useRandomOrder)
         {
             List<int> possibleIndices = Enumerable.Range(0, orderedActivities.Count).ToList();
-            possibleIndices.RemoveAt(currentActivityIndex);
+            if(possibleIndices.Count > 1)
+            {
+                possibleIndices.RemoveAt(currentActivityIndex);
+            }
             currentActivityIndex = possibleIndices[Random.Range(0, possibleIndices.Count)];
         }
         else
@@ -122,6 +134,10 @@ public class ActivityManager : MonoBehaviour
                 }*/
         //      else
         //    {
+        if (orderedActivities.Count == 0 || currentActivityIndex < 0)
+        {
+            return;
+        }
         orderedActivities[currentActivityIndex].StartActivity();
         bugAttachment.SetCurrentActivity(orderedActivities[currentActivityIndex]);
         //  }
@@ -129,6 +145,10 @@ public class ActivityManager : MonoBehaviour
 
     private void SetPaused(bool isPaused)
     {
+        if (orderedActivities.Count == 0)
+        {
+            return;
+        }
         orderedActivities[currentActivityIndex].SetPaused(isPaused);
     }
 }

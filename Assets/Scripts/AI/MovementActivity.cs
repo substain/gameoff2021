@@ -70,6 +70,7 @@ public class MovementActivity : AbstractActivity
 
     protected override void DoStartActivity()
     {
+        Debug.Log("starting movement activity");
         npcMovement.SetMoveTarget(targetPosition.position);
         npcMovement.StartMovement(moveSpeed);
     }
@@ -92,5 +93,10 @@ public class MovementActivity : AbstractActivity
     private Vector3 GetPos()
     {
         return controlledGameObject.transform.position;
+    }
+
+    public override bool IsContinuous()
+    {
+        return true;
     }
 }

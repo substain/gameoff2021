@@ -33,6 +33,8 @@ public abstract class AbstractActivity : MonoBehaviour
         audioSource = controlledGameObject.GetComponent<AudioSource>();
     }
 
+    public abstract bool IsContinuous();
+
     public AudioClip GetAudioClip()
     {
         return audioClip;

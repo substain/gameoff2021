@@ -34,7 +34,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
         currentActivity = activity;
         if (targetAudioSource != null)
         {
-            //StartPlayingSoundAt(targetAudioSource, activity.GetAudioClip(), 0f, activity.IsContinuous());
+            StartPlayingSoundAt(targetAudioSource, activity.GetAudioClip(), 0f, activity.IsContinuous());
         }
     }
 
