@@ -71,3 +71,13 @@ This is a placeholder text for an unused dialogueKey in testDialogues.txt
 
 # introTutorial 
 This is a placeholder text for an unused dialogueKey in testDialogues.txt
+
+# testDialogue3
+Sting: Can you hear that?
+%subject% What?
+Sting: That
+
+# testDialogue4
+? constraint.
+
+
