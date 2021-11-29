@@ -18,6 +18,8 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
     private AudioSource targetAudioSource = null;
 
+    private float timeListened = 0; 
+
     void Start()
     {
         this.audioSource = GetComponentInParent<AudioSource>();
@@ -31,11 +33,27 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
     public void SetCurrentActivity(AbstractActivity activity)
     {
+        timeListened = 0;
         currentActivity = activity;
+
+
         if (targetAudioSource != null)
         {
+            ConstraintManager.GameConstraint? constraint = activity.GetGameConstraint();
+
+            if (constraint.HasValue && activity.GetNeededTimeToListen() < timeListened)
+            {
+                listenTimer.SetPaused(false);
+
+                listenTimer.Init(currentActivity.GetNeededTimeToListen(), ReachedConstraintTime);
+            }
             StartPlayingSoundAt(targetAudioSource, activity.GetAudioClip(), 0f, activity.IsContinuous());
         }
+    }
+
+    private void ReachedConstraintTime()
+    {
+        ConstraintManager.Instance.SetSatisfied(currentActivity.GetGameConstraint().Value);
     }
 
     public float GetCurrentAudioClipPos()
@@ -90,22 +108,37 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
     public void StartListening(AudioSource source)
     {
+        ConstraintManager.GameConstraint? constraint = currentActivity.GetGameConstraint();
+
+        if (constraint.HasValue && currentActivity.GetNeededTimeToListen() < timeListened)
+        {
+            listenTimer.SetPaused(false);
+        }
         this.audioSource = source;
+
+        StartPlayingSoundAt(source, currentActivity.GetAudioClip(), currentActivity.GetTimeProgress(), currentActivity.IsContinuous());
+
         currentActivity.GetAudioClip();
         this.audioSource.spatialBlend = 0.2f;
     }
 
     public void StopListening()
     {
+        ConstraintManager.GameConstraint? constraint = currentActivity.GetGameConstraint();
+
+        if (constraint.HasValue && currentActivity.GetNeededTimeToListen() < timeListened)
+        {
+            listenTimer.SetPaused(true);
+        }
         this.audioSource.spatialBlend = 1;
+        this.audioSource.Stop();
     }
 
     public void StartPlayingSoundAt(AudioSource source, AudioClip clip, float clipTimePosition, bool looping)
     {
         source.clip = clip;
         source.loop = looping;
-        source.time = clipTimePosition;
+        source.time = clipTimePosition > 0 ? clipTimePosition : 0f;
         source.Play();
     }
-
 }

@@ -27,10 +27,19 @@ public abstract class AbstractActivity : MonoBehaviour
     private AudioSource audioSource;
 
     protected BugAttachment bugAttachment;
+
+    [SerializeField]
+    ConstraintManager.GameConstraint? listenConstraint = null;
+
     public void Init(GameObject controlledObject)
     {
         controlledGameObject = controlledObject;
         audioSource = controlledGameObject.GetComponent<AudioSource>();
+    }
+
+    public ConstraintManager.GameConstraint? GetGameConstraint()
+    {
+        return listenConstraint;
     }
 
     public abstract bool IsContinuous();
@@ -78,4 +87,11 @@ public abstract class AbstractActivity : MonoBehaviour
     }
 
     public abstract void SetPaused(bool isPaused);
+
+    public abstract float GetNeededTimeToListen();
+
+    public virtual float GetTimeProgress()
+    {
+        return -1;
+    }
 }
