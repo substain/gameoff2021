@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class BugAttachment : MonoBehaviour, IInteractable
 {
-    private AudioSource audioSource;
-
     [SerializeField]
     private GameObject debugBug;
 
@@ -23,11 +21,6 @@ public class BugAttachment : MonoBehaviour, IInteractable
     private AudioClip rewardClip;
 
     private bool grantedReward = false;
-
-    void Start()
-    {
-        this.audioSource = GetComponentInParent<AudioSource>();
-    }
 
     void Awake()
     {
@@ -52,6 +45,14 @@ public class BugAttachment : MonoBehaviour, IInteractable
                 listenTimer.Init(currentActivity.GetNeededTimeToListen(), ReachedConstraintTime);
             }
             StartPlayingSoundAt(targetAudioSource, activity.GetAudioClip(), 0f, activity.IsContinuous());
+
+            if (currentActivity.GetActivityString().Length > 0)
+            {
+                HUDManager.Instance.ShowListenContent(currentActivity.GetActivityString(),
+                    currentActivity.GetTimeProgress(),
+                    currentActivity.GetFullDisplayTime(),
+                    currentActivity.IsContinuous());
+            }
         }
     }
 
@@ -120,8 +121,8 @@ public class BugAttachment : MonoBehaviour, IInteractable
         {
             listenTimer.SetPaused(false);
         }
-        this.audioSource = source;
-        this.audioSource.spatialBlend = 0.2f;
+        this.targetAudioSource = source;
+        //this.audioSource.spatialBlend = 0.2f;
         StartPlayingSoundAt(source, 
             currentActivity.GetAudioClip(), 
             currentActivity.GetTimeProgress(), 
@@ -146,21 +147,26 @@ public class BugAttachment : MonoBehaviour, IInteractable
             listenTimer.SetPaused(true);
         }
         HUDManager.Instance.StopListenContent();
-        this.audioSource.spatialBlend = 1;
-        this.audioSource.Stop();
+        //this.audioSource.spatialBlend = 1;
+        this.targetAudioSource.Stop();
 
         if (grantedReward)
         {
-            StartPlayingSoundAt(audioSource, rewardClip, 0, false);
+            StartPlayingSoundAt(targetAudioSource, rewardClip, 0, false);
 
-            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraint.Value));
+            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraint.Value), true);
             grantedReward = false;
         }
+        targetAudioSource = null;
 
     }
 
     public void StartPlayingSoundAt(AudioSource source, AudioClip clip, float clipTimePosition, bool looping)
     {
+        if(source.clip == clip && looping)
+        {
+            return;
+        }
         source.clip = clip;
         source.loop = looping;
         source.time = clipTimePosition > 0 ? clipTimePosition : 0f;

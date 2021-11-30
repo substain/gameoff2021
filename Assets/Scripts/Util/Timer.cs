@@ -10,15 +10,32 @@ public class Timer : MonoBehaviour
     private bool timerFinished = true;
     private bool timerChecked = false;
     private bool paused = false;
+    private bool isFixedUpdate = false;
 
     void Update()
+    {
+        if (!isFixedUpdate)
+        {
+            Tick(Time.deltaTime);
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(isFixedUpdate)
+        {
+            Tick(Time.fixedDeltaTime);
+        }
+    }
+
+    private void Tick(float deltaTime)
     {
         if (!IsRunning())
         {
             return;
         }
 
-        timePassed += Time.deltaTime;
+        timePassed += deltaTime;
 
         if (timePassed >= timeToWait)
         {
@@ -122,5 +139,10 @@ public class Timer : MonoBehaviour
     public float GetFullDuration()
     {
         return timeToWait;
+    }
+
+    public void SetFixedUpdate(bool isFixedUpdate)
+    {
+        this.isFixedUpdate = isFixedUpdate;
     }
 }

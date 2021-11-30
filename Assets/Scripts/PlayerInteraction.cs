@@ -35,6 +35,8 @@ public class PlayerInteraction : MonoBehaviour
 
     private bool isInBlockingDialogue;
     private bool isInMenu = false;
+    private Animator animator;
+    private AudioSource audioSource;
 
     void Awake()
     {
@@ -45,6 +47,7 @@ public class PlayerInteraction : MonoBehaviour
 
         layerToCheckFor = LayerMask.GetMask(INTERACTION_LMASK_NAME);
         playerMovement = GetComponent<PlayerMovement>();
+        this.animator = GetComponentInChildren<Animator>();
     }
 
     void Start()
@@ -56,6 +59,7 @@ public class PlayerInteraction : MonoBehaviour
         InvokeRepeating("CheckForInteractables", 0.1f, 0.1f);
         GameManager.Instance.SetPlayer(this);
         ConstraintManager.OnChangeConstraints += UpdateAvailableKeys;
+        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     private void UpdateAvailableKeys()
@@ -166,6 +170,10 @@ public class PlayerInteraction : MonoBehaviour
         }
 
         currentInteractable.Interact(this);
+        if (!IsDialogueHolder(currentInteractable))
+        {
+            animator.SetBool("use", true);
+        }
     }
 
     public void RemoveBugFrom(BugAttachment bugAttachment)
@@ -230,6 +238,10 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessListenBugInput(InputAction.CallbackContext context)
     {
+        if (!context.performed)
+        {
+            return;
+        }
         if (isInBlockingDialogue || isInMenu)
         {
             return;
@@ -253,7 +265,7 @@ public class PlayerInteraction : MonoBehaviour
         //start current bug
         if(listenBugIndex > -1)
         {
-            //attachedBugs[listenBugIndex].StartListening();
+            attachedBugs[listenBugIndex].StartListening(audioSource);
         }
         HUDManager.Instance.SetCurrentActiveBugId(listenBugIndex);
     }

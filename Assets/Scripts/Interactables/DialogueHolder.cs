@@ -96,6 +96,11 @@ public class DialogueHolder : MonoBehaviour, IInteractable
     /// </summary>
     public bool ProgressDialogue(PlayerInteraction interactingPlayer)
     {
+        if (HUDManager.Instance.IsTypingDialogue())
+        {
+            HUDManager.Instance.FinishTypingDialogue();
+            return false;
+        }
         DialogueLine nextLine = currentDialogue.GetNextLine();
         if (nextLine == null)
         {

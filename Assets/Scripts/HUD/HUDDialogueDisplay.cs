@@ -4,13 +4,10 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HUDDialogueDisplay : MonoBehaviour
+public class HUDDialogueDisplay : HUDMessageDisplay
 {
     private const float FADEOUT_DISPLAY_RANGE = 4;
     private const float MAX_DISPLAY_RANGE = 8;
-
-    [SerializeField]
-    private Text contentText;
 
     [SerializeField]
     private Text subjectText;
@@ -21,22 +18,37 @@ public class HUDDialogueDisplay : MonoBehaviour
     [SerializeField]
     private List<Sprite> allSubjectPictures;
 
+    [SerializeField]
+    private float timePerLetter = 0.0f;
+
     private CanvasGroup canvasGroup;
     private Transform refPosition;
     private Transform targetPosition = null;
     private bool hasActiveDialogue;
-    void Awake()
+    protected override void Awake()
     {
         hasActiveDialogue = false;
         canvasGroup = GetComponent<CanvasGroup>();
+        base.Awake();
     }
 
-    void Update()
+    protected override void Start()
+    {
+        base.Start();
+    }
+
+    protected override void Update()
     {
         if (hasActiveDialogue && refPosition != null && targetPosition != null)
         {
             ComputeAlphaByDistance();
         }
+       base.Update();
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
     }
 
     private void ComputeAlphaByDistance()
@@ -52,18 +64,25 @@ public class HUDDialogueDisplay : MonoBehaviour
         this.refPosition = playerPosition;
         this.targetPosition = targetPosition;
         hasActiveDialogue = true;
-        contentText.text = InputKeyHelper.Instance.ReplacePlaceholdersWithCurrentKeys(dialogueLine.content);
         subjectText.text = dialogueLine.subject;
         subjectText.color = GetPersonColor(subjectPerson);
+        string messageText = InputKeyHelper.Instance.ReplacePlaceholdersWithCurrentKeys(dialogueLine.content);
+        if(timePerLetter <= 0.0001)
+        {
+            Display(messageText, 999999f, false, false, false);
+            return;
+        }
+        Display(messageText, messageText.Length * timePerLetter + MESSAGE_KEEP_SHOWING_TIME, false, true, false);
+
         //subjectPicture.sprite = GetPersonImage(subjectPerson);
     }
 
     public void CloseDialogue()
     {
         hasActiveDialogue = false;
-        contentText.text = "";
         subjectText.text = "";
         canvasGroup.alpha = 0;
+        base.Hide();
         //subjectPicture.sprite = null;
     }
 

@@ -11,22 +11,34 @@ public class TutorialShip : MonoBehaviour
     void Start()
     {
         timer = gameObject.AddComponent<Timer>();
-        MoveSideA();
+        MoveSide();
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        Vector3 movement = new Vector3(0, 0, moveDir).normalized * Time.fixedDeltaTime * 0.5f;
+        gameObject.transform.Translate(movement);
     }
 
-    private void MoveSideA()
+    private void MoveSide()
     {
-        timer.Init(MOVE_DUR, MoveSideB);
+        moveDir *= -1;
+        timer.Init(MOVE_DUR, MoveSide);
     }
 
-    private void MoveSideB()
+    public void OnTriggerEnter(Collider other)
     {
-        timer.Init(MOVE_DUR, MoveSideA);
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            other.gameObject.transform.parent = gameObject.transform;
+        }
+    }
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
+        {
+            other.gameObject.transform.parent = null;
+        }
     }
 }

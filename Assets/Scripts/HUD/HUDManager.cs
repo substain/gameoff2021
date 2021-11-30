@@ -58,9 +58,9 @@ public class HUDManager : MonoBehaviour
         hudActionHint.SetActionHint(hintText);
     }
     
-    public void DisplayMessage(string message)
+    public void DisplayMessage(string message, bool isListenBug = false)
     {
-        hudMessageDisplay.Display(message);
+        hudMessageDisplay.Display(message, isPriority: isListenBug);
     }
 
     public void SetNumberOfBugs(int numBugs)
@@ -86,6 +86,16 @@ public class HUDManager : MonoBehaviour
     public void CloseDialogue()
     {
         hudDialogueDisplay.CloseDialogue();
+    }
+
+    public void FinishTypingDialogue()
+    {
+        hudDialogueDisplay.FinishTyping();
+    }
+
+    public bool IsTypingDialogue()
+    {
+        return hudDialogueDisplay.IsTyping();
     }
 
     public void IngameMenuUseBack()
@@ -114,6 +124,7 @@ public class HUDManager : MonoBehaviour
         }
         activeMenu.SelectPreviousButton();
     }
+
 
     public void IngameMenuUseSelected()
     {
@@ -155,20 +166,13 @@ public class HUDManager : MonoBehaviour
 
     public void StopListenContent()
     {
-        hudMessageDisplay.StopShowingContent();
+        hudMessageDisplay.Hide();
     }
 
 
-    public void ShowListenContent(string listenContent, float currentProgress, float fullDuration, bool isContinuous)
+    public void ShowListenContent(string listenContent, float timePassed, float fullDuration, bool isContinuous)
     {
-        if (isContinuous)
-        {
-            DisplayMessage(listenContent);
-        }
-        else
-        {
-            hudMessageDisplay.StartShowingContent(listenContent, currentProgress, fullDuration);
-        }
+        hudMessageDisplay.DisplaySkipped(listenContent, timePassed, fullDuration, true, isContinuous);
     }
 
     public void HideIngameMenu(bool playSound = true)
