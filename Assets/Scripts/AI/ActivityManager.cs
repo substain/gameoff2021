@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System;
 
 public class ActivityManager : MonoBehaviour
 {
@@ -15,6 +16,9 @@ public class ActivityManager : MonoBehaviour
     [SerializeField]
     private int initialActivityIndex = 0;
 
+    [SerializeField]
+    private int afterPursueActivity;
+
     private List<AbstractActivity> orderedActivities = new List<AbstractActivity>();
 
     private int currentActivityIndex = -1;
@@ -24,6 +28,8 @@ public class ActivityManager : MonoBehaviour
 
     [SerializeField]
     private BugAttachment bugAttachment;
+
+    private bool isPaused = false;
 
     void Awake()
     {
@@ -55,13 +61,24 @@ public class ActivityManager : MonoBehaviour
         {
             return;
         }
+
+        pursuePlayerActivity.CheckActivationConstraints();
+        orderedActivities.ForEach(x => x.CheckActivationConstraints());
+
         orderedActivities[currentActivityIndex].StartActivity();
         bugAttachment.SetCurrentActivity(orderedActivities[currentActivityIndex]);
+        ConstraintManager.OnChangeConstraints += CheckConstraints;
+    }
+
+    private void CheckConstraints()
+    {
+        pursuePlayerActivity.CheckActivationConstraints();
+        orderedActivities.ForEach(oa => oa.CheckActivationConstraints());
     }
 
     private void CheckActivityStatus()
     {
-        if (pursuingPlayer && pursuePlayerActivity.IsFinished())
+        if (pursuingPlayer && pursuePlayerActivity.CheckIfFinished())
         {
             StopFollowingPlayer();
             return;
@@ -70,7 +87,7 @@ public class ActivityManager : MonoBehaviour
         {
             return;
         }
-        if (orderedActivities[currentActivityIndex].IsFinished())
+        if (orderedActivities[currentActivityIndex].CheckIfFinished())
         {
             UpdateActiveActivity();
         }
@@ -86,19 +103,27 @@ public class ActivityManager : MonoBehaviour
 
     private void UpdateToNextActivityIndex()
     {
-        Debug.Log("updating to next activity...");
+        List<AbstractActivity> possibleActivities = orderedActivities.Where(oa => oa.HasConstraintsSatisfied()).ToList();
+        if (possibleActivities.Count == 0)
+        {
+            return;
+        }
+
+        List<int> possibleIndices = Enumerable.Range(0, possibleActivities.Count).ToList();
+
         if (useRandomOrder)
         {
-            List<int> possibleIndices = Enumerable.Range(0, orderedActivities.Count).ToList();
             if(possibleIndices.Count > 1)
             {
                 possibleIndices.RemoveAt(currentActivityIndex);
             }
-            currentActivityIndex = possibleIndices[Random.Range(0, possibleIndices.Count)];
+            currentActivityIndex = possibleIndices[UnityEngine.Random.Range(0, possibleIndices.Count)];
         }
         else
         {
-            currentActivityIndex = (currentActivityIndex + 1) % orderedActivities.Count;
+            int refIndex = possibleIndices.FindIndex(ind => ind == currentActivityIndex);
+            refIndex = (refIndex + 1) % possibleIndices.Count;
+            currentActivityIndex = possibleIndices[refIndex];
         }
     }
 
@@ -125,30 +150,31 @@ public class ActivityManager : MonoBehaviour
 
     public void StopFollowingPlayer()
     {
-        Debug.Log("stop following player");
         pursuingPlayer = false;
 
-        /*        if (orderedActivities[currentActivityIndex].GetType() == typeof(IdleActivity))
-                {
-                    UpdateActiveActivity();
-                }*/
-        //      else
-        //    {
         if (orderedActivities.Count == 0 || currentActivityIndex < 0)
         {
             return;
         }
+        currentActivityIndex = afterPursueActivity;
+        Debug.Log("stop following player, next activity:" + currentActivityIndex);
+
         orderedActivities[currentActivityIndex].StartActivity();
         bugAttachment.SetCurrentActivity(orderedActivities[currentActivityIndex]);
-        //  }
     }
 
-    private void SetPaused(bool isPaused)
+    public void SetPaused(bool isPaused)
     {
         if (orderedActivities.Count == 0)
         {
             return;
         }
+        pursuePlayerActivity.SetPaused(isPaused);
         orderedActivities[currentActivityIndex].SetPaused(isPaused);
+    }
+
+    private void OnDestroy()
+    {
+        ConstraintManager.OnChangeConstraints -= CheckConstraints;
     }
 }

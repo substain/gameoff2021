@@ -38,7 +38,7 @@ Dev Note: This is where the tutorial for bugging starts.
 Dev Note: This is not finished yet.
 
 # listenTutorialMono
-? startListenTutorial
+? bugUsed
 Dev Note: Here is a placeholder for the tutorial for listening to people.
 
 //any npc can have the following ones as backup

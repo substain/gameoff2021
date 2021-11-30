@@ -153,6 +153,24 @@ public class HUDManager : MonoBehaviour
         }
     }
 
+    public void StopListenContent()
+    {
+        hudMessageDisplay.StopShowingContent();
+    }
+
+
+    public void ShowListenContent(string listenContent, float currentProgress, float fullDuration, bool isContinuous)
+    {
+        if (isContinuous)
+        {
+            DisplayMessage(listenContent);
+        }
+        else
+        {
+            hudMessageDisplay.StartShowingContent(listenContent, currentProgress, fullDuration);
+        }
+    }
+
     public void HideIngameMenu(bool playSound = true)
     {
         activeMenu = null;

@@ -29,7 +29,19 @@ public abstract class AbstractActivity : MonoBehaviour
     protected BugAttachment bugAttachment;
 
     [SerializeField]
-    ConstraintManager.GameConstraint? listenConstraint = null;
+    private string activityString;
+
+    [SerializeField]
+    private ConstraintManager.GameConstraint listenRewardConstraint = ConstraintManager.GameConstraint.none;
+
+    [SerializeField]
+    private ConstraintManager.GameConstraint activationConstraint = ConstraintManager.GameConstraint.none;
+
+    [SerializeField]
+    private ConstraintManager.GameConstraint deactivationConstraint = ConstraintManager.GameConstraint.none;
+    
+    private bool constraintsSatisfied = false;
+    protected bool isPaused = false;
 
     public void Init(GameObject controlledObject)
     {
@@ -39,7 +51,11 @@ public abstract class AbstractActivity : MonoBehaviour
 
     public ConstraintManager.GameConstraint? GetGameConstraint()
     {
-        return listenConstraint;
+        if(listenRewardConstraint != ConstraintManager.GameConstraint.none)
+        {
+            return listenRewardConstraint;
+        }
+        return null;
     }
 
     public abstract bool IsContinuous();
@@ -79,19 +95,64 @@ public abstract class AbstractActivity : MonoBehaviour
     }
 
     protected abstract void DoStopActivity();
-    public abstract bool IsFinished();
+
+    public bool CheckIfFinished()
+    {
+        if (isPaused)
+        {
+            return false;
+        }
+        return IsFinished();
+    }
+
+    protected abstract bool IsFinished();
 
     public int GetOrder()
     {
         return order;
     }
 
-    public abstract void SetPaused(bool isPaused);
+    public string GetActivityString()
+    {
+        return activityString;
+    }
+
+    public virtual void SetPaused(bool isPaused)
+    {
+        this.isPaused = isPaused;
+    }
 
     public abstract float GetNeededTimeToListen();
+
+    public virtual float GetFullDisplayTime()
+    {
+        return -1;
+    }
 
     public virtual float GetTimeProgress()
     {
         return -1;
+    }
+
+    public void CheckActivationConstraints()
+    {
+        if (activationConstraint != ConstraintManager.GameConstraint.none)
+        {
+            constraintsSatisfied = ConstraintManager.Instance.IsSatisfied(activationConstraint);
+        }
+        else
+        {
+            constraintsSatisfied = true;
+        }
+
+        if (constraintsSatisfied && deactivationConstraint != ConstraintManager.GameConstraint.none)
+        {
+            constraintsSatisfied = !ConstraintManager.Instance.IsSatisfied(deactivationConstraint);
+        }
+    }
+
+    public bool HasConstraintsSatisfied()
+    {
+        return constraintsSatisfied;
     }
 }

@@ -118,4 +118,9 @@ public class Timer : MonoBehaviour
     {
         this.timePassed = timePassed;
     }
+
+    public float GetFullDuration()
+    {
+        return timeToWait;
+    }
 }

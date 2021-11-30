@@ -18,7 +18,6 @@ public class PursuePlayerActivity : AbstractActivity
     private NPCMovement npcMovement;
 
     private Vector3? updatedPos = null;
-    private Vector3 nextPosition;
 
     private Timer timer;
 
@@ -72,12 +71,14 @@ public class PursuePlayerActivity : AbstractActivity
         timer.Init(playerPosUpdateRate, UpdateDestinationFromTargetPosition);
     }
 
-    public override bool IsFinished()
+    protected override bool IsFinished()
     {
         if (PlayerIsReached())
         {
             timer.Stop();
             GameManager.Instance.SetGameOver(GameManager.GameOverReason.CoverBlown);
+            //GetComponent<ActivityManager>().SetPaused(true);
+            return true;
         }
 
         if (TargetIsReached() && !lostPlayer)
@@ -98,7 +99,7 @@ public class PursuePlayerActivity : AbstractActivity
 
     private bool TargetIsReached()
     {
-        return npcMovement.IsWithinDistance(nextPosition, TARGET_REACHED_RANGE);
+        return npcMovement.IsWithinDistanceToDestination(TARGET_REACHED_RANGE);
     }
 
     private bool PlayerIsReached()
@@ -109,6 +110,7 @@ public class PursuePlayerActivity : AbstractActivity
     public override void SetPaused(bool isPaused)
     {
         npcMovement.SetPaused(true);
+        base.SetPaused(isPaused);
     }
 
     public override bool IsContinuous()

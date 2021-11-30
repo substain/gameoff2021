@@ -18,7 +18,11 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
     private AudioSource targetAudioSource = null;
 
-    private float timeListened = 0; 
+    private float timeListened = 0;
+
+    private AudioClip rewardClip;
+
+    private bool grantedReward = false;
 
     void Start()
     {
@@ -54,6 +58,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
     private void ReachedConstraintTime()
     {
         ConstraintManager.Instance.SetSatisfied(currentActivity.GetGameConstraint().Value);
+        grantedReward = true;
     }
 
     public float GetCurrentAudioClipPos()
@@ -79,6 +84,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
         float xPos = fromPosition.x < transform.position.x ? -0.65f : 0.65f;
 
         debugBug.transform.position = transform.root.position + new Vector3(xPos, 0, 0);
+        ConstraintManager.Instance.SetSatisfied(ConstraintManager.GameConstraint.bugUsed);
     }
 
     public void Interact(PlayerInteraction interactingPlayer)
@@ -115,11 +121,20 @@ public class BugAttachment : MonoBehaviour, IInteractable
             listenTimer.SetPaused(false);
         }
         this.audioSource = source;
-
-        StartPlayingSoundAt(source, currentActivity.GetAudioClip(), currentActivity.GetTimeProgress(), currentActivity.IsContinuous());
-
-        currentActivity.GetAudioClip();
         this.audioSource.spatialBlend = 0.2f;
+        StartPlayingSoundAt(source, 
+            currentActivity.GetAudioClip(), 
+            currentActivity.GetTimeProgress(), 
+            currentActivity.IsContinuous());
+
+        if (currentActivity.GetActivityString().Length > 0)
+        {
+            HUDManager.Instance.ShowListenContent(currentActivity.GetActivityString(),
+                currentActivity.GetTimeProgress(),
+                currentActivity.GetFullDisplayTime(),
+                currentActivity.IsContinuous());
+        }
+
     }
 
     public void StopListening()
@@ -130,8 +145,18 @@ public class BugAttachment : MonoBehaviour, IInteractable
         {
             listenTimer.SetPaused(true);
         }
+        HUDManager.Instance.StopListenContent();
         this.audioSource.spatialBlend = 1;
         this.audioSource.Stop();
+
+        if (grantedReward)
+        {
+            StartPlayingSoundAt(audioSource, rewardClip, 0, false);
+
+            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraint.Value));
+            grantedReward = false;
+        }
+
     }
 
     public void StartPlayingSoundAt(AudioSource source, AudioClip clip, float clipTimePosition, bool looping)

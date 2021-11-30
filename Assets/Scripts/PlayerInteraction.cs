@@ -315,6 +315,11 @@ public class PlayerInteraction : MonoBehaviour
         return (interactable.GetType() == typeof(DialogueHolder) || interactable.GetType().IsSubclassOf(typeof(DialogueHolder)));
     }
 
+    private void OnDestroy()
+    {
+        ConstraintManager.OnChangeConstraints -= UpdateAvailableKeys;
+    }
+
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {

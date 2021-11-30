@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class MovementActivity : AbstractActivity
 {
-    private const float TARGET_REACHED_RANGE = 0.5f; 
+    private const float TARGET_REACHED_RANGE = 1.5f; 
     private const float DOOR_REACHED_RANGE = 2.0f;
 
     private const float KEEP_DOOR_OPEN_TIME = 0.3f;
@@ -73,7 +73,6 @@ public class MovementActivity : AbstractActivity
 
     protected override void DoStartActivity()
     {
-        Debug.Log("starting movement activity");
         npcMovement.SetMoveTarget(targetPosition.position);
         npcMovement.StartMovement(moveSpeed);
     }
@@ -83,14 +82,15 @@ public class MovementActivity : AbstractActivity
         npcMovement.StopMovement();
     }
 
-    public override bool IsFinished()
+    protected override bool IsFinished()
     {
-        return npcMovement.IsWithinDistance(closestPosition, TARGET_REACHED_RANGE);
+        return npcMovement.IsWithinDistanceToDestination(TARGET_REACHED_RANGE);
     }
 
     public override void SetPaused(bool isPaused)
     {
         npcMovement.SetPaused(isPaused);
+        base.SetPaused(isPaused);
     }
 
     private Vector3 GetPos()

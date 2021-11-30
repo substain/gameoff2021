@@ -14,5 +14,4 @@ public class SatisfyConstraintZone : MonoBehaviour
             ConstraintManager.Instance.SetSatisfied(constraint);
         }
     }
-
 }

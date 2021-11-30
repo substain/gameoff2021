@@ -10,10 +10,12 @@ public class NPCMovement : MonoBehaviour
     private Animator animator;
     private WatcherNPC watcherNpc;
 
+    private Vector3 destination;
+
     [SerializeField]
     private Vector3 lookDirection = Vector3.back;
 
-    private float currentSpeed = 0;
+    private float currentSpeed = 1;
     void Awake()
     {
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -47,7 +49,8 @@ public class NPCMovement : MonoBehaviour
 
     public void SetMoveTarget(Vector3 target)
     {
-        navMeshAgent.SetDestination(GetClosestPositionFor(target));
+        destination = GetClosestPositionFor(target);
+        navMeshAgent.SetDestination(destination);
     }
 
     public void StopMovement()
@@ -62,7 +65,7 @@ public class NPCMovement : MonoBehaviour
     public static Vector3 GetClosestPositionFor(Vector3 targetPos)
     {
         NavMeshHit closestNavMeshPosition;
-        NavMesh.SamplePosition(targetPos, out closestNavMeshPosition, 2.0f, NavMesh.AllAreas);
+        NavMesh.SamplePosition(targetPos, out closestNavMeshPosition, 3.0f, NavMesh.AllAreas);
         return closestNavMeshPosition.position;
     }
 
@@ -74,6 +77,11 @@ public class NPCMovement : MonoBehaviour
     public bool IsWithinDistance(Vector3 target, float dist)
     {
         return Vector3.Distance(transform.position, target) <= dist;
+    }
+
+    public bool IsWithinDistanceToDestination(float dist)
+    {
+        return Vector3.Distance(transform.position, destination) <= dist;
     }
 
     private void UpdateSpriteByMovement()

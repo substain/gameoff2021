@@ -13,8 +13,13 @@ public class ConstraintManager : MonoBehaviour
 	{
 		testConstraint, ch1Finished, ch2Finished, 
 		startUseTutorial, startDashTutorial, startAvoidTutorial, 
-		startBugTutorial, startListenTutorial,
-		gotKey1, gotKey2, gotKey3, gotKey4, gotKey5, gotKey6, gotKey7, gotKey8
+		startBugTutorial, bugUsed,
+		gotKey1, gotKey2, gotKey3, gotKey4, gotKey5, gotKey6, gotKey7, gotKey8,
+
+
+
+
+		none
 	}
 
 	public enum ChoiceType
@@ -77,11 +82,21 @@ public class ConstraintManager : MonoBehaviour
 
 	public bool IsSatisfied(GameConstraint constraint)
 	{
+		if(constraint == GameConstraint.none)
+		{
+			Debug.LogWarning("'none' constraint should not be used.");
+		}
+
 		return satisfiedConstraints.Contains(constraint);
 	}
 
 	public void SetSatisfied(GameConstraint constraint)
 	{
+		if (constraint == GameConstraint.none)
+		{
+			Debug.LogWarning("'none' constraint should not be used.");
+		}
+
 		if (satisfiedConstraints.Contains(constraint))
 		{
 			return;
@@ -103,5 +118,15 @@ public class ConstraintManager : MonoBehaviour
 	void OnDestroy()
 	{
 		Instance = null;
+	}
+
+    public static string ConstraintToRewardString(GameConstraint value)
+    {
+		switch (value){
+			default:
+				{
+					return "You found a key!";
+				}
+		}
 	}
 }

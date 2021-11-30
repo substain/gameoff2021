@@ -17,7 +17,6 @@ public class IdleActivity : AbstractActivity
 
     protected override void DoStartActivity()
     {
-        Debug.Log("starting movement activity");
         timer.Init(idleTime);
     }
     protected override void DoStopActivity()
@@ -30,7 +29,7 @@ public class IdleActivity : AbstractActivity
         return false;
     }
 
-    public override bool IsFinished()
+    protected override bool IsFinished()
     {
         return !timer.IsRunning();
     }
@@ -38,11 +37,17 @@ public class IdleActivity : AbstractActivity
     public override void SetPaused(bool isPaused)
     {
         timer.SetPaused(isPaused);
+        base.SetPaused(isPaused);
     }
 
     public override float GetNeededTimeToListen()
     {
         return idleTime * FRACTION_NEEDED_TO_LISTEN;
+    }
+
+    public override float GetFullDisplayTime()
+    {
+        return timer.GetFullDuration();
     }
 
     public override float GetTimeProgress()
