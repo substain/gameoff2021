@@ -18,7 +18,7 @@ public abstract class AbstractActivity : MonoBehaviour
     private AudioClip audioClip;
 
     [SerializeField]
-    private bool audioClipLoopable;
+    protected bool contentLoopable;
 
     protected bool activityActive = false;
 
@@ -77,7 +77,7 @@ public abstract class AbstractActivity : MonoBehaviour
         if(audioClip != null)
         {
             audioSource.clip = audioClip;
-            audioSource.loop = audioClipLoopable;
+            audioSource.loop = contentLoopable;
             audioSource.Play();
         }
     }

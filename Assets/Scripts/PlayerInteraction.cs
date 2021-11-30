@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using static HUDBugDisplay;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerInteraction : MonoBehaviour
 {
     private const string INTERACTION_LMASK_NAME = "Interactable";
+    private int NUM_BUGS_POSSIBLE = 3;
 
     [SerializeField]
     private GameObject interactionPosition;
@@ -40,7 +42,8 @@ public class PlayerInteraction : MonoBehaviour
 
     void Awake()
     {
-        if(interactionPosition == null)
+
+        if (interactionPosition == null)
         {
             Debug.LogWarning("no interactionPosition assigned!");
         }
@@ -52,9 +55,8 @@ public class PlayerInteraction : MonoBehaviour
 
     void Start()
     {
-        HUDManager.Instance.SetNumberOfBugs(numberOfBugs);
+        UpdateBugStates();
         HUDManager.Instance.SetObtainedKeys(obtainedKeyIds);
-        HUDManager.Instance.SetCurrentActiveBugId(listenBugIndex);
         InputKeyHelper.Instance.SetPlayerInput(GetComponent<PlayerInput>());
         InvokeRepeating("CheckForInteractables", 0.1f, 0.1f);
         GameManager.Instance.SetPlayer(this);
@@ -222,7 +224,7 @@ public class PlayerInteraction : MonoBehaviour
     public void ChangeNumBugs(int changeAmount)
     {
         numberOfBugs = Mathf.Max(numberOfBugs + changeAmount, 0);
-        HUDManager.Instance.SetNumberOfBugs(numberOfBugs);
+        UpdateBugStates();
     }
 
     public void AddKey(int keyId)
@@ -267,7 +269,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             attachedBugs[listenBugIndex].StartListening(audioSource);
         }
-        HUDManager.Instance.SetCurrentActiveBugId(listenBugIndex);
+        UpdateBugStates();
     }
 
     public void ProcessHideInput(InputAction.CallbackContext context)
@@ -330,6 +332,31 @@ public class PlayerInteraction : MonoBehaviour
     private void OnDestroy()
     {
         ConstraintManager.OnChangeConstraints -= UpdateAvailableKeys;
+    }
+
+    private void UpdateBugStates()
+    {
+        BugState[] bugStates = new BugState[NUM_BUGS_POSSIBLE];
+        for (int i = 0; i < NUM_BUGS_POSSIBLE; i++)
+        {
+            if (i == listenBugIndex)
+            {
+                bugStates[i] = BugState.bugSending;
+                continue;
+            }
+            if (i < attachedBugs.Count)
+            {
+                bugStates[i] = BugState.bugPlaced;
+                continue;
+            }
+            if (i < numberOfBugs + attachedBugs.Count)
+            {
+                bugStates[i] = BugState.bugAvailable;
+                continue;
+            }
+            bugStates[i] = BugState.bugEmpty;
+        }
+        HUDManager.Instance.SetBugStates(bugStates);
     }
 
 #if UNITY_EDITOR

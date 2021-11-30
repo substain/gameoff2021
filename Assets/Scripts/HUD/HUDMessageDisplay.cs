@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HUDMessageDisplay : MonoBehaviour
 {
-    private const float MESSAGE_DISPLAY_DURATION = 1.5f;
+    public const float MESSAGE_DISPLAY_DURATION = 1.5f;
     protected const float MESSAGE_KEEP_SHOWING_TIME = 0.5f;
 
     [SerializeField]
@@ -95,8 +95,6 @@ public class HUDMessageDisplay : MonoBehaviour
 
     public void HideAfterTimer()
     {
-        Debug.Log("HideAfterTimer, autohide " + autoHideAfterTimer);
-
         currentIsListenBug = false;
         isTyping = false;
         currentMessage = "";
@@ -109,8 +107,6 @@ public class HUDMessageDisplay : MonoBehaviour
 
     public void Hide()
     {
-        Debug.Log("Hide");
-
         currentIsListenBug = false;
         isTyping = false; 
         currentMessage = "";
@@ -119,7 +115,6 @@ public class HUDMessageDisplay : MonoBehaviour
 
     public void DisplaySkipped(string content, float timePassed, float fullDuration, bool isPriority, bool showFull)
     {
-        Debug.Log("display skipped: " + content + ", timePassed: " + timePassed + ", fullDuration:" + fullDuration + ", showFull:" + showFull);
         float timeLeft = fullDuration - timePassed;
         if (showFull)
         {

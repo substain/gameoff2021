@@ -6,7 +6,8 @@ using UnityEngine;
 public class BugAttachment : MonoBehaviour, IInteractable
 {
     [SerializeField]
-    private GameObject debugBug;
+    private GameObject bugIndicator;
+    private Animator bugIndicatorAnimator;
 
     private bool bugIsAttached = false;
 
@@ -25,12 +26,18 @@ public class BugAttachment : MonoBehaviour, IInteractable
     void Awake()
     {
         listenTimer = gameObject.AddComponent<Timer>();
-        debugBug.SetActive(bugIsAttached);
+        bugIndicator.SetActive(bugIsAttached);
+        bugIndicatorAnimator = bugIndicator.GetComponent<Animator>();
+    }
+
+    void Start()
+    {
     }
 
     public void SetCurrentActivity(AbstractActivity activity)
     {
         timeListened = 0;
+        string lastActivityString = activity.GetActivityString();
         currentActivity = activity;
 
 
@@ -48,10 +55,20 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
             if (currentActivity.GetActivityString().Length > 0)
             {
-                HUDManager.Instance.ShowListenContent(currentActivity.GetActivityString(),
-                    currentActivity.GetTimeProgress(),
-                    currentActivity.GetFullDisplayTime(),
-                    currentActivity.IsContinuous());
+                string currentActivityString = currentActivity.GetActivityString();
+                if (lastActivityString == currentActivityString)
+                {
+                    /*
+                    HUDManager.Instance.DisplayMessage(currentActivityString,
+                       currentActivity.GetFullDisplayTime(), true);*/
+                }
+                else
+                {
+                    HUDManager.Instance.ShowSkippedContent(currentActivityString,
+                            currentActivity.GetTimeProgress(),
+                            currentActivity.GetFullDisplayTime(),
+                            currentActivity.IsContinuous());
+                }
             }
         }
     }
@@ -75,16 +92,18 @@ public class BugAttachment : MonoBehaviour, IInteractable
     public void RemoveBug()
     {
         bugIsAttached = false;
-        debugBug.SetActive(false);
+        bugIndicator.SetActive(false);
+        bugIndicatorAnimator.SetBool("isActive", false);
     }
 
     public void AddBug(Vector3 fromPosition)
     {
         bugIsAttached = true;
-        debugBug.SetActive(true);
+        bugIndicator.SetActive(true);
+        bugIndicatorAnimator.SetBool("isActive", false);
         float xPos = fromPosition.x < transform.position.x ? -0.65f : 0.65f;
 
-        debugBug.transform.position = transform.root.position + new Vector3(xPos, 0, 0);
+        //debugBug.transform.position = transform.root.position + new Vector3(xPos, 0, 0);
         ConstraintManager.Instance.SetSatisfied(ConstraintManager.GameConstraint.bugUsed);
     }
 
@@ -130,11 +149,12 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
         if (currentActivity.GetActivityString().Length > 0)
         {
-            HUDManager.Instance.ShowListenContent(currentActivity.GetActivityString(),
+            HUDManager.Instance.ShowSkippedContent(currentActivity.GetActivityString(),
                 currentActivity.GetTimeProgress(),
                 currentActivity.GetFullDisplayTime(),
                 currentActivity.IsContinuous());
         }
+        bugIndicatorAnimator.SetBool("isActive", true);
 
     }
 
@@ -154,10 +174,11 @@ public class BugAttachment : MonoBehaviour, IInteractable
         {
             StartPlayingSoundAt(targetAudioSource, rewardClip, 0, false);
 
-            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraint.Value), true);
+            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraint.Value), isListenBug: true);
             grantedReward = false;
         }
         targetAudioSource = null;
+        bugIndicatorAnimator.SetBool("isActive", false);
 
     }
 
