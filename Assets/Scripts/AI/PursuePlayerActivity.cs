@@ -24,6 +24,10 @@ public class PursuePlayerActivity : AbstractActivity
 
     private bool lostPlayer = false;
     private Transform playerTransform = null;
+
+    [SerializeField]
+    private float listenTimeNeededForConstraint = float.MaxValue;
+
     void Start()
     {
         this.order = -1; //not needed
@@ -110,5 +114,10 @@ public class PursuePlayerActivity : AbstractActivity
     public override bool IsContinuous()
     {
         return true;
+    }
+
+    public override float GetNeededTimeToListen()
+    {
+        return listenTimeNeededForConstraint;
     }
 }

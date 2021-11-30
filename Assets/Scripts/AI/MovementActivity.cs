@@ -28,6 +28,9 @@ public class MovementActivity : AbstractActivity
 
     private Timer timer;
 
+    [SerializeField]
+    private float listenTimeNeededForConstraint = float.MaxValue;
+
     void Start()
     {
         timer = GetComponent<Timer>();
@@ -98,5 +101,10 @@ public class MovementActivity : AbstractActivity
     public override bool IsContinuous()
     {
         return true;
+    }
+
+    public override float GetNeededTimeToListen()
+    {
+        return listenTimeNeededForConstraint;
     }
 }

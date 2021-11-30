@@ -12,7 +12,7 @@ public class HUDKeyDisplay : MonoBehaviour
         keyText = GetComponentInChildren<Text>();
     }
 
-    public void SetObtainedKeys(List<int> obtainedKeyIds)
+    public void SetObtainedKeys(HashSet<int> obtainedKeyIds)
     {
         string keysString;
         if(obtainedKeyIds.Count > 0)

@@ -2,6 +2,8 @@
 using UnityEngine;
 public class IdleActivity : AbstractActivity
 {
+    private const float FRACTION_NEEDED_TO_LISTEN = 0.75f;
+
     [SerializeField]
     private float idleTime;
 
@@ -36,5 +38,15 @@ public class IdleActivity : AbstractActivity
     public override void SetPaused(bool isPaused)
     {
         timer.SetPaused(isPaused);
+    }
+
+    public override float GetNeededTimeToListen()
+    {
+        return idleTime * FRACTION_NEEDED_TO_LISTEN;
+    }
+
+    public override float GetTimeProgress()
+    {
+        return timer.GetTimePassed();
     }
 }
