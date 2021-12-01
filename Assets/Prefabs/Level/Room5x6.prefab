@@ -1,5 +1,87 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1572769421
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1572769422}
+  - component: {fileID: 1572769424}
+  - component: {fileID: 1572769423}
+  m_Layer: 0
+  m_Name: NavMeshObstacle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 1
+  m_StaticEditorFlags: 8
+  m_IsActive: 1
+--- !u!4 &1572769422
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572769421}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 1, z: 0.8}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6057246411408796395}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1572769424
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572769421}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!23 &1572769423
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1572769421}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials: []
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &47852083747468846
 GameObject:
   m_ObjectHideFlags: 0
@@ -342,7 +424,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 4491
+  m_VersionIndex: 4518
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -360,7 +442,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    rid: 2996503967932088323
+    rid: 6691091235719086782
   m_Size: {x: 5, y: 3, z: -1}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 1
@@ -372,7 +454,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2996503967932088323
+    - rid: 6691091235719086782
       type: {class: Cube, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
 --- !u!23 &3950742491487865470
 MeshRenderer:
@@ -458,7 +540,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 8
   m_IsActive: 1
 --- !u!4 &3813499680352299712
 Transform:
@@ -630,7 +712,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3007
+  m_VersionIndex: 3031
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -648,7 +730,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    rid: 2996503967932088364
+    rid: 6691091235775184956
   m_Size: {x: 8, y: 0, z: -10}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 1
@@ -660,7 +742,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2996503967932088364
+    - rid: 6691091235775184956
       type: {class: Plane, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
       data:
         m_HeightSegments: 1
@@ -769,6 +851,7 @@ Transform:
   - {fileID: 5089803434519932588}
   - {fileID: 4138912572342991749}
   - {fileID: 561613310970684471}
+  - {fileID: 6057246411408796395}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0.28, y: 0, z: 0}
@@ -831,6 +914,76 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ObjectToHide: {fileID: 972814914167440188}
+--- !u!1001 &1154436391
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 933456457562392478}
+    m_Modifications:
+    - target: {fileID: 2298804904886324246, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057246412428060620, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_RootOrder
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057246412428060620, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057246412428060620, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.002438
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057246412428060620, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.995113
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057246412428060620, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.999997
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057246412428060620, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.002443469
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057246412428060620, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057246412428060620, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057246412428060620, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057246412428060620, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6057246412428060620, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121987293979329889, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_Name
+      value: Bed (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7121987293979329889, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+--- !u!4 &6057246411408796395 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6057246412428060620, guid: 3342e50f41315704ba3e5ec67c7226bb, type: 3}
+  m_PrefabInstance: {fileID: 1154436391}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2829779707636335883
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -896,7 +1049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6024573196650017548, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_VersionIndex
-      value: 4147
+      value: 4174
       objectReference: {fileID: 0}
     - target: {fileID: 7847850065240673015, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_Name
@@ -908,7 +1061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_Shape
-      value: 2996503967932088330
+      value: 6691091235719086993
       objectReference: {fileID: 0}
     - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: managedReferences[2996503920859938826]
@@ -916,6 +1069,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: managedReferences[2996503967932088330]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
+      propertyPath: managedReferences[6691091235719086993]
       value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -938,7 +1095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 38648671617134026, guid: 19a589ae264b9204f9fc72d0d4dae4bb, type: 3}
       propertyPath: m_VersionIndex
-      value: 4322
+      value: 4352
       objectReference: {fileID: 0}
     - target: {fileID: 38648671617134026, guid: 19a589ae264b9204f9fc72d0d4dae4bb, type: 3}
       propertyPath: m_SelectedEdges.Array.size
@@ -1116,6 +1273,14 @@ PrefabInstance:
       propertyPath: m_SelectedVertices.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 38648671617134027, guid: 19a589ae264b9204f9fc72d0d4dae4bb, type: 3}
+      propertyPath: m_Shape
+      value: 6691091235719087053
+      objectReference: {fileID: 0}
+    - target: {fileID: 38648671617134027, guid: 19a589ae264b9204f9fc72d0d4dae4bb, type: 3}
+      propertyPath: managedReferences[6691091235719087053]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 38648671617134029, guid: 19a589ae264b9204f9fc72d0d4dae4bb, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -1123,6 +1288,14 @@ PrefabInstance:
     - target: {fileID: 38648671617134030, guid: 19a589ae264b9204f9fc72d0d4dae4bb, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4827456870256115247, guid: 19a589ae264b9204f9fc72d0d4dae4bb, type: 3}
+      propertyPath: m_Shape
+      value: 6691091235719086892
+      objectReference: {fileID: 0}
+    - target: {fileID: 4827456870256115247, guid: 19a589ae264b9204f9fc72d0d4dae4bb, type: 3}
+      propertyPath: managedReferences[6691091235719086892]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
       objectReference: {fileID: 0}
     - target: {fileID: 6259265308930367588, guid: 19a589ae264b9204f9fc72d0d4dae4bb, type: 3}
       propertyPath: m_Name
@@ -1182,7 +1355,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7615551546287446431, guid: 19a589ae264b9204f9fc72d0d4dae4bb, type: 3}
       propertyPath: m_VersionIndex
-      value: 4183
+      value: 4210
       objectReference: {fileID: 0}
     - target: {fileID: 7615551546287446431, guid: 19a589ae264b9204f9fc72d0d4dae4bb, type: 3}
       propertyPath: m_SelectedEdges.Array.size
@@ -1236,19 +1409,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6011386573438819214, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6011386573438819214, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6011386573438819214, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6011386573438819214, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6011386573438819214, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1256,7 +1429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6011386573438819214, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -90
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 6011386573438819214, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1268,7 +1441,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6024573196650017548, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_VersionIndex
-      value: 4138
+      value: 4165
       objectReference: {fileID: 0}
     - target: {fileID: 7847850065240673015, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_Name
@@ -1280,7 +1453,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_Shape
-      value: 2996503967932088332
+      value: 6691091235719087051
       objectReference: {fileID: 0}
     - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: managedReferences[2996503920859938829]
@@ -1288,6 +1461,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: managedReferences[2996503967932088332]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
+      propertyPath: managedReferences[6691091235719087051]
       value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1362,7 +1539,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6024573196650017548, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_VersionIndex
-      value: 4144
+      value: 4171
       objectReference: {fileID: 0}
     - target: {fileID: 7847850065240673015, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_Name
@@ -1374,7 +1551,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_Shape
-      value: 2996503967932088365
+      value: 6691091235775185002
       objectReference: {fileID: 0}
     - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: managedReferences[2996503920859938840]
@@ -1382,6 +1559,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: managedReferences[2996503967932088365]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
+      propertyPath: managedReferences[6691091235775185002]
       value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1456,7 +1637,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6024573196650017548, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_VersionIndex
-      value: 4141
+      value: 4168
       objectReference: {fileID: 0}
     - target: {fileID: 7847850065240673015, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_Name
@@ -1468,7 +1649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: m_Shape
-      value: 2996503967932088332
+      value: 6691091235775184993
       objectReference: {fileID: 0}
     - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: managedReferences[2996503920859938829]
@@ -1476,6 +1657,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
       propertyPath: managedReferences[2996503967932088332]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704007673557308604, guid: 13bebc1946f797d4180ecf6cce482715, type: 3}
+      propertyPath: managedReferences[6691091235775184993]
       value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1502,7 +1687,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5630866849138136897, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: m_VersionIndex
-      value: 3941
+      value: 3968
       objectReference: {fileID: 0}
     - target: {fileID: 5680150508343443395, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: m_RootOrder
@@ -1522,11 +1707,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5680150508343443395, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 5680150508343443395, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5680150508343443395, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: m_LocalRotation.y
@@ -1542,7 +1727,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5680150508343443395, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 270
       objectReference: {fileID: 0}
     - target: {fileID: 5680150508343443395, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -1558,7 +1743,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7310914680684769521, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: m_Shape
-      value: 2996503967932088328
+      value: 6691091235775184981
       objectReference: {fileID: 0}
     - target: {fileID: 7310914680684769521, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: managedReferences[2996503920859938821]
@@ -1566,6 +1751,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7310914680684769521, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: managedReferences[2996503967932088328]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310914680684769521, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
+      propertyPath: managedReferences[6691091235775184981]
       value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
       objectReference: {fileID: 0}
     - target: {fileID: 8166826000009490106, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
@@ -1600,7 +1789,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5630866849138136897, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: m_VersionIndex
-      value: 3935
+      value: 3962
       objectReference: {fileID: 0}
     - target: {fileID: 5680150508343443395, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: m_RootOrder
@@ -1656,7 +1845,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7310914680684769521, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: m_Shape
-      value: 2996503967932088335
+      value: 6691091235719086841
       objectReference: {fileID: 0}
     - target: {fileID: 7310914680684769521, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: managedReferences[2996503920859938849]
@@ -1664,6 +1853,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7310914680684769521, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
       propertyPath: managedReferences[2996503967932088335]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 7310914680684769521, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
+      propertyPath: managedReferences[6691091235719086841]
       value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
       objectReference: {fileID: 0}
     - target: {fileID: 8166826000009490106, guid: 85d7faba99b886a458a95319b1f358bc, type: 3}
@@ -1690,7 +1883,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5805198733637185416, guid: 35a1af68c005e024cb4bef2dfa075f7f, type: 3}
       propertyPath: m_Shape
-      value: 2996503882330275858
+      value: 6691091235719087076
       objectReference: {fileID: 0}
     - target: {fileID: 5805198733637185416, guid: 35a1af68c005e024cb4bef2dfa075f7f, type: 3}
       propertyPath: m_Size.x
@@ -1728,13 +1921,17 @@ PrefabInstance:
       propertyPath: managedReferences[2996503882330275858]
       value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
       objectReference: {fileID: 0}
+    - target: {fileID: 5805198733637185416, guid: 35a1af68c005e024cb4bef2dfa075f7f, type: 3}
+      propertyPath: managedReferences[6691091235719087076]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 5805198733637185417, guid: 35a1af68c005e024cb4bef2dfa075f7f, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5805198733637185417, guid: 35a1af68c005e024cb4bef2dfa075f7f, type: 3}
       propertyPath: m_VersionIndex
-      value: 4519
+      value: 4546
       objectReference: {fileID: 0}
     - target: {fileID: 5805198733637185417, guid: 35a1af68c005e024cb4bef2dfa075f7f, type: 3}
       propertyPath: m_SelectedEdges.Array.size
