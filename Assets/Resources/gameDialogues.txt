@@ -7,18 +7,21 @@ C.R. Piller: Now that I'm on the ship, I need to find Scarlet.
 C.R. Piller: I can't use these stairs.. I have to find different way to get upstairs.
 
 # Monologue when Piller finds Weapon
-C.R. Piller: I found it! But it's so big, we can't get it off the ship ourselves!
+C.R. Piller: I found it! But it's impossible to move! It's too heavy to carry! We can't get it off the ship ourselves!
 C.R. Piller: There is no way this weapon can do good in the hands of the UG, they will rule the world. 
-C.R. Piller: But if I destroy it, maybe the seas will continue to rise. What do I do D:!
+C.R. Piller: But if I destroy it, maybe the seas will continue to rise and more people will die. What do I do D:!
 
 # weaponDestroyed
 ? finishLevel
 C.R. Piller: I'm going to destroy the weapon now. Maybe we can build it again in time, better that
 than handing the world to people that caused this mess.
+...: Piller and Beatle escape and go out for a hot date. Scientists of the resistance work hard to create a new weather changer. They succeed. 
 
 # weaponLeft
 ? finishLevelAlt
 C.R. Piller: I'm going to leave the weapon. If I destroy it then everyone could die anyway. Resisting will be harder now. 
+...: The UG use the weapon to create hurricanes and natural disasters. Fortunately a disaster backfires and destroys a ship with all their leaders. 
+...: Now resistance fighters are trying to undo their wrongs.
 
 # firstMeetScarlet
 !
