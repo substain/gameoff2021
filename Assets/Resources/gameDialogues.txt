@@ -6,7 +6,7 @@ C.R. Piller: Now that I'm on the ship, I need to find Scarlet.
 ? cantUseStairs
 C.R. Piller: I can't use these stairs.. I have to find different way to get upstairs.
 
-# Monologue when Piller finds Weapon
+# weaponFound
 C.R. Piller: I found it! But it's so big, we can't get it off the ship ourselves!
 C.R. Piller: There is no way this weapon can do good in the hands of the UG, they will rule the world. 
 C.R. Piller: But if I destroy it, maybe the seas will continue to rise. What do I do D:!
@@ -34,15 +34,15 @@ Scarlet Beatle: Take this key, it will help you get to locations around the ship
 C.R. Piller: I’ll find it. You can count on me. 
 Scarlet Beatle: We all do. Be safe.
 
-# Scarlet Beatle
+# scarletHelpful
 *
 Scarlet Beatle: Hello handsome, try bugging the people in the dining room. 
 
-# Scarlet Beatle
+# scarletNice
 *
 Scarlet Beatle: I'd like to take you out for dinner when this is all over, on me x
 
-# Scarlet Beatle
+# scarletRemember
 *
 Scarlet Beatle: Remember our first mission over the Saharan Ocean, strange it's under the sea now
 

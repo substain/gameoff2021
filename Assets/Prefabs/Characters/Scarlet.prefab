@@ -335,6 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bugIndicator: {fileID: 6839238214408584823}
+  rewardClip: {fileID: 0}
 --- !u!114 &1758105493995981394
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -736,6 +737,7 @@ MonoBehaviour:
   watchDelay: 1
   playerSpotted: 0
   visibleTargets: []
+  hearingDistance: 5
   displayWatcherGizmo: 1
 --- !u!82 &2001903028
 AudioSource:
@@ -1116,6 +1118,7 @@ GameObject:
   - component: {fileID: 7565368755326109424}
   - component: {fileID: 6446241005199521809}
   - component: {fileID: 1792200066}
+  - component: {fileID: 8524813835717811993}
   m_Layer: 0
   m_Name: ActivityManager
   m_TagString: Untagged
@@ -1180,14 +1183,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   order: -1
-  baseAlert: -1
   audioClip: {fileID: 0}
   contentLoopable: 0
   activityString: 
-  listenRewardConstraint: 16
-  activationConstraint: 16
-  deactivationConstraint: 16
+  listenRewardConstraint: 0
+  activationConstraint: 0
+  deactivationConstraint: 0
   playerReachedRange: 2
-  moveSpeed: 6
+  moveSpeed: 7
   playerPosUpdateRate: 0.25
   listenTimeNeededForConstraint: 3.4028235e+38
+--- !u!114 &8524813835717811993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8149315412953787710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c54e7c2e1d9f342459a1d084dd4a0a19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  order: -1
+  audioClip: {fileID: 0}
+  contentLoopable: 0
+  activityString: 
+  listenRewardConstraint: 0
+  activationConstraint: 0
+  deactivationConstraint: 0
+  changeAngleTime: 0.7
+  checkRadius: 80
+  checkDuration: 2.5

@@ -24,8 +24,6 @@ public class WatcherNPC : MonoBehaviour {
 	[HideInInspector]
 	public List<Transform> visibleTargets = new List<Transform>();
 
-	private Light watchLight;
-
 	private ActivityManager activityManager;
 	private Vector3 lookDirection = Vector3.zero;
 
@@ -35,7 +33,6 @@ public class WatcherNPC : MonoBehaviour {
 	void Awake()
 	{
 		activityManager = GetComponentInChildren<ActivityManager>();
-		watchLight = GetComponentInChildren<Light>();
 	}
 
 	void Start()
@@ -43,7 +40,6 @@ public class WatcherNPC : MonoBehaviour {
 		GameObject canvas = gameObject.transform.Find("Canvas").gameObject;
 		GameObject slider = canvas.transform.Find("Slider").gameObject;
 		slider.GetComponent<Slider>().maxValue = watchDelay;
-		InitWatchLight();
 	}
 	void FixedUpdate() {
 		//Debug.Log("fixedUpdate watcherNPC");
@@ -65,15 +61,14 @@ public class WatcherNPC : MonoBehaviour {
         }
     }
 
-	private void InitWatchLight()
+	public float GetViewAngle()
 	{
-		watchLight.spotAngle = viewAngle;
+		return viewAngle;
 	}
 
 	public void SetLookDirection(Vector3 lookDirection)
 	{
 		this.lookDirection = lookDirection;
-		watchLight.transform.rotation = Quaternion.LookRotation(lookDirection);
 	}
 
 	private void AdjustRotation() {

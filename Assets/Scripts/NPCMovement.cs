@@ -11,6 +11,7 @@ public class NPCMovement : MonoBehaviour
     private WatcherNPC watcherNpc;
 
     private Vector3 destination;
+    private Light watchLight;
 
     [SerializeField]
     private Vector3 lookDirection = Vector3.back;
@@ -18,6 +19,8 @@ public class NPCMovement : MonoBehaviour
     private float currentSpeed = 1;
     void Awake()
     {
+        watchLight = GetComponentInChildren<Light>();
+
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         animator = GetComponentInChildren<Animator>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -27,6 +30,19 @@ public class NPCMovement : MonoBehaviour
     void Start()
     {
         SetLookDirection(lookDirection);
+        InitWatchLight();
+    }
+
+    private void InitWatchLight()
+    {
+        if(watcherNpc != null)
+        {
+            watchLight.spotAngle = watcherNpc.GetViewAngle();
+        }
+        else
+        {
+            watchLight.spotAngle = 45f;
+        }
     }
 
     void FixedUpdate()
@@ -108,8 +124,9 @@ public class NPCMovement : MonoBehaviour
     {
         spriteRenderer.flipX = lookDir.x < 0;
         animator.SetBool("isBack", lookDir.z > 0);
-        watcherNpc.SetLookDirection(lookDir);
+        watcherNpc?.SetLookDirection(lookDir);
         lookDirection = lookDir;
+        watchLight.transform.rotation = Quaternion.LookRotation(lookDirection);
     }
 
     public Vector3 GetLookDirection()

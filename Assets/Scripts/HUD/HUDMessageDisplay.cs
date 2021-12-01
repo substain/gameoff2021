@@ -52,7 +52,7 @@ public class HUDMessageDisplay : MonoBehaviour
         if (timePassed < typeDuration)
         {
             relativeProgress = Mathf.InverseLerp(0, typeDuration, timePassed);
-            int lettersShown = Mathf.CeilToInt(relativeProgress / relTimePerLetter);
+            int lettersShown = Mathf.Min(Mathf.CeilToInt(relativeProgress / relTimePerLetter), currentMessage.Length);
             if (lettersShown <= 0)
             {
                 messageText.text = "";

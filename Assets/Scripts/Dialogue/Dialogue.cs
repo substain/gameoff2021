@@ -56,6 +56,11 @@ public class Dialogue
     {
         if (isOneShot)
         {
+            ConstraintManager.GameConstraint? constraint = ToGameConstraint(key);
+            if (constraint.HasValue)
+            {
+                ConstraintManager.Instance.SetSatisfied(constraint.Value);
+            }
             wasCompleted = true;
         }
         Reset();
@@ -95,5 +100,16 @@ public class Dialogue
     private static string GetReplacedText(DialogueLine dialogueLine)
     {
         return InputKeyHelper.Instance.ReplacePlaceholdersWithCurrentKeys(dialogueLine.content);
+    }
+
+    public static ConstraintManager.GameConstraint? ToGameConstraint(DialogueHolder.DialogueKey dialogueKey)
+    {
+        switch (dialogueKey){
+            case DialogueHolder.DialogueKey.firstMeetScarlet:
+                {
+                    return ConstraintManager.GameConstraint.gotKey2;
+                }
+        }
+        return null;
     }
 }

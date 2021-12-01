@@ -14,7 +14,7 @@ public class ConstraintManager : MonoBehaviour
 		none, finishLevel, 
 		gotKey1, gotKey2, gotKey3, gotKey4, gotKey5, gotKey6, gotKey7, gotKey8,
 		startUseTutorial, startDashTutorial, startAvoidTutorial, startBugTutorial, bugUsed,
-		cantUseStairs, finishLevelAlt
+		cantUseStairs, finishLevelAlt, upperStairsReached, upperLevelReached, weaponXLocationRevealed
 	}
 
 	public enum ChoiceType

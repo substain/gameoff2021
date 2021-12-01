@@ -10,7 +10,7 @@ public class PursuePlayerActivity : AbstractActivity
     private float playerReachedRange = 2.0f;
 
     [SerializeField]
-    private float moveSpeed = 2;
+    private float moveSpeed = 7;
 
     [SerializeField]
     private float playerPosUpdateRate = 0.75f;
