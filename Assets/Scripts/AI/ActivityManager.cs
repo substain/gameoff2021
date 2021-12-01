@@ -105,6 +105,7 @@ public class ActivityManager : MonoBehaviour
 
     private void UpdateActiveActivity()
     {
+
         UpdateToNextActivityIndex();
         if(currentIndex > -1)
         {
@@ -117,6 +118,7 @@ public class ActivityManager : MonoBehaviour
         List<AbstractActivity> possibleActivities = orderedActivities.Where(oa => oa.HasConstraintsSatisfied()).ToList();
         if (possibleActivities.Count == 0)
         {
+            currentIndex = -1;
             return;
         }
 
@@ -124,17 +126,18 @@ public class ActivityManager : MonoBehaviour
 
         if (useRandomOrder)
         {
-            if(possibleIndices.Count > 1)
+            if (possibleIndices.Count > 1)
             {
                 possibleIndices.RemoveAt(currentIndex);
             }
-            currentIndex = possibleIndices[UnityEngine.Random.Range(0, possibleIndices.Count)];
+            currentIndex = orderedActivities.FindIndex(oa => oa == possibleActivities[possibleIndices[UnityEngine.Random.Range(0, possibleIndices.Count)]]);
+
         }
         else
         {
             int refIndex = possibleIndices.FindIndex(ind => ind == currentIndex);
             refIndex = (refIndex + 1) % possibleIndices.Count;
-            currentIndex = possibleIndices[refIndex];
+            currentIndex = orderedActivities.FindIndex(oa => oa == possibleActivities[possibleIndices[refIndex]]);
         }
     }
 
@@ -208,6 +211,7 @@ public class ActivityManager : MonoBehaviour
 
     private void StartActivity(AbstractActivity activity)
     {
+
         currentActivity?.StopActivity();
         activity.StartActivity();
         bugAttachment.SetCurrentActivity(activity);

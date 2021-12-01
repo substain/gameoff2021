@@ -115,7 +115,6 @@ public class DialogueHolder : MonoBehaviour, IInteractable
 
     protected virtual void FinishDialogue(PlayerInteraction interactingPlayer)
     {
-        Debug.Log("finishing dialogue" + currentDialogue.GetKey().ToString());
         currentDialogue.SetFinished();
         if (currentDialogue.IsOneShot())
         {

@@ -31,10 +31,15 @@ public class MovementActivity : AbstractActivity
     [SerializeField]
     private float listenTimeNeededForConstraint = float.MaxValue;
 
+    void Awake()
+    {
+        npcMovement = controlledGameObject?.GetComponent<NPCMovement>();
+    }
+
     void Start()
     {
+        npcMovement = controlledGameObject?.GetComponent<NPCMovement>();
         timer = GetComponent<Timer>();
-        npcMovement = controlledGameObject.GetComponent<NPCMovement>();
         InvokeRepeating("CheckForDoors", 1, 0.1f);
     }
 
@@ -73,6 +78,7 @@ public class MovementActivity : AbstractActivity
 
     protected override void DoStartActivity()
     {
+        npcMovement = controlledGameObject?.GetComponent<NPCMovement>();
         npcMovement.SetMoveTarget(targetPosition.position);
         npcMovement.StartMovement(moveSpeed);
     }

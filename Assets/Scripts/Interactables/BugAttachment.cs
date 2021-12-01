@@ -173,7 +173,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
         }
         source.clip = clip;
         source.loop = looping;
-        source.time = clipTimePosition > 0 ? clipTimePosition : 0f;
+        source.time = Mathf.Max(clipTimePosition > 0 ? clipTimePosition : 0f, source.clip.length-1);
         source.Play();
     }
 

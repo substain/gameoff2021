@@ -7,7 +7,7 @@ C.R. Piller: Now that I'm on the ship, I need to find Scarlet.
 C.R. Piller: I can't use these stairs.. I have to find different way to get upstairs.
 
 # weaponFound
-! finishLevel
+? finishLevel
 C.R. Piller: I found it! But it's impossible to move! It's too heavy to carry! We can't get it off the ship ourselves!
 C.R. Piller: There is no way this weapon can do good in the hands of the UG, they will rule the world.
 C.R. Piller: But if I destroy it, maybe the seas will continue to rise and more people will die. What do I do D:!

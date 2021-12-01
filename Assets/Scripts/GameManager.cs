@@ -18,6 +18,9 @@ public class GameManager : MonoBehaviour
 	public static GameManager Instance = null;
 
 	[SerializeField]
+	private float timeToFinish = 4.0f;
+
+	[SerializeField]
 	private GameScene thisScene;	
 	
 	[SerializeField]
@@ -231,13 +234,17 @@ public class GameManager : MonoBehaviour
 		if (ConstraintManager.Instance.IsSatisfied(constraintNeededForNextLevel))
 		{
 			Timer timer = gameObject.AddComponent<Timer>();
-			timer.Init(5, LoadNextLevel);
+			timer.Init(timeToFinish, LoadNextLevel);
 			ConstraintManager.OnChangeConstraints -= CheckLevelFinished;
 		}
 	}
 
 	public void StartClip(AudioClip clip)
 	{
+		if(musicAudioSource.clip == clip)
+		{
+			return;
+		}
 		musicAudioSource.clip = clip;
 		musicAudioSource.Play();
 	}

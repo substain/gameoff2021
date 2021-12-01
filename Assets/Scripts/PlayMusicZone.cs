@@ -14,6 +14,7 @@ public class PlayMusicZone : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
+            Debug.Log("starting " + musicToStart.name);
             GameManager.Instance.StartClip(musicToStart);
         }
     }

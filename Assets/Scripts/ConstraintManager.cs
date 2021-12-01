@@ -53,7 +53,7 @@ public class ConstraintManager : MonoBehaviour
 
 	public bool AllConstraintsSatisfied(List<GameConstraint> constraints)
 	{
-		foreach(GameConstraint gc in constraints)
+		foreach (GameConstraint gc in constraints)
 		{
 			if (!satisfiedConstraints.Contains(gc))
 			{
@@ -87,6 +87,7 @@ public class ConstraintManager : MonoBehaviour
 
 	public void SetSatisfied(GameConstraint constraint)
 	{
+		Debug.Log("setting satisfied: " + constraint.ToString());
 		if (constraint == GameConstraint.none)
 		{
 			Debug.LogWarning("'none' constraint should not be used.");
