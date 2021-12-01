@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.AI;
-using System;
 
 public class ActivityManager : MonoBehaviour
 {
@@ -21,9 +18,13 @@ public class ActivityManager : MonoBehaviour
 
     private List<AbstractActivity> orderedActivities = new List<AbstractActivity>();
 
-    private int currentActivityIndex = -1;
+    private int currentIndex = -1;
 
     private PursuePlayerActivity pursuePlayerActivity;
+    private SuspiciousActivity suspiciousActivity;
+    private AbstractActivity currentActivity;
+
+    private bool beingSuspicious = false;
     private bool pursuingPlayer = false;
 
     [SerializeField]
@@ -37,14 +38,17 @@ public class ActivityManager : MonoBehaviour
 
         //search for pursue player activities
         pursuePlayerActivity = (PursuePlayerActivity) activities.FirstOrDefault(activity => activity.GetType() == typeof(PursuePlayerActivity));
-        pursuePlayerActivity.Init(controlledObject);
+        pursuePlayerActivity?.Init(controlledObject);
+
+        suspiciousActivity = (SuspiciousActivity)activities.FirstOrDefault(activity => activity.GetType() == typeof(SuspiciousActivity));
+        suspiciousActivity?.Init(controlledObject);
 
         orderedActivities = activities.OrderBy(activity => activity.GetOrder())
-                                        .Where(activity => activity.GetType() != typeof(PursuePlayerActivity))
+                                        .Where(activity => activity.GetType() != typeof(PursuePlayerActivity) && activity.GetType() != typeof(SuspiciousActivity))
                                         .ToList();
 
         orderedActivities.ForEach(x => x.Init(controlledObject));
-        currentActivityIndex = Mathf.Min(initialActivityIndex, orderedActivities.Count-1);
+        currentIndex = Mathf.Min(initialActivityIndex, orderedActivities.Count-1);
 
         if (orderedActivities.Count == 0)
         {
@@ -57,22 +61,23 @@ public class ActivityManager : MonoBehaviour
     void Start()
     {
         InvokeRepeating("CheckActivityStatus", 0.11f, 0.11f);
-        if(orderedActivities.Count == 0 || currentActivityIndex < 0)
+        if(orderedActivities.Count == 0 || currentIndex < 0)
         {
             return;
         }
 
-        pursuePlayerActivity.CheckActivationConstraints();
+        pursuePlayerActivity?.CheckActivationConstraints();
+        suspiciousActivity?.CheckActivationConstraints();
         orderedActivities.ForEach(x => x.CheckActivationConstraints());
 
-        orderedActivities[currentActivityIndex].StartActivity();
-        bugAttachment.SetCurrentActivity(orderedActivities[currentActivityIndex]);
+        StartActivity(orderedActivities[currentIndex]);
         ConstraintManager.OnChangeConstraints += CheckConstraints;
     }
 
     private void CheckConstraints()
     {
-        pursuePlayerActivity.CheckActivationConstraints();
+        pursuePlayerActivity?.CheckActivationConstraints();
+        suspiciousActivity?.CheckActivationConstraints();
         orderedActivities.ForEach(oa => oa.CheckActivationConstraints());
     }
 
@@ -83,11 +88,16 @@ public class ActivityManager : MonoBehaviour
             StopFollowingPlayer();
             return;
         }
-        if (orderedActivities.Count == 0 || currentActivityIndex < 0)
+        if (beingSuspicious && suspiciousActivity.CheckIfFinished())
+        {
+            StopBeingSuspicious();
+            return;
+        }
+        if (orderedActivities.Count == 0 || currentIndex < 0)
         {
             return;
         }
-        if (orderedActivities[currentActivityIndex].CheckIfFinished())
+        if (orderedActivities[currentIndex].CheckIfFinished())
         {
             UpdateActiveActivity();
         }
@@ -95,10 +105,11 @@ public class ActivityManager : MonoBehaviour
 
     private void UpdateActiveActivity()
     {
-        orderedActivities[currentActivityIndex].StopActivity();
         UpdateToNextActivityIndex();
-        orderedActivities[currentActivityIndex].StartActivity();
-        bugAttachment.SetCurrentActivity(orderedActivities[currentActivityIndex]);
+        if(currentIndex > -1)
+        {
+            StartActivity(orderedActivities[currentIndex]);
+        }
     }
 
     private void UpdateToNextActivityIndex()
@@ -115,15 +126,15 @@ public class ActivityManager : MonoBehaviour
         {
             if(possibleIndices.Count > 1)
             {
-                possibleIndices.RemoveAt(currentActivityIndex);
+                possibleIndices.RemoveAt(currentIndex);
             }
-            currentActivityIndex = possibleIndices[UnityEngine.Random.Range(0, possibleIndices.Count)];
+            currentIndex = possibleIndices[UnityEngine.Random.Range(0, possibleIndices.Count)];
         }
         else
         {
-            int refIndex = possibleIndices.FindIndex(ind => ind == currentActivityIndex);
+            int refIndex = possibleIndices.FindIndex(ind => ind == currentIndex);
             refIndex = (refIndex + 1) % possibleIndices.Count;
-            currentActivityIndex = possibleIndices[refIndex];
+            currentIndex = possibleIndices[refIndex];
         }
     }
 
@@ -138,29 +149,51 @@ public class ActivityManager : MonoBehaviour
 
     public void StartPursuePlayer(Transform targetTransform)
     {
-        if(!pursuingPlayer)
+        if (pursuingPlayer || pursuePlayerActivity == null)
         {
-            pursuingPlayer = true;
-            pursuePlayerActivity.SetPlayer(targetTransform);
-            pursuePlayerActivity.SetTargetPosition(targetTransform.position);
-            pursuePlayerActivity.StartActivity();
-            bugAttachment.SetCurrentActivity(pursuePlayerActivity);
+            return;
         }
+        beingSuspicious = false;
+        pursuingPlayer = true;
+        pursuePlayerActivity.SetPlayer(targetTransform);
+        pursuePlayerActivity.SetTargetPosition(targetTransform.position);
+        StartActivity(pursuePlayerActivity);
+    }
+
+    public void StartBeingSuspicious(Transform targetTransform)
+    {
+        if (pursuingPlayer || beingSuspicious || suspiciousActivity == null)
+        {
+            return;
+        }
+        beingSuspicious = true;
+        suspiciousActivity.SetTarget(targetTransform);
+        StartActivity(suspiciousActivity);
     }
 
     public void StopFollowingPlayer()
     {
         pursuingPlayer = false;
+        beingSuspicious = true;
 
-        if (orderedActivities.Count == 0 || currentActivityIndex < 0)
+        if (suspiciousActivity == null){
+            StopBeingSuspicious();
+            return;
+        }
+
+        StartActivity(suspiciousActivity);
+    }
+
+    public void StopBeingSuspicious()
+    {
+        beingSuspicious = false;
+
+        if (orderedActivities.Count == 0 || currentIndex < 0)
         {
             return;
         }
-        currentActivityIndex = afterPursueActivity;
-        Debug.Log("stop following player, next activity:" + currentActivityIndex);
-
-        orderedActivities[currentActivityIndex].StartActivity();
-        bugAttachment.SetCurrentActivity(orderedActivities[currentActivityIndex]);
+        currentIndex = afterPursueActivity;
+        StartActivity(orderedActivities[currentIndex]);
     }
 
     public void SetPaused(bool isPaused)
@@ -170,7 +203,20 @@ public class ActivityManager : MonoBehaviour
             return;
         }
         pursuePlayerActivity.SetPaused(isPaused);
-        orderedActivities[currentActivityIndex].SetPaused(isPaused);
+        orderedActivities[currentIndex].SetPaused(isPaused);
+    }
+
+    private void StartActivity(AbstractActivity activity)
+    {
+        currentActivity?.StopActivity();
+        activity.StartActivity();
+        bugAttachment.SetCurrentActivity(activity);
+        currentActivity = activity;
+    }
+
+    public bool IsSuspicious()
+    {
+        return beingSuspicious;
     }
 
     private void OnDestroy()

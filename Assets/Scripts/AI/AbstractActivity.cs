@@ -10,10 +10,6 @@ public abstract class AbstractActivity : MonoBehaviour
     [SerializeField]
     protected int order;
 
-    [Tooltip("How alert the npc is doing this activity (0-1)")]
-    [SerializeField]
-    protected float baseAlert = 0.5f;
-
     [SerializeField]
     private AudioClip audioClip;
 

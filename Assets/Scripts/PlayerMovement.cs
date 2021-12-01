@@ -165,6 +165,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public bool IsQuiet()
+    {
+        return isSneaking || currentMovement.magnitude < 2 * movementInputCutoff;
+    }
+
     public void ProcessMoveInput(InputAction.CallbackContext context)
     {
         if (isInMenu)

@@ -19,6 +19,7 @@ public class IdleActivity : AbstractActivity
     {
         timer.Init(idleTime);
     }
+
     protected override void DoStopActivity()
     {
         timer.Finish();

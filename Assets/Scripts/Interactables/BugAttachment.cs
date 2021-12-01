@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ConstraintManager;
 
 public class BugAttachment : MonoBehaviour, IInteractable
 {
@@ -18,11 +19,12 @@ public class BugAttachment : MonoBehaviour, IInteractable
     private AudioSource targetAudioSource = null;
 
     private float timeListened = 0;
-
+    
+    [SerializeField]
     private AudioClip rewardClip;
 
     private bool grantedReward = false;
-
+    private GameConstraint constraintRewarded = GameConstraint.testConstraint;
     void Awake()
     {
         listenTimer = gameObject.AddComponent<Timer>();
@@ -36,6 +38,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
     public void SetCurrentActivity(AbstractActivity activity)
     {
+
         timeListened = 0;
         string lastActivityString = activity.GetActivityString();
         currentActivity = activity;
@@ -45,7 +48,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
         {
             ConstraintManager.GameConstraint? constraint = activity.GetGameConstraint();
 
-            if (constraint.HasValue && activity.GetNeededTimeToListen() < timeListened)
+            if (constraint.HasValue)
             {
                 listenTimer.SetPaused(false);
 
@@ -75,13 +78,9 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
     private void ReachedConstraintTime()
     {
+        constraintRewarded = currentActivity.GetGameConstraint().Value;
         ConstraintManager.Instance.SetSatisfied(currentActivity.GetGameConstraint().Value);
         grantedReward = true;
-    }
-
-    public float GetCurrentAudioClipPos()
-    {
-        return listenTimer.GetTimePassed();
     }
 
     public bool HasBugAttached()
@@ -138,6 +137,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
         if (constraint.HasValue && currentActivity.GetNeededTimeToListen() < timeListened)
         {
+            listenTimer.Init(currentActivity.GetNeededTimeToListen() - timeListened, ReachedConstraintTime);
             listenTimer.SetPaused(false);
         }
         this.targetAudioSource = source;
@@ -164,6 +164,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
         if (constraint.HasValue && currentActivity.GetNeededTimeToListen() < timeListened)
         {
+            timeListened = listenTimer.GetTimePassed();
             listenTimer.SetPaused(true);
         }
         HUDManager.Instance.StopListenContent();
@@ -174,7 +175,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
         {
             StartPlayingSoundAt(targetAudioSource, rewardClip, 0, false);
 
-            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraint.Value), isListenBug: true);
+            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraintRewarded), isListenBug: true);
             grantedReward = false;
         }
         targetAudioSource = null;

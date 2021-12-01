@@ -29,6 +29,9 @@ public class WatcherNPC : MonoBehaviour {
 	private ActivityManager activityManager;
 	private Vector3 lookDirection = Vector3.zero;
 
+	[SerializeField]
+	private float hearingDistance = 5.0f;
+
 	void Awake()
 	{
 		activityManager = GetComponentInChildren<ActivityManager>();
@@ -50,7 +53,8 @@ public class WatcherNPC : MonoBehaviour {
 		//if ( visibleTargets.Count != 0 ) {
 		if ( visibleTargets.Count != 0 ) {
 			//Debug.Log("Count down time " + watchCounter);
-			watchCounter += Time.deltaTime * spottingSpeed * (1 / dstToTarget);
+			float suspiciousModifier = activityManager.IsSuspicious() ? 1.75f : 1f;
+			watchCounter += Time.deltaTime * spottingSpeed * (1 / dstToTarget) * suspiciousModifier;
 			spottedIndicator.value = watchCounter;
 
 			//TODO maybe:  calculate spotting speed with dstToTarget and deltaTime
@@ -79,7 +83,7 @@ public class WatcherNPC : MonoBehaviour {
 
 	private void spottedPlayer()
 	{
-		GetComponentInChildren<ActivityManager>().StartPursuePlayer(visibleTargets[0]);
+		activityManager.StartPursuePlayer(visibleTargets[0]);
 
 		//Debug.Log("Player spotted");
 		spottedIndicator.gameObject.SetActive(false);
@@ -126,6 +130,7 @@ public class WatcherNPC : MonoBehaviour {
 					//Debug.Log("See target");
 				}
 			}
+			CheckTargetForSound(target);
 		}
 
 		// Reset values if nobody is in FoV
@@ -144,6 +149,16 @@ public class WatcherNPC : MonoBehaviour {
 		}
 	}
 
+	private void CheckTargetForSound(Transform target)
+	{
+		PlayerMovement playerMovement = target.GetComponent<PlayerMovement>();
+		if (Vector3.Distance(target.position, transform.position) <= hearingDistance && 
+			playerMovement != null && 
+			!playerMovement.IsQuiet())
+		{
+			activityManager.StartBeingSuspicious(target);
+		}
+	}
 
 #if UNITY_EDITOR
 
