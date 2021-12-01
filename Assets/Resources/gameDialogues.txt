@@ -1,5 +1,5 @@
 # introMonologue
-! 
+!
 C.R. Piller: Now that I'm on the ship, I need to find Scarlet.
 
 # cantUseStairs
@@ -7,18 +7,21 @@ C.R. Piller: Now that I'm on the ship, I need to find Scarlet.
 C.R. Piller: I can't use these stairs.. I have to find different way to get upstairs.
 
 # weaponFound
-C.R. Piller: I found it! But it's so big, we can't get it off the ship ourselves!
-C.R. Piller: There is no way this weapon can do good in the hands of the UG, they will rule the world. 
-C.R. Piller: But if I destroy it, maybe the seas will continue to rise. What do I do D:!
+C.R. Piller: I found it! But it's impossible to move! It's too heavy to carry! We can't get it off the ship ourselves!
+C.R. Piller: There is no way this weapon can do good in the hands of the UG, they will rule the world.
+C.R. Piller: But if I destroy it, maybe the seas will continue to rise and more people will die. What do I do D:!
 
 # weaponDestroyed
 ? finishLevel
 C.R. Piller: I'm going to destroy the weapon now. Maybe we can build it again in time, better that
 than handing the world to people that caused this mess.
+...: Piller and Beatle escape and go out for a hot date. Scientists of the resistance work hard to create a new weather changer. They succeed.
 
 # weaponLeft
 ? finishLevelAlt
-C.R. Piller: I'm going to leave the weapon. If I destroy it then everyone could die anyway. Resisting will be harder now. 
+C.R. Piller: I'm going to leave the weapon. If I destroy it then everyone could die anyway. Resisting will be harder now.
+...: The UG use the weapon to create hurricanes and natural disasters. Fortunately a disaster backfires and destroys a ship with all their leaders.
+...: Now resistance fighters are trying to undo their wrongs.
 
 # firstMeetScarlet
 !
@@ -26,17 +29,17 @@ Scarlet Beatle: It’s pleasant to set my eyes on you again Cat.
 C.R. Piller: And you Beetle, Scarlet Beatle.
 Scarlet Beatle: (Blush) Ok agent, here is our mission. The spy I am tracking is probably a male in his 30s.
 Scarlet Beatle: We know he eats cheese sticks.
-Scarlet Beatle: We think he was the cause of the theft of Weapon X. X was a tool created over many 
-Scarlet Beatle: years to reverse climate change, but we have intel that UG plan only to use it to 
+Scarlet Beatle: We think he was the cause of the theft of Weapon X. X was a tool created over many
+Scarlet Beatle: years to reverse climate change, but we have intel that UG plan only to use it to
 Scarlet Beatle: dominate more - climate change suits them. Your mission is to find it and capture it.
-Scarlet Beatle: Use your listening bug to find him and find where he has hidden weapon is. 
+Scarlet Beatle: Use your listening bug to find him and find where he has hidden weapon is.
 Scarlet Beatle: Take this key, it will help you get to locations around the ship.
-C.R. Piller: I’ll find it. You can count on me. 
+C.R. Piller: I’ll find it. You can count on me.
 Scarlet Beatle: We all do. Be safe.
 
 # scarletHelpful
 *
-Scarlet Beatle: Hello handsome, try bugging the people in the dining room. 
+Scarlet Beatle: Hello handsome, try bugging the people in the dining room.
 
 # scarletNice
 *
@@ -66,4 +69,3 @@ UNUSED
 
 # bugTutorialMono
 UNUSED
-
