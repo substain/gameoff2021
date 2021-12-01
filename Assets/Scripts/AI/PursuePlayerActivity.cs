@@ -30,7 +30,6 @@ public class PursuePlayerActivity : AbstractActivity
     void Start()
     {
         this.order = -1; //not needed
-        this.baseAlert = 1; //not needed
 
         timer = GetComponent<Timer>();
         npcMovement = controlledGameObject.GetComponent<NPCMovement>();

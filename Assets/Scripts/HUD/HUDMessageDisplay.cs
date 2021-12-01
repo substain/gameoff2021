@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class HUDMessageDisplay : MonoBehaviour
 {
-    private const float MESSAGE_DISPLAY_DURATION = 1.5f;
+    public const float MESSAGE_DISPLAY_DURATION = 1.5f;
     protected const float MESSAGE_KEEP_SHOWING_TIME = 0.5f;
 
     [SerializeField]
@@ -16,15 +16,18 @@ public class HUDMessageDisplay : MonoBehaviour
     private string currentMessage;
     private float relTimePerLetter = 0;
     private bool autoHideAfterTimer = true;
+    protected CanvasGroup canvasGroup;
 
     protected virtual void Awake()
     {
         displayTimer = gameObject.AddComponent<Timer>();
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     protected virtual void Start()
     {
         displayTimer.SetFixedUpdate(true);
+        canvasGroup.alpha = 0;
     }
 
     protected virtual void Update()
@@ -71,6 +74,8 @@ public class HUDMessageDisplay : MonoBehaviour
         bool useTyping = true,
         bool autoHideAfterTimer = true)
     {
+        canvasGroup.alpha = 1;
+
         this.autoHideAfterTimer = autoHideAfterTimer;
 
         if ((currentIsListenBug && !isPriority) || message.Length == 0)
@@ -95,8 +100,6 @@ public class HUDMessageDisplay : MonoBehaviour
 
     public void HideAfterTimer()
     {
-        Debug.Log("HideAfterTimer, autohide " + autoHideAfterTimer);
-
         currentIsListenBug = false;
         isTyping = false;
         currentMessage = "";
@@ -105,21 +108,20 @@ public class HUDMessageDisplay : MonoBehaviour
             return;
         }
         messageText.text = "";
+        canvasGroup.alpha = 0;
     }
 
     public void Hide()
     {
-        Debug.Log("Hide");
-
         currentIsListenBug = false;
         isTyping = false; 
         currentMessage = "";
         messageText.text = "";
+        canvasGroup.alpha = 0;
     }
 
     public void DisplaySkipped(string content, float timePassed, float fullDuration, bool isPriority, bool showFull)
     {
-        Debug.Log("display skipped: " + content + ", timePassed: " + timePassed + ", fullDuration:" + fullDuration + ", showFull:" + showFull);
         float timeLeft = fullDuration - timePassed;
         if (showFull)
         {

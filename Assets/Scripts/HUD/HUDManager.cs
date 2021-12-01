@@ -12,7 +12,6 @@ public class HUDManager : MonoBehaviour
     private HUDMessageDisplay hudMessageDisplay;
     private HUDBugDisplay hudBugDisplay;
     private HUDKeyDisplay hudKeyDisplay;
-    private HUDListenBugDisplay hudListenBugDisplay;
     private HUDDialogueDisplay hudDialogueDisplay;
 
     private List<IngameOverlayMenu> ingameMenus;
@@ -46,7 +45,6 @@ public class HUDManager : MonoBehaviour
         hudMessageDisplay = GetComponentInChildren<HUDMessageDisplay>();
         hudBugDisplay = GetComponentInChildren<HUDBugDisplay>();
         hudKeyDisplay = GetComponentInChildren<HUDKeyDisplay>();
-        hudListenBugDisplay = GetComponentInChildren<HUDListenBugDisplay>();
         hudDialogueDisplay = GetComponentInChildren<HUDDialogueDisplay>();
 
         ingameMenus = new List<IngameOverlayMenu>(GetComponentsInChildren<IngameOverlayMenu>());
@@ -55,17 +53,17 @@ public class HUDManager : MonoBehaviour
 
     public void UpdateActionHintText(string hintText)
     {
-        hudActionHint.SetActionHint(hintText);
+        //hudActionHint.SetActionHint(hintText);
     }
     
-    public void DisplayMessage(string message, bool isListenBug = false)
+    public void DisplayMessage(string message, float duration = HUDMessageDisplay.MESSAGE_DISPLAY_DURATION, bool isListenBug = false)
     {
-        hudMessageDisplay.Display(message, isPriority: isListenBug);
+        hudMessageDisplay.Display(message, duration: duration, isPriority: isListenBug);
     }
 
-    public void SetNumberOfBugs(int numBugs)
+    public void SetBugStates(HUDBugDisplay.BugState[] bugStates)
     {
-        hudBugDisplay.SetNumberOfBugs(numBugs);
+        hudBugDisplay.SetBugStates(bugStates);
     }
 
     public void SetObtainedKeys(HashSet<int> obtainedKeyIds)
@@ -73,12 +71,7 @@ public class HUDManager : MonoBehaviour
         hudKeyDisplay.SetObtainedKeys(obtainedKeyIds);
     }
 
-    public void SetCurrentActiveBugId(int bugId)
-    {
-        hudListenBugDisplay.SetActiveBugId(bugId);
-    }
-
-    public void ShowDialog(DialogueLine dialogueLine, Transform playerPosition, Transform targetPosition)
+    public void ShowDialogue(DialogueLine dialogueLine, Transform playerPosition, Transform targetPosition)
     {
         hudDialogueDisplay.ShowDialogue(dialogueLine, playerPosition, targetPosition);
     }
@@ -169,8 +162,7 @@ public class HUDManager : MonoBehaviour
         hudMessageDisplay.Hide();
     }
 
-
-    public void ShowListenContent(string listenContent, float timePassed, float fullDuration, bool isContinuous)
+    public void ShowSkippedContent(string listenContent, float timePassed, float fullDuration, bool isContinuous)
     {
         hudMessageDisplay.DisplaySkipped(listenContent, timePassed, fullDuration, true, isContinuous);
     }

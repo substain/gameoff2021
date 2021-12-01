@@ -1,61 +1,22 @@
-// This is a comment. Comments are ignored 
-// Empty lines are ignored
-// "#" means a new dialogue starts
-// "*" means that a dialogue can be started again
-// "? abc" means that the constraint abc needs to be satisfied. These are set via code (see ConstraintManager.GameConstraint) 
+# introMonologue
+! 
+C.R. Piller: Now that I'm on the ship, I should go and find Scarlet.
+C.R. Piller: She is probably in one of the cabins.
 
-// all other lines displayed is parsed like this:
-// subject: content
+# cantUseStairs
+? cantUseStairs
+C.R. Piller: I can't use these stairs.. I have to find different way to get upstairs.
 
-// or optionally like this
-// content
+# weaponDestroyed
+? finishLevel
+C.R. Piller: I'm going to destroy the weapon now...
 
-// you may use %subject% as a placeholder for the NPCs
+# weaponLeft
+? finishLevelAlt
+C.R. Piller: I'm going to leave the weapon...
 
-# testDialogue1
-You hear somebody screaming
-%subject%: What was that noise?
-C.R. Piller: I have no idea, but we should ask Sting.
-%subject%: Who is Sting?
-C.R. Piller: I am Sting!
-%subject%: Whaaat?
-Sting: Whaaat?
-
-# testDialogue2
-*
-? testConstraint
-%subject%: Hello! 
-Sting: Oh, hello there!
-%subject%: What are you doing?
-Sting: Just listening to the radio.
-Sting: ... why do you ask?
-%subject%: I was just curious.
-
-
-# anyoneBusy
-*
-%subject%: I'm busy.
-
-# anyoneSpeechless
-*
-%subject%: ...
-
-
-# testDialogue1 
-This is a placeholder text in gameDialogues. This key should not be used.
-
-# testDialogue2 
-This is a placeholder text in gameDialogues. This key should not be used.
-
-# testMonologue 
-This is a placeholder text in gameDialogues. This key should not be used.
-
-# testBlocking 
-This is a placeholder text in gameDialogues. This key should not be used.
-
-# testChoice 
-This is a placeholder text in gameDialogues. This key should not be used.
-
+# firstMeetScarlet
+!
 # Scarlet First Meets Sting
 !
 Scarlet Beatle: It’s pleasant to set my eyes on you again Cat.
@@ -91,4 +52,25 @@ Scarlet Beatle: I'd like to take you out for dinner when this is all over, on me
 # Scarlet Beatle
 *
 Scarlet Beatle: Remember our first mission over the Saharan Ocean, strange it's under the sea now
+
+//any npc can have the following ones as backup
+# anyoneBusy
+*
+%subject%: I'm busy.
+
+# anyoneSpeechless
+*
+%subject%: ...
+
+# useTutorialMono
+UNUSED
+
+# dashTutorialMono
+UNUSED
+
+# avoidTutorialMono
+UNUSED
+
+# bugTutorialMono
+UNUSED
 

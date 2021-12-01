@@ -5,12 +5,6 @@ C.R. Piller: My friends know me as Sting.
 C.R. Piller: I was told to make my way onto the cruise ship avoiding detection. 
 C.R. Piller: Once aboard I am to rendezvous with Agent Scarlet Beetle as she has been tracking the target for some time 
 C.R. Piller: and will provide me with everything I need. 
-//Sting: I will work with the Green Order for now, but once I know where the weapon is I will destroy it for Rise
-//Sting: I have listening devices that can help me locate objects. 
-//possible controls: Interact, Move, Dash, Sneak, Run, Back, ListenBug, OpenMenu
-//Sting: I can use %run% to run and %sneak% to sneak. 
-//Sting: To listen to a placed bug, I can use %listenbug%
-//Sting: I can use %back% for canceling dialogues. 
 
 # useTutorialMono
 ? startUseTutorial
@@ -29,17 +23,18 @@ C.R. Piller: I can use %dash% to dash.
 C.R. Piller: I've done it! Now I have to get on this ship.
 C.R. Piller: First, I should get past this guard.
 C.R. Piller: Maybe it helps if I sneak by using %sneak%.
-Dev Note: This should be more of a challenge, lol.
 
 # bugTutorialMono
 !
 ? startBugTutorial
-Dev Note: This is where the tutorial for bugging starts.
-Dev Note: This is not finished yet.
+C.R. Piller: Seems like I need a code to get on the ship.
+C.R. Piller: I should try to look around and use my bugging device to spy on people to get the code.
+C.R. Piller: To plant a device, I can use %interact% when I'm near a person.
+C.R. Piller: I can use %listenbug% to cycle through all planted devices and listen to them.
 
-# listenTutorialMono
-? bugUsed
-Dev Note: Here is a placeholder for the tutorial for listening to people.
+# shipReachedMono
+? finishLevel
+C.R. Piller: Yes! I'm on the ship! Time to start this operation!
 
 //any npc can have the following ones as backup
 # anyoneBusy
@@ -49,18 +44,3 @@ Dev Note: Here is a placeholder for the tutorial for listening to people.
 # anyoneSpeechless
 *
 %subject%: ...
-
-# testDialogue1 
-This is a placeholder text in tutorialDialogues. This key should not be used.
-
-# testDialogue2 
-This is a placeholder text in tutorialDialogues. This key should not be used.
-
-# testMonologue 
-This is a placeholder text in tutorialDialogues. This key should not be used.
-
-# testBlocking 
-This is a placeholder text in tutorialDialogues. This key should not be used.
-
-# testChoice 
-This is a placeholder text in tutorialDialogues. This key should not be used.

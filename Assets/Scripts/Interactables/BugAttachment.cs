@@ -2,11 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static ConstraintManager;
 
 public class BugAttachment : MonoBehaviour, IInteractable
 {
     [SerializeField]
-    private GameObject debugBug;
+    private GameObject bugIndicator;
+    private Animator bugIndicatorAnimator;
 
     private bool bugIsAttached = false;
 
@@ -17,20 +19,28 @@ public class BugAttachment : MonoBehaviour, IInteractable
     private AudioSource targetAudioSource = null;
 
     private float timeListened = 0;
-
+    
+    [SerializeField]
     private AudioClip rewardClip;
 
     private bool grantedReward = false;
-
+    private GameConstraint constraintRewarded = GameConstraint.none;
     void Awake()
     {
         listenTimer = gameObject.AddComponent<Timer>();
-        debugBug.SetActive(bugIsAttached);
+        bugIndicator.SetActive(bugIsAttached);
+        bugIndicatorAnimator = bugIndicator.GetComponent<Animator>();
+    }
+
+    void Start()
+    {
     }
 
     public void SetCurrentActivity(AbstractActivity activity)
     {
+
         timeListened = 0;
+        string lastActivityString = activity.GetActivityString();
         currentActivity = activity;
 
 
@@ -38,33 +48,26 @@ public class BugAttachment : MonoBehaviour, IInteractable
         {
             ConstraintManager.GameConstraint? constraint = activity.GetGameConstraint();
 
-            if (constraint.HasValue && activity.GetNeededTimeToListen() < timeListened)
+            if (constraint.HasValue)
             {
                 listenTimer.SetPaused(false);
 
                 listenTimer.Init(currentActivity.GetNeededTimeToListen(), ReachedConstraintTime);
             }
-            StartPlayingSoundAt(targetAudioSource, activity.GetAudioClip(), 0f, activity.IsContinuous());
+                StartPlayingSoundAt(targetAudioSource, activity.GetAudioClip(), 0f, activity.IsContinuous());
 
             if (currentActivity.GetActivityString().Length > 0)
             {
-                HUDManager.Instance.ShowListenContent(currentActivity.GetActivityString(),
-                    currentActivity.GetTimeProgress(),
-                    currentActivity.GetFullDisplayTime(),
-                    currentActivity.IsContinuous());
+                DisplayActivityString();
             }
         }
     }
 
     private void ReachedConstraintTime()
     {
+        constraintRewarded = currentActivity.GetGameConstraint().Value;
         ConstraintManager.Instance.SetSatisfied(currentActivity.GetGameConstraint().Value);
         grantedReward = true;
-    }
-
-    public float GetCurrentAudioClipPos()
-    {
-        return listenTimer.GetTimePassed();
     }
 
     public bool HasBugAttached()
@@ -75,16 +78,18 @@ public class BugAttachment : MonoBehaviour, IInteractable
     public void RemoveBug()
     {
         bugIsAttached = false;
-        debugBug.SetActive(false);
+        bugIndicator.SetActive(false);
+        bugIndicatorAnimator.SetBool("isActive", false);
     }
 
     public void AddBug(Vector3 fromPosition)
     {
         bugIsAttached = true;
-        debugBug.SetActive(true);
+        bugIndicator.SetActive(true);
+        bugIndicatorAnimator.SetBool("isActive", false);
         float xPos = fromPosition.x < transform.position.x ? -0.65f : 0.65f;
 
-        debugBug.transform.position = transform.root.position + new Vector3(xPos, 0, 0);
+        //debugBug.transform.position = transform.root.position + new Vector3(xPos, 0, 0);
         ConstraintManager.Instance.SetSatisfied(ConstraintManager.GameConstraint.bugUsed);
     }
 
@@ -119,6 +124,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
         if (constraint.HasValue && currentActivity.GetNeededTimeToListen() < timeListened)
         {
+            listenTimer.Init(currentActivity.GetNeededTimeToListen() - timeListened, ReachedConstraintTime);
             listenTimer.SetPaused(false);
         }
         this.targetAudioSource = source;
@@ -130,11 +136,9 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
         if (currentActivity.GetActivityString().Length > 0)
         {
-            HUDManager.Instance.ShowListenContent(currentActivity.GetActivityString(),
-                currentActivity.GetTimeProgress(),
-                currentActivity.GetFullDisplayTime(),
-                currentActivity.IsContinuous());
+            DisplayActivityString();
         }
+        bugIndicatorAnimator.SetBool("isActive", true);
 
     }
 
@@ -144,6 +148,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
         if (constraint.HasValue && currentActivity.GetNeededTimeToListen() < timeListened)
         {
+            timeListened = listenTimer.GetTimePassed();
             listenTimer.SetPaused(true);
         }
         HUDManager.Instance.StopListenContent();
@@ -153,12 +158,11 @@ public class BugAttachment : MonoBehaviour, IInteractable
         if (grantedReward)
         {
             StartPlayingSoundAt(targetAudioSource, rewardClip, 0, false);
-
-            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraint.Value), true);
+            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraintRewarded));
             grantedReward = false;
         }
         targetAudioSource = null;
-
+        bugIndicatorAnimator.SetBool("isActive", false);
     }
 
     public void StartPlayingSoundAt(AudioSource source, AudioClip clip, float clipTimePosition, bool looping)
@@ -171,5 +175,31 @@ public class BugAttachment : MonoBehaviour, IInteractable
         source.loop = looping;
         source.time = clipTimePosition > 0 ? clipTimePosition : 0f;
         source.Play();
+    }
+
+    public void DisplayActivityString()
+    {
+        string activityString = currentActivity.GetActivityString();
+        if (activityString.StartsWith(DialogueManager.DIALOGUE_INDICATOR))
+        {
+            DialogueHolder.DialogueKey? dialogueKey = DialogueManager.ToDialogueKey(activityString.Substring(2).Trim());
+            if (dialogueKey.HasValue)
+            {
+                Dialogue dialogue = DialogueManager.Instance.GetDialogueTemplate(dialogueKey.Value).ToDialogue();
+                    if (dialogue != null)
+                    {
+                        HUDManager.Instance.ShowSkippedContent(dialogue.GetFullText(),
+                               currentActivity.GetTimeProgress(),
+                               currentActivity.GetFullDisplayTime(),
+                               currentActivity.IsContinuous());
+                        return;
+                    }
+            }
+        }
+
+        HUDManager.Instance.ShowSkippedContent(currentActivity.GetActivityString(),
+           currentActivity.GetTimeProgress(),
+           currentActivity.GetFullDisplayTime(),
+           currentActivity.IsContinuous());
     }
 }

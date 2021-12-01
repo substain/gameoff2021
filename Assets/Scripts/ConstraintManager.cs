@@ -11,20 +11,14 @@ public class ConstraintManager : MonoBehaviour
 	public const string KEY_PREFIX = "gotKey";
 	public enum GameConstraint
 	{
-		testConstraint, ch1Finished, ch2Finished, 
-		startUseTutorial, startDashTutorial, startAvoidTutorial, 
-		startBugTutorial, bugUsed,
+		none, finishLevel, 
 		gotKey1, gotKey2, gotKey3, gotKey4, gotKey5, gotKey6, gotKey7, gotKey8,
-
-
-
-
-		none
+		startUseTutorial, startDashTutorial, startAvoidTutorial, startBugTutorial, bugUsed,
+		cantUseStairs, finishLevelAlt
 	}
 
 	public enum ChoiceType
 	{
-		testChoice1, testChoice2, testChoice3,
 		doShowTutorial, dontShowTutorial
 	}
 
@@ -125,7 +119,7 @@ public class ConstraintManager : MonoBehaviour
 		switch (value){
 			default:
 				{
-					return "You found a key!";
+					return "I've got a key!";
 				}
 		}
 	}

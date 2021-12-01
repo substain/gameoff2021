@@ -236,7 +236,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 0}
-  m_VersionIndex: 3040
+  m_VersionIndex: 3061
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -254,7 +254,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Shape:
-    rid: 2996504111164424439
+    rid: 6691091237103730941
   m_Size: {x: 8, y: 0, z: -10}
   m_Rotation: {x: 0, y: 0, z: 0, w: 1}
   m_PivotLocation: 1
@@ -266,7 +266,7 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 2996504111164424439
+    - rid: 6691091237103730941
       type: {class: Plane, ns: UnityEngine.ProBuilder.Shapes, asm: Unity.ProBuilder}
       data:
         m_HeightSegments: 1
@@ -386,13 +386,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103730757
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: managedReferences[6691091237103730757]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_VersionIndex
-      value: 694
+      value: 715
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858156, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -434,11 +442,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3452648509733528730, guid: e652a3ac2d9a95b4a8a424f1c8c21a32, type: 3}
       propertyPath: m_VersionIndex
-      value: 3799
+      value: 3820
       objectReference: {fileID: 0}
     - target: {fileID: 4396912775904162688, guid: e652a3ac2d9a95b4a8a424f1c8c21a32, type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516002929798243786, guid: e652a3ac2d9a95b4a8a424f1c8c21a32, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103731072
+      objectReference: {fileID: 0}
+    - target: {fileID: 6516002929798243786, guid: e652a3ac2d9a95b4a8a424f1c8c21a32, type: 3}
+      propertyPath: managedReferences[6691091237103731072]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
       objectReference: {fileID: 0}
     - target: {fileID: 7988288090619222705, guid: e652a3ac2d9a95b4a8a424f1c8c21a32, type: 3}
       propertyPath: m_RootOrder
@@ -550,13 +566,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103731139
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: managedReferences[6691091237103731139]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_VersionIndex
-      value: 697
+      value: 718
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858156, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -628,13 +652,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103730802
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: managedReferences[6691091237103730802]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_VersionIndex
-      value: 691
+      value: 712
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858156, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -714,13 +746,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103730741
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: managedReferences[6691091237103730741]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_VersionIndex
-      value: 691
+      value: 712
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858156, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -729,6 +769,10 @@ PrefabInstance:
     - target: {fileID: 2346275270462858158, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Name
       value: VariantWall8x3 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858158, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858159, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -792,13 +836,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103730887
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: managedReferences[6691091237103730887]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_VersionIndex
-      value: 700
+      value: 721
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858156, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -870,13 +922,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103731095
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: managedReferences[6691091237103731095]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_VersionIndex
-      value: 700
+      value: 721
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858156, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -956,13 +1016,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103730713
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: managedReferences[6691091237103730713]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_VersionIndex
-      value: 694
+      value: 715
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858156, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -1034,13 +1102,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103731132
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: managedReferences[6691091237103731132]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_VersionIndex
-      value: 697
+      value: 718
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858156, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -1049,6 +1125,10 @@ PrefabInstance:
     - target: {fileID: 2346275270462858158, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Name
       value: VariantWall8x3 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858158, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858159, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -1112,13 +1192,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103730834
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: managedReferences[6691091237103730834]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_VersionIndex
-      value: 688
+      value: 709
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858156, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -1127,6 +1215,10 @@ PrefabInstance:
     - target: {fileID: 2346275270462858158, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Name
       value: VariantWall8x3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858158, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858159, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -1190,13 +1282,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103730866
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: managedReferences[6691091237103730866]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_VersionIndex
-      value: 703
+      value: 724
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858156, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -1268,13 +1368,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103731090
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: managedReferences[6691091237103731090]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_VersionIndex
-      value: 694
+      value: 715
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858156, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -1283,6 +1391,10 @@ PrefabInstance:
     - target: {fileID: 2346275270462858158, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Name
       value: VariantWall8x3 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858158, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858159, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
@@ -1346,13 +1458,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: m_Shape
+      value: 6691091237103731113
+      objectReference: {fileID: 0}
+    - target: {fileID: 2346275270462858146, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
+      propertyPath: managedReferences[6691091237103731113]
+      value: Unity.ProBuilder UnityEngine.ProBuilder.Shapes.Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858147, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_VersionIndex
-      value: 697
+      value: 718
       objectReference: {fileID: 0}
     - target: {fileID: 2346275270462858156, guid: 8110d239626f7b349b32ad871c2cbf69, type: 3}
       propertyPath: m_Mesh

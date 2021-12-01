@@ -18,17 +18,26 @@ public class GameManager : MonoBehaviour
 	public static GameManager Instance = null;
 
 	[SerializeField]
-	private GameScene thisScene;
+	private GameScene thisScene;	
+	
+	[SerializeField]
+	private GameScene nextScene;
+
+	[SerializeField]
+	private ConstraintManager.GameConstraint constraintNeededForNextLevel;
 
 	private PlayerInteraction player;
 
 	private bool hideMenuOnStart = true;
 
 	private AudioSource musicAudioSource;
+	private AudioSource menuAudioSource;
 
 	[SerializeField]
-	private AudioClip backGroundClip;
+	private AudioClip initialBackgroundClip;
 
+	[SerializeField]
+	private AudioClip pauseMenuClip;
 	void Awake()
 	{
 		if (Instance != null)
@@ -40,22 +49,29 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
+
+		AudioSource[] audioSources = GetComponents<AudioSource>();
+		if (audioSources.Length < 3)
+		{
+			Debug.LogWarning("Warning: less than 3 audio sources were found.");
+		}
+		musicAudioSource = audioSources[0];
+		musicAudioSource.clip = initialBackgroundClip;
+		musicAudioSource.loop = true;
+		musicAudioSource.Play();
+
+		menuAudioSource = audioSources[1];
+		menuAudioSource.loop = true;
+		menuAudioSource.Play();
+		menuAudioSource.clip = pauseMenuClip;
+
+		HUDManager.Instance.SetMenuAudioSource(audioSources[2]);
 		if (hideMenuOnStart)
 		{
 			HideIngameMenu(playSound: false);
 		}
-		AudioSource[] audioSources = GetComponents<AudioSource>();
-		if (audioSources.Length < 2)
-		{
-			Debug.LogWarning("Warning: less than 2 audio sources were found.");
-		}
-		musicAudioSource = audioSources[0];
-		HUDManager.Instance.SetMenuAudioSource(audioSources[1]);
-		/*
-		musicAudioSource.loop = true;
-		musicAudioSource.clip = backGroundClip;
-		musicAudioSource.Play();
-		*/
+		ConstraintManager.OnChangeConstraints += CheckLevelFinished;
+
 	}
 	public void DontHideMenuOnStart()
 	{
@@ -72,6 +88,11 @@ public class GameManager : MonoBehaviour
 		SceneManager.LoadScene(ToSceneName(gameScene));
 	}
 
+	public void LoadNextLevel()
+	{
+		SceneManager.LoadScene(ToSceneName(nextScene));
+	}
+
 	public void SetPlayer(PlayerInteraction player)
 	{
 		this.player = player;
@@ -79,6 +100,7 @@ public class GameManager : MonoBehaviour
 
 	public void SetGameOver(GameOverReason gameOverReason)
 	{
+
 		if (gameOver)
 		{
 			return;
@@ -90,6 +112,8 @@ public class GameManager : MonoBehaviour
 
 	public void StartPauseMenu()
 	{
+		PauseSound();
+		StartMenuSound();
 		player.SetMenuActive(true);
 		SetPaused(true);
 		HUDManager.Instance.ShowIngameMenu(IngameOverlayMenu.IngameMenuType.pause, GetRandomPauseMenuTitle());
@@ -97,14 +121,17 @@ public class GameManager : MonoBehaviour
 
 	public void StartOptionsMenu()
 	{
+		PauseSound();
+		StartMenuSound();
 		player?.SetMenuActive(true);
 		SetPaused(true);
 		HUDManager.Instance.ShowIngameMenu(IngameOverlayMenu.IngameMenuType.options, "Options");
 	}
-	
 
 	public void HideIngameMenu(bool playSound = true)
 	{
+		ContinueSound();
+		StopMenuSound();
 		player?.SetMenuActive(false);
 		SetPaused(false);
 		HUDManager.Instance.HideIngameMenu(playSound);
@@ -117,6 +144,7 @@ public class GameManager : MonoBehaviour
 
 	void OnDestroy()
 	{
+		ConstraintManager.OnChangeConstraints -= CheckLevelFinished;
 		Instance = null;
 	}
 
@@ -198,4 +226,41 @@ public class GameManager : MonoBehaviour
 		return Util.ChooseRandomFromList(pauseMenuTitles);
 	}
 
+	public void CheckLevelFinished()
+	{
+		if (ConstraintManager.Instance.IsSatisfied(constraintNeededForNextLevel))
+		{
+			Timer timer = gameObject.AddComponent<Timer>();
+			timer.Init(5, LoadNextLevel);
+			ConstraintManager.OnChangeConstraints -= CheckLevelFinished;
+		}
+	}
+
+	public void StartClip(AudioClip clip)
+	{
+		musicAudioSource.clip = clip;
+		musicAudioSource.Play();
+	}
+
+
+	public void PauseSound()
+	{
+		musicAudioSource.Pause();
+	}
+
+
+	public void ContinueSound()
+	{
+		musicAudioSource.Play();
+	}
+
+	public void StartMenuSound()
+	{
+		menuAudioSource.Play();
+	}
+
+	public void StopMenuSound()
+	{
+		menuAudioSource.Pause();
+	}
 }

@@ -19,6 +19,7 @@ public class IdleActivity : AbstractActivity
     {
         timer.Init(idleTime);
     }
+
     protected override void DoStopActivity()
     {
         timer.Finish();
@@ -26,7 +27,7 @@ public class IdleActivity : AbstractActivity
 
     public override bool IsContinuous()
     {
-        return false;
+        return contentLoopable;
     }
 
     protected override bool IsFinished()

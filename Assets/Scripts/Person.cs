@@ -2,5 +2,6 @@
 {
     Unknown, //
     Sting, //the player
-    Iris
+    Iris,
+    Captain
 }

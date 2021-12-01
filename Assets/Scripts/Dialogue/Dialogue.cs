@@ -86,4 +86,14 @@ public class Dialogue
     {
         return key;
     }
+
+    public string GetFullText()
+    {
+        return dialogueLines.Select(dl => GetReplacedText(dl)).Aggregate((dl1, dl2) => dl1 + "\n" + dl2);
+    }
+
+    private static string GetReplacedText(DialogueLine dialogueLine)
+    {
+        return InputKeyHelper.Instance.ReplacePlaceholdersWithCurrentKeys(dialogueLine.content);
+    }
 }
