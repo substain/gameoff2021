@@ -7,9 +7,11 @@ C.R. Piller: Now that I'm on the ship, I need to find Scarlet.
 C.R. Piller: I can't use these stairs.. I have to find different way to get upstairs.
 
 # weaponFound
+! finishLevel
 C.R. Piller: I found it! But it's impossible to move! It's too heavy to carry! We can't get it off the ship ourselves!
 C.R. Piller: There is no way this weapon can do good in the hands of the UG, they will rule the world.
 C.R. Piller: But if I destroy it, maybe the seas will continue to rise and more people will die. What do I do D:!
+C.R. Piller: What will I do ... ?
 
 # weaponDestroyed
 ? finishLevel
@@ -48,6 +50,28 @@ Scarlet Beatle: I'd like to take you out for dinner when this is all over, on me
 # scarletRemember
 *
 Scarlet Beatle: Remember our first mission over the Saharan Ocean, strange it's under the sea now
+
+# cheese1
+? ateCheeseStick1
+C.R. Piller: Are those cheese sticks! Okay, I’ll have some. 
+
+# cheese2 
+? ateCheeseStick2
+C.R. Piller: The aim is to blend in right? Right. So I’m in a dinning room, I should dine on more cheese sticks.
+
+# cheese3 
+? ateCheeseStick3
+C.R. Piller: Cheese Louise, I want more… Will people think I’m strange? I don’t care
+
+# cheese4 
+? ateCheeseStick4
+C.R. Piller: People are looking at me… But the C in my name stands for cheese, just one more round? Yeah why not. 
+
+# lastCheese
+? lastCheeseStickUsed
+C.R. Piller: One moohhhuuaa… They’ve caught me! It wasn’t worth it.
+
+
 
 //any npc can have the following ones as backup
 # anyoneBusy

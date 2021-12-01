@@ -87,6 +87,7 @@ public class DialogueManager : MonoBehaviour
 						Debug.LogWarning("The key " + key.Value + " is already used and will be overwritten.");
 					}
 					dialogueTemps[key.Value] = new DialogueTemplate();
+					dialogueTemps[key.Value].SetKey(key.Value);
 					currentDialogue = dialogueTemps[key.Value];
 				}
 				continue;

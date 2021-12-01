@@ -54,13 +54,16 @@ public class Dialogue
     
     public void SetFinished()
     {
+        Debug.Log("setting finished:" + key.ToString());
+        ConstraintManager.GameConstraint? constraint = ToGameConstraint(key);
+        if (constraint.HasValue)
+        {
+            Debug.Log("satisfying " + constraint.Value.ToString());
+            ConstraintManager.Instance.SetSatisfied(constraint.Value);
+        }
         if (isOneShot)
         {
-            ConstraintManager.GameConstraint? constraint = ToGameConstraint(key);
-            if (constraint.HasValue)
-            {
-                ConstraintManager.Instance.SetSatisfied(constraint.Value);
-            }
+
             wasCompleted = true;
         }
         Reset();

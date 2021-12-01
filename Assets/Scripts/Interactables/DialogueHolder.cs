@@ -13,7 +13,8 @@ public class DialogueHolder : MonoBehaviour, IInteractable
         useTutorialMono, dashTutorialMono,                      //only tutorialDialogues.txt
         avoidTutorialMono, bugTutorialMono, //only tutorialDialogues.txt
         shipReachedMono, cantUseStairs, weaponDestroyed, weaponLeft,
-        firstMeetScarlet, weaponFound, scarletHelpful, scarletNice, scarletRemember
+        firstMeetScarlet, weaponFound, scarletHelpful, scarletNice, scarletRemember,
+        cheese1, cheese2, cheese3, cheese4, lastCheese
     }
 
     [SerializeField]
@@ -114,6 +115,7 @@ public class DialogueHolder : MonoBehaviour, IInteractable
 
     protected virtual void FinishDialogue(PlayerInteraction interactingPlayer)
     {
+        Debug.Log("finishing dialogue" + currentDialogue.GetKey().ToString());
         currentDialogue.SetFinished();
         if (currentDialogue.IsOneShot())
         {
