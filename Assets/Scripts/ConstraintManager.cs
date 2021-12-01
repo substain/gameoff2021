@@ -11,10 +11,10 @@ public class ConstraintManager : MonoBehaviour
 	public const string KEY_PREFIX = "gotKey";
 	public enum GameConstraint
 	{
-		none, finishLevel,
+		none, finishLevel, 
 		gotKey1, gotKey2, gotKey3, gotKey4, gotKey5, gotKey6, gotKey7, gotKey8,
 		startUseTutorial, startDashTutorial, startAvoidTutorial, startBugTutorial, bugUsed,
-		cantUseStairs
+		cantUseStairs, finishLevelAlt
 	}
 
 	public enum ChoiceType

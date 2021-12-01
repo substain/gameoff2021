@@ -1,17 +1,25 @@
-// This is a comment. Comments are ignored 
-// Empty lines are ignored
-// "#" means a new dialogue starts
-// "*" means that a dialogue can be started again
-// "? abc" means that the constraint abc needs to be satisfied. These are set via code (see ConstraintManager.GameConstraint) 
+# introMonologue
+! 
+C.R. Piller: Now that I'm on the ship, I should go and find Scarlet.
+C.R. Piller: She is probably in one of the cabins.
 
-// all other lines displayed is parsed like this:
-// subject: content
+# cantUseStairs
+? cantUseStairs
+C.R. Piller: I can't use these stairs.. I have to find different way to get upstairs.
 
-// or optionally like this
-// content
+# weaponDestroyed
+? finishLevel
+C.R. Piller: I'm going to destroy the weapon now...
 
-// you may use %subject% as a placeholder for the NPCs
+# weaponLeft
+? finishLevelAlt
+C.R. Piller: I'm going to leave the weapon...
 
+# firstMeetScarlet
+!
+C.R. Piller: Hello scarlet, its me!
+
+//any npc can have the following ones as backup
 # anyoneBusy
 *
 %subject%: I'm busy.
@@ -19,3 +27,15 @@
 # anyoneSpeechless
 *
 %subject%: ...
+
+# useTutorialMono
+UNUSED
+
+# dashTutorialMono
+UNUSED
+
+# avoidTutorialMono
+UNUSED
+
+# bugTutorialMono
+UNUSED

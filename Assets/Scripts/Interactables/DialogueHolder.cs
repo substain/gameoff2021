@@ -12,7 +12,8 @@ public class DialogueHolder : MonoBehaviour, IInteractable
         introMonologue,
         useTutorialMono, dashTutorialMono,                      //only tutorialDialogues.txt
         avoidTutorialMono, bugTutorialMono, //only tutorialDialogues.txt
-        shipReachedMono
+        shipReachedMono, cantUseStairs, weaponDestroyed, weaponLeft,
+        firstMeetScarlet
     }
 
     [SerializeField]
