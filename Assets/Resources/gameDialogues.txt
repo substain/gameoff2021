@@ -56,4 +56,39 @@ This is a placeholder text in gameDialogues. This key should not be used.
 # testChoice 
 This is a placeholder text in gameDialogues. This key should not be used.
 
-#
+# Scarlet First Meets Sting
+!
+Scarlet Beatle: It’s pleasant to set my eyes on you again Cat.
+
+C.R. Piller: And you Beetle, Scarlet Beatle.
+
+Scarlet Beatle: (Blush) Ok agent, here is our mission. The spy we are tracking is probably 
+
+Scarlet Beatle: A male in his 30s and we know he eats cheese sticks. 
+
+Scarlet Beatle: We think he was the cause of the theft of Weapon X. X was a tool created over many 
+
+Scarlet Beatle: years to reverse climate change, but we have intel that UG plan only to use it to 
+
+Scarlet Beatle: dominate more - climate change suits them. Your mission is to find it and capture it.
+
+Scarlet Beatle: Use your listening bug to find him and find where he has hidden weapon is. 
+
+Scarlet Beatle: Take this key, it will help you get to locations around the ship.
+
+C.R. Piller: I’ll find it. You can count on me. 
+
+Scarlet Beatle: We all do. Be safe.
+
+# Scarlet Beatle
+*
+Scarlet Beatle: Hello handsome, try bugging the people in the dining room. 
+
+# Scarlet Beatle
+*
+Scarlet Beatle: I'd like to take you out for dinner when this is all over, on me x
+
+# Scarlet Beatle
+*
+Scarlet Beatle: Remember our first mission over the Saharan Ocean, strange it's under the sea now
+
