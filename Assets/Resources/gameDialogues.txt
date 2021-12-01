@@ -12,26 +12,6 @@
 
 // you may use %subject% as a placeholder for the NPCs
 
-# testDialogue1
-You hear somebody screaming
-%subject%: What was that noise?
-C.R. Piller: I have no idea, but we should ask Sting.
-%subject%: Who is Sting?
-C.R. Piller: I am Sting!
-%subject%: Whaaat?
-Sting: Whaaat?
-
-# testDialogue2
-*
-? testConstraint
-%subject%: Hello! 
-Sting: Oh, hello there!
-%subject%: What are you doing?
-Sting: Just listening to the radio.
-Sting: ... why do you ask?
-%subject%: I was just curious.
-
-
 # anyoneBusy
 *
 %subject%: I'm busy.
@@ -39,21 +19,3 @@ Sting: ... why do you ask?
 # anyoneSpeechless
 *
 %subject%: ...
-
-
-# testDialogue1 
-This is a placeholder text in gameDialogues. This key should not be used.
-
-# testDialogue2 
-This is a placeholder text in gameDialogues. This key should not be used.
-
-# testMonologue 
-This is a placeholder text in gameDialogues. This key should not be used.
-
-# testBlocking 
-This is a placeholder text in gameDialogues. This key should not be used.
-
-# testChoice 
-This is a placeholder text in gameDialogues. This key should not be used.
-
-#

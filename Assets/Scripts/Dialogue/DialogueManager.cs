@@ -22,7 +22,7 @@ public class DialogueManager : MonoBehaviour
 
 	[SerializeField]
 	private bool useDebugOutput;
-	private const string DIALOGUE_INDICATOR = "#";
+	public const string DIALOGUE_INDICATOR = "#";
 	private const string COMMENT_INDICATOR = "//";
 	private const string CONSTRAINT_INDICATOR = "?";
 	private const string REPEATABLE_INDICATOR = "*";

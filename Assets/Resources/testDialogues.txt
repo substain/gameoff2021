@@ -14,24 +14,6 @@
 
 // you may use %subject% as a placeholder for the NPCs
 
-# testDialogue1
-You hear somebody screaming
-%subject%: What was that noise?
-C.R. Piller: I have no idea, but we should ask Sting.
-%subject%: Who is Sting?
-C.R. Piller: I am Sting!
-%subject%: Whaaat?
-Sting: Whaaat?
-
-# testDialogue2
-*
-? testConstraint
-%subject%: Hello! 
-Sting: Oh, hello there!
-%subject%: What are you doing?
-Sting: Just listening to the radio.
-Sting: ... why do you ask?
-%subject%: I was just curious.
 
 //any npc can have the following ones as backup
 # anyoneBusy
@@ -58,26 +40,9 @@ You can't move until the dialogue is finished/canceled
 ...
 See?
 
-# testChoice
-In the next line, you will presented a choice
-What is your favorite food?
-+ testChoice1 Burger
-+ testChoice2 Pizza
-+ testChoice3 Salad
-(Unfortunately, choices are not implemented yet)
-
 # introMonologue
 This is a placeholder text for an unused dialogueKey in testDialogues.txt
 
 # introTutorial 
 This is a placeholder text for an unused dialogueKey in testDialogues.txt
-
-# testDialogue3
-Sting: Can you hear that?
-%subject% What?
-Sting: That
-
-# testDialogue4
-? constraint.
-
 

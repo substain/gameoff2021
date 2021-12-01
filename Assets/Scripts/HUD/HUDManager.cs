@@ -53,7 +53,7 @@ public class HUDManager : MonoBehaviour
 
     public void UpdateActionHintText(string hintText)
     {
-        hudActionHint.SetActionHint(hintText);
+        //hudActionHint.SetActionHint(hintText);
     }
     
     public void DisplayMessage(string message, float duration = HUDMessageDisplay.MESSAGE_DISPLAY_DURATION, bool isListenBug = false)
@@ -71,7 +71,7 @@ public class HUDManager : MonoBehaviour
         hudKeyDisplay.SetObtainedKeys(obtainedKeyIds);
     }
 
-    public void ShowDialog(DialogueLine dialogueLine, Transform playerPosition, Transform targetPosition)
+    public void ShowDialogue(DialogueLine dialogueLine, Transform playerPosition, Transform targetPosition)
     {
         hudDialogueDisplay.ShowDialogue(dialogueLine, playerPosition, targetPosition);
     }

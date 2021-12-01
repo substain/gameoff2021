@@ -8,6 +8,12 @@ public class TutorialShip : MonoBehaviour
     private Timer timer;
     private float moveDir = 1.0f;
 
+    [SerializeField]
+    private AudioClip onShipClip;
+
+    [SerializeField]
+    private AudioClip offShipClip;
+
     void Start()
     {
         timer = gameObject.AddComponent<Timer>();

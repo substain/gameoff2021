@@ -21,14 +21,13 @@ public class HUDDialogueDisplay : HUDMessageDisplay
     [SerializeField]
     private float timePerLetter = 0.0f;
 
-    private CanvasGroup canvasGroup;
     private Transform refPosition;
     private Transform targetPosition = null;
     private bool hasActiveDialogue;
     protected override void Awake()
     {
         hasActiveDialogue = false;
-        canvasGroup = GetComponent<CanvasGroup>();
+        //canvasGroup = GetComponent<CanvasGroup>();
         base.Awake();
     }
 

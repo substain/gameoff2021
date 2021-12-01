@@ -24,7 +24,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
     private AudioClip rewardClip;
 
     private bool grantedReward = false;
-    private GameConstraint constraintRewarded = GameConstraint.testConstraint;
+    private GameConstraint constraintRewarded = GameConstraint.none;
     void Awake()
     {
         listenTimer = gameObject.AddComponent<Timer>();
@@ -54,24 +54,11 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
                 listenTimer.Init(currentActivity.GetNeededTimeToListen(), ReachedConstraintTime);
             }
-            StartPlayingSoundAt(targetAudioSource, activity.GetAudioClip(), 0f, activity.IsContinuous());
+                StartPlayingSoundAt(targetAudioSource, activity.GetAudioClip(), 0f, activity.IsContinuous());
 
             if (currentActivity.GetActivityString().Length > 0)
             {
-                string currentActivityString = currentActivity.GetActivityString();
-                if (lastActivityString == currentActivityString)
-                {
-                    /*
-                    HUDManager.Instance.DisplayMessage(currentActivityString,
-                       currentActivity.GetFullDisplayTime(), true);*/
-                }
-                else
-                {
-                    HUDManager.Instance.ShowSkippedContent(currentActivityString,
-                            currentActivity.GetTimeProgress(),
-                            currentActivity.GetFullDisplayTime(),
-                            currentActivity.IsContinuous());
-                }
+                DisplayActivityString();
             }
         }
     }
@@ -149,10 +136,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
         if (currentActivity.GetActivityString().Length > 0)
         {
-            HUDManager.Instance.ShowSkippedContent(currentActivity.GetActivityString(),
-                currentActivity.GetTimeProgress(),
-                currentActivity.GetFullDisplayTime(),
-                currentActivity.IsContinuous());
+            DisplayActivityString();
         }
         bugIndicatorAnimator.SetBool("isActive", true);
 
@@ -174,13 +158,11 @@ public class BugAttachment : MonoBehaviour, IInteractable
         if (grantedReward)
         {
             StartPlayingSoundAt(targetAudioSource, rewardClip, 0, false);
-
-            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraintRewarded), isListenBug: true);
+            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraintRewarded));
             grantedReward = false;
         }
         targetAudioSource = null;
         bugIndicatorAnimator.SetBool("isActive", false);
-
     }
 
     public void StartPlayingSoundAt(AudioSource source, AudioClip clip, float clipTimePosition, bool looping)
@@ -193,5 +175,31 @@ public class BugAttachment : MonoBehaviour, IInteractable
         source.loop = looping;
         source.time = clipTimePosition > 0 ? clipTimePosition : 0f;
         source.Play();
+    }
+
+    public void DisplayActivityString()
+    {
+        string activityString = currentActivity.GetActivityString();
+        if (activityString.StartsWith(DialogueManager.DIALOGUE_INDICATOR))
+        {
+            DialogueHolder.DialogueKey? dialogueKey = DialogueManager.ToDialogueKey(activityString.Substring(2).Trim());
+            if (dialogueKey.HasValue)
+            {
+                Dialogue dialogue = DialogueManager.Instance.GetDialogueTemplate(dialogueKey.Value).ToDialogue();
+                    if (dialogue != null)
+                    {
+                        HUDManager.Instance.ShowSkippedContent(dialogue.GetFullText(),
+                               currentActivity.GetTimeProgress(),
+                               currentActivity.GetFullDisplayTime(),
+                               currentActivity.IsContinuous());
+                        return;
+                    }
+            }
+        }
+
+        HUDManager.Instance.ShowSkippedContent(currentActivity.GetActivityString(),
+           currentActivity.GetTimeProgress(),
+           currentActivity.GetFullDisplayTime(),
+           currentActivity.IsContinuous());
     }
 }

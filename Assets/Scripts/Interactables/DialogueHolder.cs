@@ -8,12 +8,11 @@ public class DialogueHolder : MonoBehaviour, IInteractable
 {
     public enum DialogueKey
     {
-        testDialogue1, testDialogue2, testMonologue,    //only testDialogues.txt
-        testBlocking, testChoice,                       //only testDialogues.txt
-        anyoneSpeechless, anyoneBusy,                   //everywhere
-        introMonologue, introTutorial,                  //only tutorialDialogues.txt
-        useTutorialMono, dashTutorialMono,              //only tutorialDialogues.txt
-        avoidTutorialMono, bugTutorialMono, listenTutorialMono              //only tutorialDialogues.txt
+        anyoneSpeechless, anyoneBusy,                           //everywhere
+        introMonologue,
+        useTutorialMono, dashTutorialMono,                      //only tutorialDialogues.txt
+        avoidTutorialMono, bugTutorialMono, //only tutorialDialogues.txt
+        shipReachedMono
     }
 
     [SerializeField]
@@ -107,7 +106,7 @@ public class DialogueHolder : MonoBehaviour, IInteractable
             FinishDialogue(interactingPlayer);
             return true;
         }
-        HUDManager.Instance.ShowDialog(nextLine, interactingPlayer.transform, transform);
+        HUDManager.Instance.ShowDialogue(nextLine, interactingPlayer.transform, transform);
 
         return false;
     }

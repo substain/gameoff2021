@@ -16,15 +16,18 @@ public class HUDMessageDisplay : MonoBehaviour
     private string currentMessage;
     private float relTimePerLetter = 0;
     private bool autoHideAfterTimer = true;
+    protected CanvasGroup canvasGroup;
 
     protected virtual void Awake()
     {
         displayTimer = gameObject.AddComponent<Timer>();
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     protected virtual void Start()
     {
         displayTimer.SetFixedUpdate(true);
+        canvasGroup.alpha = 0;
     }
 
     protected virtual void Update()
@@ -71,6 +74,8 @@ public class HUDMessageDisplay : MonoBehaviour
         bool useTyping = true,
         bool autoHideAfterTimer = true)
     {
+        canvasGroup.alpha = 1;
+
         this.autoHideAfterTimer = autoHideAfterTimer;
 
         if ((currentIsListenBug && !isPriority) || message.Length == 0)
@@ -103,6 +108,7 @@ public class HUDMessageDisplay : MonoBehaviour
             return;
         }
         messageText.text = "";
+        canvasGroup.alpha = 0;
     }
 
     public void Hide()
@@ -111,6 +117,7 @@ public class HUDMessageDisplay : MonoBehaviour
         isTyping = false; 
         currentMessage = "";
         messageText.text = "";
+        canvasGroup.alpha = 0;
     }
 
     public void DisplaySkipped(string content, float timePassed, float fullDuration, bool isPriority, bool showFull)
