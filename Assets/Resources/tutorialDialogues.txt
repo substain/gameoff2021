@@ -1,10 +1,10 @@
 # introMonologue
 ! 
 C.R. Piller: The year is 2050 and I live in a world that many knew was coming but never believed. 
-C.R. Piller: My friends know me as Sting.
-C.R. Piller: I was told to make my way onto the cruise ship avoiding detection. 
-C.R. Piller: Once aboard I am to rendezvous with Agent Scarlet Beetle as she has been tracking the target for some time 
-C.R. Piller: and will provide me with everything I need. 
+C.R. Piller: The world is covered by ocean because of inapt governments and coin in greedy pockets. 
+C.R. Piller: I am an agent for a resistance group named Rise trying to stop their chaos.
+C.R. Piller: I have been told to make my way onto a VIP cruise ship avoiding detection, it is bound for the United Governments territory or the UG.
+C.R. Piller: Once aboard I am to rendezvous with Agent Scarlet Beetle and collect my mission.
 
 # useTutorialMono
 ? startUseTutorial

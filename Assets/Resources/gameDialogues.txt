@@ -1,7 +1,6 @@
 # introMonologue
 ! 
-C.R. Piller: Now that I'm on the ship, I should go and find Scarlet.
-C.R. Piller: She is probably in one of the cabins.
+C.R. Piller: Now that I'm on the ship, I need to find Scarlet.
 
 # cantUseStairs
 ? cantUseStairs
@@ -14,18 +13,19 @@ C.R. Piller: But if I destroy it, maybe the seas will continue to rise. What do 
 
 # weaponDestroyed
 ? finishLevel
-C.R. Piller: I'm going to destroy the weapon now...
+C.R. Piller: I'm going to destroy the weapon now. Maybe we can build it again in time, better that
+than handing the world to people that caused this mess.
 
 # weaponLeft
 ? finishLevelAlt
-C.R. Piller: I'm going to leave the weapon...
+C.R. Piller: I'm going to leave the weapon. If I destroy it then everyone could die anyway. Resisting will be harder now. 
 
 # firstMeetScarlet
 !
 Scarlet Beatle: It’s pleasant to set my eyes on you again Cat.
 C.R. Piller: And you Beetle, Scarlet Beatle.
-Scarlet Beatle: (Blush) Ok agent, here is our mission. The spy we are tracking is probably 
-Scarlet Beatle: A male in his 30s and we know he eats cheese sticks. 
+Scarlet Beatle: (Blush) Ok agent, here is our mission. The spy I am tracking is probably a male in his 30s.
+Scarlet Beatle: We know he eats cheese sticks.
 Scarlet Beatle: We think he was the cause of the theft of Weapon X. X was a tool created over many 
 Scarlet Beatle: years to reverse climate change, but we have intel that UG plan only to use it to 
 Scarlet Beatle: dominate more - climate change suits them. Your mission is to find it and capture it.
