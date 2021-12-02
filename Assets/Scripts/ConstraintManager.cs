@@ -87,7 +87,6 @@ public class ConstraintManager : MonoBehaviour
 
 	public void SetSatisfied(GameConstraint constraint)
 	{
-		Debug.Log("setting satisfied: " + constraint.ToString());
 		if (constraint == GameConstraint.none)
 		{
 			Debug.LogWarning("'none' constraint should not be used.");

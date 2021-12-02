@@ -52,7 +52,7 @@ public class ActivityManager : MonoBehaviour
 
         if (orderedActivities.Count == 0)
         {
-            Debug.LogWarning("no activities to do");
+            //Debug.LogWarning("no activities to do");
             return;
         }
 

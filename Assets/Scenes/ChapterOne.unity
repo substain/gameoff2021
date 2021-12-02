@@ -44550,6 +44550,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1179069312, guid: 03b4e2ca61890234b941dcaff5f2cec7, type: 3}
+      propertyPath: m_Color.b
+      value: 0.7372549
+      objectReference: {fileID: 0}
+    - target: {fileID: 1179069312, guid: 03b4e2ca61890234b941dcaff5f2cec7, type: 3}
+      propertyPath: m_Color.g
+      value: 0.9019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 1179069312, guid: 03b4e2ca61890234b941dcaff5f2cec7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.36078432
+      objectReference: {fileID: 0}
     - target: {fileID: 1310189430, guid: 03b4e2ca61890234b941dcaff5f2cec7, type: 3}
       propertyPath: m_SortingOrder
       value: 4
@@ -96679,7 +96691,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1916978428272938865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99731,7 +99743,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -2, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -102881,7 +102893,7 @@ MonoBehaviour:
   listenRewardConstraint: 0
   activationConstraint: 17
   deactivationConstraint: 0
-  targetPosition: {fileID: 0}
+  targetPosition: {fileID: 349634259}
   moveSpeed: 2
   doorsToPass: []
   closeDoorAfterEnter: 0
@@ -102903,7 +102915,7 @@ MonoBehaviour:
   contentLoopable: 0
   activityString: 
   listenRewardConstraint: 0
-  activationConstraint: 24
+  activationConstraint: 20
   deactivationConstraint: 0
   targetPosition: {fileID: 1880075750}
   moveSpeed: 8
