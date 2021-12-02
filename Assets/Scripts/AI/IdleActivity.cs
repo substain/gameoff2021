@@ -2,7 +2,7 @@
 using UnityEngine;
 public class IdleActivity : AbstractActivity
 {
-    private const float FRACTION_NEEDED_TO_LISTEN = 0.75f;
+    private const float FRACTION_NEEDED_TO_LISTEN = 0.6f;
 
     [SerializeField]
     private float idleTime;

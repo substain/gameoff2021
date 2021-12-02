@@ -42,6 +42,10 @@ public class ConstraintManager : MonoBehaviour
 	public delegate void ConstraintsChanged();
 	public static event ConstraintsChanged OnChangeConstraints;
 
+	private AudioSource playerAudioSource;
+	[SerializeField]
+	private AudioClip rewardSoundClip;
+
 	void Awake()
 	{
 		if (Instance != null)
@@ -49,6 +53,11 @@ public class ConstraintManager : MonoBehaviour
 			Debug.LogWarning("There is more than one ConstraintManager in this scene.");
 		}
 		Instance = this;
+	}
+
+	void Start()
+	{
+		playerAudioSource = FindObjectOfType<PlayerInteraction>().GetAudioSource();
 	}
 
 	public bool AllConstraintsSatisfied(List<GameConstraint> constraints)
@@ -85,6 +94,11 @@ public class ConstraintManager : MonoBehaviour
 		return satisfiedConstraints.Contains(constraint);
 	}
 
+	public void PlayRewardSound()
+	{
+		playerAudioSource.PlayOneShot(rewardSoundClip);
+	}
+
 	public void SetSatisfied(GameConstraint constraint)
 	{
 		if (constraint == GameConstraint.none)
@@ -118,6 +132,10 @@ public class ConstraintManager : MonoBehaviour
     public static string ConstraintToRewardString(GameConstraint value)
     {
 		switch (value){
+			case GameConstraint.weaponXLocationRevealed:
+				{
+					return "The weapon is somewhere in the upper level of the ship!";
+				}
 			default:
 				{
 					return "I've got a key!";

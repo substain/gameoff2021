@@ -57,7 +57,8 @@ public class Dialogue
         ConstraintManager.GameConstraint? constraint = ToGameConstraint(key);
         if (constraint.HasValue)
         {
-            Debug.Log("satisfying " + constraint.Value.ToString());
+            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraint.Value));
+            ConstraintManager.Instance.PlayRewardSound();
             ConstraintManager.Instance.SetSatisfied(constraint.Value);
         }
         if (isOneShot)

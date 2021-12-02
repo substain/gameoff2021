@@ -167,6 +167,10 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
     public void StartPlayingSoundAt(AudioSource source, AudioClip clip, float clipTimePosition, bool looping)
     {
+        if(clip == null)
+        {
+            return;
+        }
         if(source.clip == clip && looping)
         {
             return;

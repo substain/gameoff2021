@@ -51,6 +51,7 @@ public class PlayerInteraction : MonoBehaviour
         layerToCheckFor = LayerMask.GetMask(INTERACTION_LMASK_NAME);
         playerMovement = GetComponent<PlayerMovement>();
         this.animator = GetComponentInChildren<Animator>();
+        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     void Start()
@@ -61,7 +62,6 @@ public class PlayerInteraction : MonoBehaviour
         InvokeRepeating("CheckForInteractables", 0.1f, 0.1f);
         GameManager.Instance.SetPlayer(this);
         ConstraintManager.OnChangeConstraints += UpdateAvailableKeys;
-        audioSource = GetComponentInChildren<AudioSource>();
     }
 
     private void UpdateAvailableKeys()
@@ -322,6 +322,11 @@ public class PlayerInteraction : MonoBehaviour
             return;
         }
         GameManager.Instance.StartPauseMenu();
+    }
+
+    public AudioSource GetAudioSource()
+    {
+        return audioSource;
     }
 
     private static bool IsDialogueHolder(IInteractable interactable)

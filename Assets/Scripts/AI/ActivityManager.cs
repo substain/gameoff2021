@@ -18,7 +18,7 @@ public class ActivityManager : MonoBehaviour
 
     private List<AbstractActivity> orderedActivities = new List<AbstractActivity>();
 
-    private int currentIndex = -1;
+    public int currentIndex = -1;
 
     private PursuePlayerActivity pursuePlayerActivity;
     private SuspiciousActivity suspiciousActivity;
@@ -105,9 +105,8 @@ public class ActivityManager : MonoBehaviour
 
     private void UpdateActiveActivity()
     {
-
         UpdateToNextActivityIndex();
-        if(currentIndex > -1)
+        if (currentIndex > -1)
         {
             StartActivity(orderedActivities[currentIndex]);
         }
@@ -126,12 +125,17 @@ public class ActivityManager : MonoBehaviour
 
         if (useRandomOrder)
         {
-            if (possibleIndices.Count > 1)
+            if (possibleIndices.Count > 1 && currentIndex > -1)
             {
-                possibleIndices.RemoveAt(currentIndex);
+                int currentPossibleIndex = possibleActivities.FindIndex(pa => pa == orderedActivities[currentIndex]);
+                if(currentPossibleIndex > 0)
+                {
+                    possibleIndices.RemoveAt(currentPossibleIndex);
+                }
             }
-            currentIndex = orderedActivities.FindIndex(oa => oa == possibleActivities[possibleIndices[UnityEngine.Random.Range(0, possibleIndices.Count)]]);
-
+            int randomPossibleIndex = UnityEngine.Random.Range(0, possibleIndices.Count - 1);
+            AbstractActivity randomActivity = possibleActivities[possibleIndices[randomPossibleIndex]];
+            currentIndex = orderedActivities.FindIndex(oa => oa == randomActivity);
         }
         else
         {
