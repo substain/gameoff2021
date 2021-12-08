@@ -92,7 +92,6 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isInBlockingDialogue = false;
     private bool isInMenu = false;
-    private bool selectionFinished = true;
     private bool playFootsteps = false;
 
     private AudioSource playerSource;
@@ -167,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
 
     public bool IsQuiet()
     {
-        return isSneaking || currentMovement.magnitude < 2 * movementInputCutoff;
+        return !isDashing && (isSneaking || currentMovement.magnitude < 2 * movementInputCutoff);
     }
 
     public void ProcessMoveInput(InputAction.CallbackContext context)
@@ -175,39 +174,11 @@ public class PlayerMovement : MonoBehaviour
         if (isInMenu)
         {
             currentMovement = Vector3.zero;
-            UseMenuInputs(context);
             animator.SetBool("isWalking", false);
             playFootsteps = false;
             return;
         }
         ProcessMoveInput(context.ReadValue<Vector2>());
-    }
-
-    private void UseMenuInputs(InputAction.CallbackContext context)
-    {
-        Vector2 direction = context.ReadValue<Vector2>();
-        if (direction.magnitude > MainMenuFunctions.NAV_THRESHOLD)
-        {
-            if (selectionFinished)
-            {
-                Util.Dir4 dir = Util.ToDir4(direction);
-                if (dir == Util.Dir4.North)
-                {
-                    HUDManager.Instance.IngameMenuSelectPrevious();
-                }
-
-                if (dir == Util.Dir4.South)
-                {
-                    HUDManager.Instance.IngameMenuSelectNext();
-                }
-                selectionFinished = false;
-            }
-        }
-        else
-        {
-            selectionFinished = true;
-        }
-        return;
     }
 
     private void ProcessMoveInput(Vector2 direction)
@@ -278,13 +249,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void ProcessDashInput(InputAction.CallbackContext context)
     {
-        if (!context.performed)
+        if (isInMenu || !context.performed)
         {
-            return;
-        }
-        if (isInMenu)
-        {
-            HUDManager.Instance.IngameMenuUseSelected();
             return;
         }
         if (isInBlockingDialogue || isDashing || dashTimer.IsRunning())

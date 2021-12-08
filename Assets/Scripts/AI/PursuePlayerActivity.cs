@@ -30,6 +30,8 @@ public class PursuePlayerActivity : AbstractActivity
     void Start()
     {
         this.order = -1; //not needed
+        playerPosUpdateRate = playerPosUpdateRate * 1 / SettingsManager.GetDifficultyModifier();
+        moveSpeed = moveSpeed * SettingsManager.GetDifficultyModifier();
 
         timer = GetComponent<Timer>();
         npcMovement = controlledGameObject.GetComponent<NPCMovement>();

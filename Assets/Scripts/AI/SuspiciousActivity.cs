@@ -30,6 +30,8 @@ public class SuspiciousActivity : AbstractActivity
     {
         this.order = -1; //not needed
 
+        changeAngleTime = changeAngleTime * 1/SettingsManager.GetDifficultyModifier();
+
         timer = GetComponent<Timer>();
         npcMovement = controlledGameObject.GetComponent<NPCMovement>();
     }

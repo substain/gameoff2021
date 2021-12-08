@@ -49,12 +49,6 @@ public class IngameButton: ButtonScript
         return this.navigationTarget;
     }
 
-    void OnEnable()
-    {
-
-
-    }
-
     public override void Select(bool playSound = true)
     {
         SetSelected(true);

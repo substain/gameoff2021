@@ -63,7 +63,7 @@ public class ButtonScript : MonoBehaviour
         }
     }
 
-    public void Activate() {
+    public virtual void Activate() {
         if (anim != null)
         {
             anim.Play("Activated");

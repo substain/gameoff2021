@@ -14,7 +14,7 @@ public class PlayMusicZone : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            GameManager.Instance.StartClip(musicToStart);
+            GameManager.Instance.StartBackgroundMusicClip(musicToStart);
         }
     }
 }

@@ -33,10 +33,15 @@ public class WatcherNPC : MonoBehaviour {
 	void Awake()
 	{
 		activityManager = GetComponentInChildren<ActivityManager>();
+
+		hearingDistance = hearingDistance * SettingsManager.GetSlightDifficultyModifier();
+		viewAngle = viewAngle * SettingsManager.GetSlightDifficultyModifier();
+		spottingSpeed = spottingSpeed * 1/SettingsManager.GetDifficultyModifier();
 	}
 
 	void Start()
 	{
+
 		GameObject canvas = gameObject.transform.Find("Canvas").gameObject;
 		GameObject slider = canvas.transform.Find("Slider").gameObject;
 		slider.GetComponent<Slider>().maxValue = watchDelay;

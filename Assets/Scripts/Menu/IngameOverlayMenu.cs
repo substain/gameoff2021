@@ -79,7 +79,7 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
 
     public void UseBack()
     {
-        UseNavigationTarget(MenuNavigationTarget.Back);
+        UseNavigationTarget(MenuNavigationTarget.Parent);
     }
 
     public void SelectNextButton()
@@ -136,14 +136,14 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
     {
         switch (navTarget)
         {
-            case MenuNavigationTarget.Retry:
+            case MenuNavigationTarget.RestartScene:
                 {
                     GameManager.Instance.ReloadCurrentScene();
                     return;
                 }
             case MenuNavigationTarget.Options:
                 {
-                    HUDManager.Instance.ShowIngameMenu(IngameMenuType.options, null, menuType);
+                    //HUDManager.Instance.SetMenuActive(IngameMenuType.options, null, menuType);
                     return;
                 }
             case MenuNavigationTarget.MainMenu:
@@ -156,12 +156,12 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
                     GameManager.QuitGame();
                     return;
                 }
-            case MenuNavigationTarget.Back:
+            case MenuNavigationTarget.Parent:
                 {
                     if(parent != null)
                     {
                         menuSfxAudioSource.PlayOneShot(backMenuClip);
-                        HUDManager.Instance.ShowIngameMenu(parent.Value);
+                        //HUDManager.Instance.SetMenuActive(parent.Value);
                         return;
                     }
 

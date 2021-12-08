@@ -157,13 +157,8 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessInteractInput(InputAction.CallbackContext context)
     {
-        if (!context.performed)
+        if (isInMenu || !context.performed)
         {
-            return;
-        }
-        if (isInMenu)
-        {
-            HUDManager.Instance.IngameMenuUseSelected();
             return;
         }
         if (currentInteractable == null)
@@ -274,13 +269,9 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessHideInput(InputAction.CallbackContext context)
     {
-        if (!context.performed)
+        if (isInMenu || !context.performed)
         {
             return;
-        }
-        if (isInMenu)
-        {
-            HUDManager.Instance.IngameMenuUseBack();
         }
         if (isInBlockingDialogue)
         {
@@ -312,13 +303,8 @@ public class PlayerInteraction : MonoBehaviour
 
     public void ProcessMenuButtonInput(InputAction.CallbackContext context)
     {
-        if (!context.performed)
+        if (isInMenu || !context.performed)
         {
-            return;
-        }
-        if (isInMenu)
-        {
-            HUDManager.Instance.IngameMenuUseBack();
             return;
         }
         GameManager.Instance.StartPauseMenu();

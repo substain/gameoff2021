@@ -9,10 +9,13 @@ public class IdleActivity : AbstractActivity
 
     private Timer timer;
 
-    private float currentTime;
     void Awake()
     {
         timer = GetComponent<Timer>();
+        if(idleTime < 6f)
+        {
+            idleTime = idleTime * SettingsManager.GetDifficultyModifier();
+        }
     }
 
     protected override void DoStartActivity()

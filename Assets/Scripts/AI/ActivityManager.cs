@@ -55,7 +55,6 @@ public class ActivityManager : MonoBehaviour
             //Debug.LogWarning("no activities to do");
             return;
         }
-
     }
 
     void Start()
