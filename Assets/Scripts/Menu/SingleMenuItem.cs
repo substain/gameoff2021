@@ -5,20 +5,20 @@ public abstract class SingleMenuItem : MenuItem
 {
     private readonly Color focusedTextColor = HUDDialogueDisplay.GetPersonColor(Person.Sting);
     private readonly Color unfocusedTextColor = Color.white;
-    private Text buttonText;
+    protected Text menuItemText;
 
     protected virtual void Awake()
     {
-        this.buttonText = GetComponentInChildren<Text>();
+        this.menuItemText = GetComponentInChildren<Text>();
     }
 
-    public override void SelectNext()
+    public override void FocusNext()
     {
         //nothing to do here - this item is a leaf
         return;
     }
 
-    public override void SelectPrevious()
+    public override void FocusPrevious()
     {
         //nothing to do here - this item is a leaf
         return;
@@ -26,6 +26,6 @@ public abstract class SingleMenuItem : MenuItem
 
     public override void SetFocused(bool isFocused)
     {
-        buttonText.color = isFocused ? focusedTextColor : unfocusedTextColor;
+        menuItemText.color = isFocused ? focusedTextColor : unfocusedTextColor;
     }
 }

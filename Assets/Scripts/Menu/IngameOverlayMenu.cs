@@ -138,7 +138,7 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
         {
             case MenuNavigationTarget.RestartScene:
                 {
-                    GameManager.Instance.ReloadCurrentScene();
+                    GameManager.GameInstance.ReloadCurrentScene();
                     return;
                 }
             case MenuNavigationTarget.Options:
@@ -181,7 +181,7 @@ public class IngameOverlayMenu : MonoBehaviour, ISelectableMenu
                 }
             case MenuNavigationTarget.HideMenu:
                 {
-                    GameManager.Instance.HideIngameMenu();
+                    GameManager.GameInstance.HideIngameMenu();
                     return;
                 }
         }

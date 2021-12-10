@@ -38,25 +38,28 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private AudioClip closeMenuClip;
 
+    [SerializeField]
+    private AudioClip uiBackgroundMusic;
+
     //private MenuController activeMenu = null;
     private Dictionary<MenuType, MenuController> controlledMenus;
     private MenuType? activeMenu;
 
-
     protected virtual void Awake()
-    {
+    { 
         SetInstance();
-        controlledMenus = GetComponentsInChildren<MenuController>().ToDictionary(mc => mc.GetMenuType());
+        controlledMenus = GetComponentsInChildren<MenuController>(includeInactive: true).ToDictionary(mc => mc.GetMenuType());
         AudioSource[] audioSources = GetComponents<AudioSource>();
         if (audioSources.Length < 2)
         {
             Debug.LogWarning("Warning: less than 2 audio sources were found on " + this.GetType().ToString() + "'s GameObject.");
         }
-        menuSoundAudioSource = audioSources[0];
-        menuMusicAudioSource = audioSources[1];
+        menuMusicAudioSource = audioSources[0];
+        menuMusicAudioSource.clip = uiBackgroundMusic;
+        menuSoundAudioSource = audioSources[1];
     }
 
-    protected virtual void SetInstance()
+    private void SetInstance()
     {
         if (Instance != null)
         {
@@ -84,10 +87,12 @@ public class UIManager : MonoBehaviour
         {
             if(newActiveMenu.HasValue && menuPair.Key == newActiveMenu.Value)
             {
+                PlayerMenuInput.Instance.SetEnabled(true);
                 PlayMenuSound(MenuSoundType.openMenu);
                 MenuController mc = menuPair.Value;
                 menuMusicAudioSource.Play();
-                mc.SetEnabled(true);
+                //mc.SetEnabled(true);
+                mc.gameObject.SetActive(true);
                 mc.SetTitle(GetRandomMenuTitleByType(menuPair.Key, gameOverReason));
                 
                 if (parentMenu.HasValue)
@@ -97,11 +102,13 @@ public class UIManager : MonoBehaviour
             }
             else
             {
-                menuPair.Value.SetEnabled(false);
+                menuPair.Value.gameObject.SetActive(false);
+                //menuPair.Value.SetEnabled(false);
             }
         }
         if (activeMenu.HasValue && !newMenuHasValue)
         {
+            PlayerMenuInput.Instance.SetEnabled(false);
             menuMusicAudioSource.Pause();
             PlayMenuSound(MenuSoundType.closeMenu);
         }

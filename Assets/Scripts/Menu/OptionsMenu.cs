@@ -8,7 +8,7 @@ public class OptionsMenus : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GameManager.Instance.StartOptionsMenu();
+        GameManager.GameInstance.StartOptionsMenu();
     }
     public void ProcessBackInput(InputAction.CallbackContext context)
     {

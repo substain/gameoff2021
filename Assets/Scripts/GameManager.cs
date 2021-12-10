@@ -13,7 +13,7 @@ public class GameManager : MainManager
 		CoverBlown, WentSwimming, TooMuchCheese
 	}
 
-	public static new GameManager Instance;
+	public static GameManager GameInstance;
 
 	private bool gameOver = false;
 
@@ -38,16 +38,17 @@ public class GameManager : MainManager
 
 	protected override void Awake()
 	{
+		SetInstance();
 		base.Awake();
 	}
 
-	protected override void SetInstance()
+	private void SetInstance()
 	{
-		if (Instance != null)
+		if (GameInstance != null)
 		{
 			Debug.LogWarning("There is more than one " + this.GetType().ToString() + " in this scene.");
 		}
-		Instance = this;
+		GameInstance = this;
 	}
 
 	void Start()
@@ -129,7 +130,7 @@ public class GameManager : MainManager
 	void OnDestroy()
 	{
 		ConstraintManager.OnChangeConstraints -= CheckLevelFinished;
-		Instance = null;
+		GameInstance = null;
 	}
 
 	public void CheckLevelFinished()

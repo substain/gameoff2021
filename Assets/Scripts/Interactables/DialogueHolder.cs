@@ -97,9 +97,9 @@ public class DialogueHolder : MonoBehaviour, IInteractable
     /// </summary>
     public bool ProgressDialogue(PlayerInteraction interactingPlayer)
     {
-        if (HUDManager.Instance.IsTypingDialogue())
+        if (HUDManager.HUDInstance.IsTypingDialogue())
         {
-            HUDManager.Instance.FinishTypingDialogue();
+            HUDManager.HUDInstance.FinishTypingDialogue();
             return false;
         }
         DialogueLine nextLine = currentDialogue.GetNextLine();
@@ -108,7 +108,7 @@ public class DialogueHolder : MonoBehaviour, IInteractable
             FinishDialogue(interactingPlayer);
             return true;
         }
-        HUDManager.Instance.ShowDialogue(nextLine, interactingPlayer.transform, transform);
+        HUDManager.HUDInstance.ShowDialogue(nextLine, interactingPlayer.transform, transform);
 
         return false;
     }
@@ -124,7 +124,7 @@ public class DialogueHolder : MonoBehaviour, IInteractable
         }
         currentDialogue = null;
 
-        HUDManager.Instance.CloseDialogue();
+        HUDManager.HUDInstance.CloseDialogue();
     }
 
     public virtual bool HasValidNewDialogue()
@@ -180,7 +180,7 @@ public class DialogueHolder : MonoBehaviour, IInteractable
 
     public virtual void CancelDialogue()
     {
-        HUDManager.Instance.CloseDialogue();
+        HUDManager.HUDInstance.CloseDialogue();
         currentDialogue?.Reset();
         currentDialogue = null;
     }

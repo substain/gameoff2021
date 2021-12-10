@@ -29,8 +29,16 @@ public class MenuController : MonoBehaviour
     void Awake()
     {
         //order children items by y value
-        childrenItems = GetComponentsInChildren<MenuItem>().OrderByDescending(bs => bs.transform.position.y).ToList();
+        childrenItems = GetComponentsInChildren<MenuItem>(includeInactive: true)
+            .Where(mi => !mi.GetType().IsSubclassOf(typeof(SelectableMenuItem))) //only direct children
+            .OrderByDescending(bs => bs.transform.position.y).ToList();
+
         childrenItems.ForEach(ci => ci.SetMenuController(this));
+    }
+
+    void Start()
+    {
+        UpdateItemFocus();
     }
 
     public MenuType GetMenuType()
@@ -87,12 +95,12 @@ public class MenuController : MonoBehaviour
 
     public void FocusNextWithinItem()
     {
-        childrenItems[focusedItemIndex].SelectNext();
+        childrenItems[focusedItemIndex].FocusNext();
     }
 
     public void FocusPreviousWithinItem()
     {
-        childrenItems[focusedItemIndex].UseFocused();
+        childrenItems[focusedItemIndex].FocusPrevious();
     }
 
     public void UseBack()
@@ -138,7 +146,13 @@ public class MenuController : MonoBehaviour
 
     public void SetEnabled(bool isEnabled)
     {
-
+        /*foreach (Transform child in transform)
+        {
+            Debug.Log("child:" + child.name);
+            child.gameObject.SetActive(childrenActive);
+        }*/
+        //childrenButtons.ForEach(button => button.GetComponent<Button>().interactable = isEnabled);
+        //canvasGroup.alpha = isEnabled ? 1 : 0;
     }
 
     public void UseNavigationTarget(MenuNavigationTarget navTarget)
@@ -147,20 +161,24 @@ public class MenuController : MonoBehaviour
         {
             case MenuNavigationTarget.RestartScene:
                 {
-                    GameManager.Instance.ReloadCurrentScene();
+                    GameManager.GameInstance.ReloadCurrentScene();
                     return;
                 }
             case MenuNavigationTarget.Options:
                 {
-                    //HUDManager.Instance.ShowMenu(MenuType.mainMenu, null, menuType);
+                    UIManager.Instance.SetMenuActive(MenuType.options, menuType);
                     return;
                 }
             case MenuNavigationTarget.Parent:
                 {
-                    if (parent != null)
+                    if (parent.HasValue)
                     {
-                        //HUDManager.Instance.ShowMenu(parent.Value);
+                        UIManager.Instance.SetMenuActive(parent.Value);
                         return;
+                    }
+                    else
+                    {
+                        Debug.LogWarning(menuType.ToString() + " menu is trying to get back to its parent menu, which is set to null.");
                     }
                     break;
                 }
@@ -177,10 +195,10 @@ public class MenuController : MonoBehaviour
 
             case MenuNavigationTarget.HideMenu:
                 {
-                    GameManager.Instance.HideIngameMenu();
+                    GameManager.GameInstance.HideIngameMenu();
                     return;
                 }
         }
-        Debug.LogWarning("Could not determine a navigation function for " + navTarget.ToString() + " on a " + menuType.ToString() + " menu.");
+        Debug.LogWarning("Could not determine a navigation function for " + navTarget.ToString() + " on " + menuType.ToString() + " menu.");
     }
 }

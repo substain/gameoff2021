@@ -151,14 +151,14 @@ public class BugAttachment : MonoBehaviour, IInteractable
             timeListened = listenTimer.GetTimePassed();
             listenTimer.SetPaused(true);
         }
-        HUDManager.Instance.StopListenContent();
+        HUDManager.HUDInstance.StopListenContent();
         //this.audioSource.spatialBlend = 1;
         this.targetAudioSource.Stop();
 
         if (grantedReward)
         {
             StartPlayingSoundAt(targetAudioSource, rewardClip, 0, false);
-            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraintRewarded));
+            HUDManager.HUDInstance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraintRewarded));
             grantedReward = false;
         }
         targetAudioSource = null;
@@ -192,7 +192,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
                 Dialogue dialogue = DialogueManager.Instance.GetDialogueTemplate(dialogueKey.Value).ToDialogue();
                     if (dialogue != null)
                     {
-                        HUDManager.Instance.ShowSkippedContent(dialogue.GetFullText(),
+                        HUDManager.HUDInstance.ShowSkippedContent(dialogue.GetFullText(),
                                currentActivity.GetTimeProgress(),
                                currentActivity.GetFullDisplayTime(),
                                currentActivity.IsContinuous());
@@ -201,7 +201,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
             }
         }
 
-        HUDManager.Instance.ShowSkippedContent(currentActivity.GetActivityString(),
+        HUDManager.HUDInstance.ShowSkippedContent(currentActivity.GetActivityString(),
            currentActivity.GetTimeProgress(),
            currentActivity.GetFullDisplayTime(),
            currentActivity.IsContinuous());

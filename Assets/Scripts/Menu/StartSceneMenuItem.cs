@@ -17,6 +17,6 @@ public class StartSceneMenuItem : SingleMenuItem
 
     public override void UseFocused()
     {
-        GameManager.Instance.LoadScene(sceneToStart);
+        MainManager.Instance.LoadScene(sceneToStart);
     }
 }

@@ -11,7 +11,7 @@ public class GameOverZone : MonoBehaviour
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
-            GameManager.Instance.SetGameOver(gameOverReason);
+            GameManager.GameInstance.SetGameOver(gameOverReason);
         }
     }
 

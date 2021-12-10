@@ -57,10 +57,10 @@ public class PlayerInteraction : MonoBehaviour
     void Start()
     {
         UpdateBugStates();
-        HUDManager.Instance.SetObtainedKeys(obtainedKeyIds);
+        HUDManager.HUDInstance.SetObtainedKeys(obtainedKeyIds);
         InputKeyHelper.Instance.SetPlayerInput(GetComponent<PlayerInput>());
         InvokeRepeating("CheckForInteractables", 0.1f, 0.1f);
-        GameManager.Instance.SetPlayer(this);
+        GameManager.GameInstance.SetPlayer(this);
         ConstraintManager.OnChangeConstraints += UpdateAvailableKeys;
     }
 
@@ -70,7 +70,7 @@ public class PlayerInteraction : MonoBehaviour
             .Select(gc => Convert.ToInt32(gc.ToString().Replace(ConstraintManager.KEY_PREFIX, ""))).ToHashSet();
 
         obtainedKeyIds.UnionWith(availableKeys);
-        HUDManager.Instance.SetObtainedKeys(obtainedKeyIds);
+        HUDManager.HUDInstance.SetObtainedKeys(obtainedKeyIds);
     }
 
     private void CheckForInteractables()
@@ -90,14 +90,14 @@ public class PlayerInteraction : MonoBehaviour
         {
             currentInteractable = orderedInteractables[0];
             string keyname = InputKeyHelper.Instance.GetNameForKey(InputKeyHelper.ControlType.Interact);
-            HUDManager.Instance.UpdateActionHintText("Press "+ keyname + " to " + currentInteractable.GetInteractionTypeString());
+            HUDManager.HUDInstance.UpdateActionHintText("Press "+ keyname + " to " + currentInteractable.GetInteractionTypeString());
         }
         else
         {
             currentInteractable = null;
             if(previousInteractable != null)
             {
-                HUDManager.Instance.UpdateActionHintText("");
+                HUDManager.HUDInstance.UpdateActionHintText("");
             }
         }
     }
@@ -196,7 +196,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (numberOfBugs <= 0)
         {
-            HUDManager.Instance.DisplayMessage("You don't have a device to bug this person.");
+            HUDManager.HUDInstance.DisplayMessage("You don't have a device to bug this person.");
             return;
         }
         attachedBugs.Add(bugAttachment);
@@ -225,7 +225,7 @@ public class PlayerInteraction : MonoBehaviour
     public void AddKey(int keyId)
     {
         obtainedKeyIds.Add(keyId);
-        HUDManager.Instance.SetObtainedKeys(obtainedKeyIds);
+        HUDManager.HUDInstance.SetObtainedKeys(obtainedKeyIds);
     }
 
     public bool HasKeyWithId(int value)
@@ -307,7 +307,7 @@ public class PlayerInteraction : MonoBehaviour
         {
             return;
         }
-        GameManager.Instance.StartPauseMenu();
+        GameManager.GameInstance.StartPauseMenu();
     }
 
     public AudioSource GetAudioSource()
@@ -347,7 +347,7 @@ public class PlayerInteraction : MonoBehaviour
             }
             bugStates[i] = BugState.bugEmpty;
         }
-        HUDManager.Instance.SetBugStates(bugStates);
+        HUDManager.HUDInstance.SetBugStates(bugStates);
     }
 
 #if UNITY_EDITOR

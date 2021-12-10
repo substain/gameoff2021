@@ -57,7 +57,7 @@ public class Dialogue
         ConstraintManager.GameConstraint? constraint = ToGameConstraint(key);
         if (constraint.HasValue)
         {
-            HUDManager.Instance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraint.Value));
+            HUDManager.HUDInstance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraint.Value));
             ConstraintManager.Instance.PlayRewardSound();
             ConstraintManager.Instance.SetSatisfied(constraint.Value);
         }

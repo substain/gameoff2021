@@ -40,6 +40,7 @@ public class PlayerMenuInput : MonoBehaviour
 
     public void ProcessUseInput(InputAction.CallbackContext context)
     {
+
         if (!isEnabled || !context.performed)
         {
             return;

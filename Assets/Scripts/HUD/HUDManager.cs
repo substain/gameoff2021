@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using static IngameOverlayMenu;
 
 public class HUDManager : UIManager
 {
     [SerializeField]
     private bool actionHintEnabled = false;
 
-    public static new HUDManager Instance = null;
+    public static HUDManager HUDInstance = null;
 
     private HUDActionHint hudActionHint;
     private HUDMessageDisplay hudMessageDisplay;
@@ -21,6 +17,7 @@ public class HUDManager : UIManager
     protected override void Awake()
     {
         base.Awake();
+        SetInstance();
         hudActionHint = GetComponentInChildren<HUDActionHint>();
         hudMessageDisplay = GetComponentInChildren<HUDMessageDisplay>();
         hudBugDisplay = GetComponentInChildren<HUDBugDisplay>();
@@ -28,13 +25,13 @@ public class HUDManager : UIManager
         hudDialogueDisplay = GetComponentInChildren<HUDDialogueDisplay>();
     }
 
-    protected override void SetInstance()
+    private void SetInstance()
     {
-        if (Instance != null)
+        if (HUDInstance != null)
         {
             Debug.LogWarning("There is more than one " + this.GetType().ToString() + " in this scene.");
         }
-        Instance = this;
+        HUDInstance = this;
     }
 
     public void UpdateActionHintText(string hintText)
@@ -93,6 +90,6 @@ public class HUDManager : UIManager
 
     void OnDestroy()
     {
-        Instance = null;
+        HUDInstance = null;
     }
 }

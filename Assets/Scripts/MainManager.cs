@@ -17,7 +17,7 @@ public class MainManager : MonoBehaviour
 		SetInstance();
 	}
 
-	protected virtual void SetInstance()
+	private void SetInstance()
 	{
 		if (Instance != null)
 		{

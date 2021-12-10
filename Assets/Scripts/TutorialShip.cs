@@ -38,7 +38,7 @@ public class TutorialShip : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             other.gameObject.transform.parent = gameObject.transform;
-            GameManager.Instance.StartBackgroundMusicClip(onShipClip);
+            GameManager.GameInstance.StartBackgroundMusicClip(onShipClip);
         }
     }
     public void OnTriggerExit(Collider other)
@@ -46,7 +46,7 @@ public class TutorialShip : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Player"))
         {
             other.gameObject.transform.parent = null;
-            GameManager.Instance.StartBackgroundMusicClip(offShipClip);
+            GameManager.GameInstance.StartBackgroundMusicClip(offShipClip);
         }
     }
 }

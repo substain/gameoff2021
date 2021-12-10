@@ -534,7 +534,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.3607843, g: 0.9019608, b: 0.7372549, a: 1}
+  m_Color: {r: 0.36078432, g: 0.9019608, b: 0.7372549, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -612,7 +612,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 4
   m_TargetDisplay: 0
 --- !u!114 &1310189429
 MonoBehaviour:
@@ -842,6 +842,7 @@ GameObject:
   - component: {fileID: 1781268069}
   - component: {fileID: 1781268068}
   - component: {fileID: 5448682338394032351}
+  - component: {fileID: 2199294116645824727}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1108,6 +1109,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2199294116645824727}
+        m_TargetAssemblyTypeName: PlayerMenuInput, Assembly-CSharp
+        m_MethodName: ProvideDirectionalInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: c4fc039e-9143-4263-9884-7bc37ba8ddec
     m_ActionName: Gameplay/Move[/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
@@ -1115,6 +1128,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1781268067}
         m_TargetAssemblyTypeName: PlayerInteraction, Assembly-CSharp
         m_MethodName: ProcessInteractInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2199294116645824727}
+        m_TargetAssemblyTypeName: PlayerMenuInput, Assembly-CSharp
+        m_MethodName: ProcessUseInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1160,6 +1185,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2199294116645824727}
+        m_TargetAssemblyTypeName: PlayerMenuInput, Assembly-CSharp
+        m_MethodName: ProcessUseInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: f7fb7332-c3b8-4c99-a3b1-adc7414a79e6
     m_ActionName: Gameplay/Dash[/Keyboard/space,/DualShock4GamepadHID/buttonSouth,/DualShock4GamepadHID1/buttonSouth]
   - m_PersistentCalls:
@@ -1167,6 +1204,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1781268067}
         m_TargetAssemblyTypeName: PlayerInteraction, Assembly-CSharp
         m_MethodName: ProcessHideInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2199294116645824727}
+        m_TargetAssemblyTypeName: PlayerMenuInput, Assembly-CSharp
+        m_MethodName: ProcessBackInput
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1215,3 +1264,15 @@ MonoBehaviour:
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2199294116645824727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4183720738613080792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b4602e5794cf1349883a1a69a2e0249, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

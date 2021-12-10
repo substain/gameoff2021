@@ -77,7 +77,7 @@ public class PursuePlayerActivity : AbstractActivity
         if (PlayerIsReached())
         {
             timer.Stop();
-            GameManager.Instance.SetGameOver(GameManager.GameOverReason.CoverBlown);
+            GameManager.GameInstance.SetGameOver(GameManager.GameOverReason.CoverBlown);
             //GetComponent<ActivityManager>().SetPaused(true);
             return true;
         }

@@ -18,9 +18,9 @@ public abstract class MenuItem : MonoBehaviour
 
     public abstract void UseFocused();
 
-    public abstract void SelectNext();
+    public abstract void FocusNext();
 
-    public abstract void SelectPrevious();
+    public abstract void FocusPrevious();
 
     public abstract UIManager.MenuSoundType GetSoundType();
 }
