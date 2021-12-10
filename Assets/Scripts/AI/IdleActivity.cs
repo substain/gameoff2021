@@ -12,9 +12,13 @@ public class IdleActivity : AbstractActivity
     void Awake()
     {
         timer = GetComponent<Timer>();
-        if(idleTime < 6f)
+        if(idleTime < 5f)
         {
-            idleTime = idleTime * SettingsManager.GetDifficultyModifier();
+            idleTime = idleTime * 1 / SettingsManager.GetDifficultyModifier();
+        }
+        else
+        {
+            idleTime = idleTime * 1 / SettingsManager.GetSlightDifficultyModifier();
         }
     }
 

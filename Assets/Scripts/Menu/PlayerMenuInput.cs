@@ -73,4 +73,9 @@ public class PlayerMenuInput : MonoBehaviour
     {
         UIManager.Instance.NavigateDirectional(dir);
     }
+
+    void OnDestroy()
+    {
+        Instance = null;
+    }
 }

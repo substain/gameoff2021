@@ -72,25 +72,23 @@ public class UIManager : MonoBehaviour
     {
         KeyValuePair<MenuType, MenuController> menuPair = controlledMenus.Where(mc => mc.Value.IsEnabledOnStart()).FirstOrDefault();
         if(menuPair.Equals(default(KeyValuePair<MenuType, MenuController>))){
-            SetMenuActive(null);
+            SetMenuActive(null, isStart: true);
         }
         else
         {
-            SetMenuActive(menuPair.Key);
+            SetMenuActive(menuPair.Key, isStart:true);
         }
     }
 
-    public void SetMenuActive(MenuType? newActiveMenu, MenuType? parentMenu = null, GameManager.GameOverReason? gameOverReason = null)
+    public void SetMenuActive(MenuType? newActiveMenu, MenuType? parentMenu = null, GameManager.GameOverReason? gameOverReason = null, bool isStart = false)
     {
-        bool newMenuHasValue = activeMenu.HasValue;
+        bool oldMenuHasValue = activeMenu.HasValue;
         foreach (KeyValuePair<MenuType, MenuController> menuPair in controlledMenus)
         {
             if(newActiveMenu.HasValue && menuPair.Key == newActiveMenu.Value)
             {
                 PlayerMenuInput.Instance.SetEnabled(true);
-                PlayMenuSound(MenuSoundType.openMenu);
                 MenuController mc = menuPair.Value;
-                menuMusicAudioSource.Play();
                 //mc.SetEnabled(true);
                 mc.gameObject.SetActive(true);
                 mc.SetTitle(GetRandomMenuTitleByType(menuPair.Key, gameOverReason));
@@ -106,11 +104,22 @@ public class UIManager : MonoBehaviour
                 //menuPair.Value.SetEnabled(false);
             }
         }
-        if (activeMenu.HasValue && !newMenuHasValue)
+        if (!newActiveMenu.HasValue && oldMenuHasValue)
         {
             PlayerMenuInput.Instance.SetEnabled(false);
             menuMusicAudioSource.Pause();
-            PlayMenuSound(MenuSoundType.closeMenu);
+            if (!isStart)
+            {
+                PlayMenuSound(MenuSoundType.closeMenu);
+            }
+        }
+        if(newActiveMenu.HasValue && !oldMenuHasValue)
+        {
+            menuMusicAudioSource.Play();
+            if (!isStart)
+            {
+                PlayMenuSound(MenuSoundType.openMenu);
+            }
         }
         activeMenu = newActiveMenu;
     }
@@ -262,4 +271,9 @@ public class UIManager : MonoBehaviour
         "you found the cheesy end!",
         "you don't know when to stop!"
     };
+
+    protected virtual void OnDestroy()
+    {
+        Instance = null;
+    }
 }

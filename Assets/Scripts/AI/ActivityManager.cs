@@ -168,13 +168,17 @@ public class ActivityManager : MonoBehaviour
 
     public void StartBeingSuspicious(Transform targetTransform)
     {
-        if (pursuingPlayer || beingSuspicious || suspiciousActivity == null)
+        if (pursuingPlayer || suspiciousActivity == null)
         {
             return;
         }
-        beingSuspicious = true;
         suspiciousActivity.SetTarget(targetTransform);
-        StartActivity(suspiciousActivity);
+
+        if (!beingSuspicious)
+        {
+            beingSuspicious = true;
+            StartActivity(suspiciousActivity);
+        }
     }
 
     public void StopFollowingPlayer()

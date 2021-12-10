@@ -88,8 +88,9 @@ public class HUDManager : UIManager
         hudMessageDisplay.DisplaySkipped(listenContent, timePassed, fullDuration, true, isContinuous);
     }
 
-    void OnDestroy()
+    protected override void OnDestroy()
     {
         HUDInstance = null;
+        base.OnDestroy();
     }
 }

@@ -31,7 +31,7 @@ public class MainManager : MonoBehaviour
 		SceneManager.LoadScene(ToSceneName(gameScene));
 	}
 
-	void OnDestroy()
+	protected virtual void OnDestroy()
 	{
 		Instance = null;
 	}

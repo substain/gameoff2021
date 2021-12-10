@@ -39,6 +39,7 @@ public class GameManager : MainManager
 	protected override void Awake()
 	{
 		SetInstance();
+		SetPaused(false);
 		base.Awake();
 	}
 
@@ -127,10 +128,11 @@ public class GameManager : MainManager
 		Time.timeScale = isPaused? 0 : 1;
 	}
 
-	void OnDestroy()
+	protected override void OnDestroy()
 	{
 		ConstraintManager.OnChangeConstraints -= CheckLevelFinished;
 		GameInstance = null;
+		base.OnDestroy();
 	}
 
 	public void CheckLevelFinished()
