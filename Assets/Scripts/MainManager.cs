@@ -17,6 +17,14 @@ public class MainManager : MonoBehaviour
 		SetInstance();
 	}
 
+	protected virtual void Start()
+	{
+		if(GameManager.GameInstance == null)
+		{
+			CheckpointManager.Reset();
+		}
+	}
+
 	private void SetInstance()
 	{
 		if (Instance != null)

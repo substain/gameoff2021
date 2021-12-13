@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class HUDManager : UIManager
 {
+    public const float FADE_DURATION = 1.5f;
+
     [SerializeField]
     private bool actionHintEnabled = false;
 
@@ -13,6 +16,7 @@ public class HUDManager : UIManager
     private HUDBugDisplay hudBugDisplay;
     private HUDKeyDisplay hudKeyDisplay;
     private HUDDialogueDisplay hudDialogueDisplay;
+    private HUDOverlayScreen hudOverlayScreen;
 
     protected override void Awake()
     {
@@ -23,6 +27,7 @@ public class HUDManager : UIManager
         hudBugDisplay = GetComponentInChildren<HUDBugDisplay>();
         hudKeyDisplay = GetComponentInChildren<HUDKeyDisplay>();
         hudDialogueDisplay = GetComponentInChildren<HUDDialogueDisplay>();
+        hudOverlayScreen = GetComponentInChildren<HUDOverlayScreen>();
     }
 
     private void SetInstance()
@@ -58,6 +63,7 @@ public class HUDManager : UIManager
         hudKeyDisplay.SetObtainedKeys(obtainedKeyIds);
     }
 
+
     public void ShowDialogue(DialogueLine dialogueLine, Transform playerPosition, Transform targetPosition)
     {
         hudDialogueDisplay.ShowDialogue(dialogueLine, playerPosition, targetPosition);
@@ -86,6 +92,27 @@ public class HUDManager : UIManager
     public void ShowSkippedContent(string listenContent, float timePassed, float fullDuration, bool isContinuous)
     {
         hudMessageDisplay.DisplaySkipped(listenContent, timePassed, fullDuration, true, isContinuous);
+    }
+
+    public void SetOverlayVisible(bool isVisible)
+    {
+        hudOverlayScreen.SetVisible(isVisible);
+    }
+
+    public void FadeInOverlay(string overlayText)
+    {
+        hudOverlayScreen.SetOverlayText(overlayText);
+        hudOverlayScreen.FadeIn(FADE_DURATION);
+    }
+
+    public void FadeOutOverlay()
+    {
+        hudOverlayScreen.FadeOut(FADE_DURATION);
+    }
+
+    public bool IsFading()
+    {
+        return hudOverlayScreen.IsFading();
     }
 
     protected override void OnDestroy()

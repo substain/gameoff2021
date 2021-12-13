@@ -35,6 +35,8 @@ public class DialogueManager : MonoBehaviour
 
 	public static DialogueManager Instance = null;
 
+	private HashSet<DialogueKey> finishedDialogues = new HashSet<DialogueKey>();
+
 	void Awake()
 	{
 		if (Instance != null)
@@ -42,7 +44,27 @@ public class DialogueManager : MonoBehaviour
 			Debug.LogWarning("There is more than one DialogueManager in this scene.");
 		}
 		Instance = this;
+		finishedDialogues = new HashSet<DialogueKey>(CheckpointManager.GetFinishedDialogues());
 		LoadDialogues();
+	}
+
+	public void SetFinished(DialogueKey dialogueKey)
+	{
+		if (finishedDialogues.Contains(dialogueKey))
+		{
+			return;
+		}
+		finishedDialogues.Add(dialogueKey);
+	}
+
+	public bool IsFinished(DialogueKey dialogueKey)
+	{
+		return finishedDialogues.Contains(dialogueKey);
+	}
+
+	public HashSet<DialogueKey> GetFinishedDialogues()
+	{
+		return finishedDialogues;
 	}
 
 	private void LoadDialogues()

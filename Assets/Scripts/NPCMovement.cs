@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class NPCMovement : MonoBehaviour
 
     private Vector3 destination;
     private Light watchLight;
+
+    private NavMeshPathStatus pathStatus;
 
     [SerializeField]
     private Vector3 lookDirection = Vector3.back;
@@ -67,12 +70,21 @@ public class NPCMovement : MonoBehaviour
     {
         destination = GetClosestPositionFor(target);
         navMeshAgent.SetDestination(destination);
+
+        NavMeshPath path = new NavMeshPath();
+        navMeshAgent.CalculatePath(destination, path);
+        pathStatus = path.status;
     }
 
     public void StopMovement()
     {
         navMeshAgent.isStopped = true; 
         animator.SetBool("isWalking", false);
+    }
+
+    public NavMeshPathStatus GetPathStatus()
+    {
+        return pathStatus;
     }
 
     /// <summary>

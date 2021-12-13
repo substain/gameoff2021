@@ -18,7 +18,7 @@ public class GameManager : MainManager
 	private bool gameOver = false;
 
 	[SerializeField]
-	private float timeToFinish = 4.0f;
+	private float timeToFinish = 1.0f;
 
 	[SerializeField]
 	private GameScene thisScene;	
@@ -27,7 +27,9 @@ public class GameManager : MainManager
 	private GameScene nextScene;
 
 	[SerializeField]
-	private ConstraintManager.GameConstraint constraintNeededForNextLevel;
+	private string finalText;
+
+	private const ConstraintManager.GameConstraint constraintNeededForNextLevel = ConstraintManager.GameConstraint.loadNextLevel;
 
 	private PlayerInteraction player;
 
@@ -36,10 +38,19 @@ public class GameManager : MainManager
 	[SerializeField]
 	private AudioClip initialBackgroundClip;
 
+	[SerializeField]
+	private bool useOverlayFading = true;
+
+	private Vector3? playerStartPos;
+
+	private PlayerInteraction playerInteraction;
+
 	protected override void Awake()
 	{
+		CheckpointManager.SetCurrentScene(thisScene);
 		SetInstance();
 		SetPaused(false);
+		playerStartPos = CheckpointManager.GetCurrentPosition();
 		base.Awake();
 	}
 
@@ -52,7 +63,7 @@ public class GameManager : MainManager
 		GameInstance = this;
 	}
 
-	void Start()
+	protected override void Start()
 	{
 		AudioSource[] audioSources = GetComponents<AudioSource>();
 		if (audioSources.Length < 1)
@@ -65,6 +76,31 @@ public class GameManager : MainManager
 		musicAudioSource.Play();
 
 		ConstraintManager.OnChangeConstraints += CheckLevelFinished;
+
+		if (useOverlayFading)
+		{
+			HUDManager.HUDInstance.SetOverlayVisible(true);
+			HUDManager.HUDInstance.FadeOutOverlay();
+		}
+		else
+		{
+			HUDManager.HUDInstance.SetOverlayVisible(false);
+		}
+	}
+
+	public PlayerInteraction GetPlayer()
+	{
+		return player;
+	}
+
+	public Vector3? GetPlayerStartPos()
+	{
+		return playerStartPos;
+	}
+
+	public int GetFadeDelay()
+	{
+		return (useOverlayFading && HUDManager.HUDInstance.IsFading()) ? Mathf.CeilToInt(HUDManager.FADE_DURATION) : 0;
 	}
 
 	public void ReloadCurrentScene()
@@ -89,7 +125,8 @@ public class GameManager : MainManager
 			return;
 		}
 		gameOver = true;
-		SetMenuActive(MenuController.MenuType.gameover, gameOverReason: gameOverReason);
+		GameOverReason usedGameOverReason = player.GetComponent<PlayerMovement>().SlowedByCheese() ? GameOverReason.TooMuchCheese : gameOverReason;
+		SetMenuActive(MenuController.MenuType.gameover, gameOverReason: usedGameOverReason);
 	}
 
 	public void StartPauseMenu()
@@ -142,6 +179,11 @@ public class GameManager : MainManager
 			Timer timer = gameObject.AddComponent<Timer>();
 			timer.Init(timeToFinish, LoadNextLevel);
 			ConstraintManager.OnChangeConstraints -= CheckLevelFinished;
+			SettingsManager.SetSceneFinished(thisScene);
+			if (useOverlayFading)
+			{
+				HUDManager.HUDInstance.FadeInOverlay(finalText);
+			}
 		}
 	}
 

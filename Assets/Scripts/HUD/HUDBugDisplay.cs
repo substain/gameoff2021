@@ -24,7 +24,7 @@ public class HUDBugDisplay : MonoBehaviour
 
     public void SetBugStates(BugState[] bugStates)
     {
-        for(int i = 0; i < bugStates.Length; i++)
+        for (int i = 0; i < bugStates.Length; i++)
         {
             int bugSpriteIndex = (int) bugStates[i];
             bugStatesSpriteRenderer[i].sprite = bugStateSprites[bugSpriteIndex];

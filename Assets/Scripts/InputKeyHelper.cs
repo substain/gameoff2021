@@ -35,7 +35,6 @@ public class InputKeyHelper : MonoBehaviour
     {
         //int binding = playerInput.actions[ctype.ToString()].GetBindingForControl(control).GetValueOrDefault().effectivePath;
         string bindingName =  playerInput.actions[ctype.ToString()].GetBindingDisplayString();
-        //Debug.Log(binding + " => " + bindingName);
 
         return bindingName; //TODO
         //https://forum.unity.com/threads/get-name-of-mapped-key-with-new-input-system.939464/

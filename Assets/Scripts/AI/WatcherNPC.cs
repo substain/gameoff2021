@@ -30,6 +30,8 @@ public class WatcherNPC : MonoBehaviour {
 	[SerializeField]
 	private float hearingDistance = 5.0f;
 
+	private float currentSpottingSpeed = 1.0f;
+
 	void Awake()
 	{
 		activityManager = GetComponentInChildren<ActivityManager>();
@@ -37,6 +39,7 @@ public class WatcherNPC : MonoBehaviour {
 		hearingDistance = hearingDistance * SettingsManager.GetSlightDifficultyModifier();
 		viewAngle = viewAngle * SettingsManager.GetSlightDifficultyModifier();
 		spottingSpeed = spottingSpeed * 1/SettingsManager.GetDifficultyModifier();
+		currentSpottingSpeed = spottingSpeed;
 	}
 
 	void Start()
@@ -47,13 +50,11 @@ public class WatcherNPC : MonoBehaviour {
 		slider.GetComponent<Slider>().maxValue = watchDelay;
 	}
 	void FixedUpdate() {
-		//Debug.Log("fixedUpdate watcherNPC");
 		FindVisibleTargets();
 		AdjustRotation();
 
 		//if ( visibleTargets.Count != 0 ) {
 		if ( visibleTargets.Count != 0 ) {
-			//Debug.Log("Count down time " + watchCounter);
 			float suspiciousModifier = activityManager.IsSuspicious() ? 1.75f : 1f;
 			watchCounter += Time.deltaTime * spottingSpeed * (1 / dstToTarget) * suspiciousModifier;
 			spottedIndicator.value = watchCounter;
@@ -65,6 +66,11 @@ public class WatcherNPC : MonoBehaviour {
             }
         }
     }
+
+	public void SetSpottingSpeedFactor(float spottingSpeedFactor)
+	{
+		currentSpottingSpeed = spottingSpeed * spottingSpeedFactor;
+	}
 
 	public float GetViewAngle()
 	{
@@ -84,8 +90,6 @@ public class WatcherNPC : MonoBehaviour {
 	private void spottedPlayer()
 	{
 		activityManager.StartPursuePlayer(visibleTargets[0]);
-
-		//Debug.Log("Player spotted");
 		spottedIndicator.gameObject.SetActive(false);
 		alertIcon.SetActive(true);
 		playerSpotted = true;
@@ -127,7 +131,6 @@ public class WatcherNPC : MonoBehaviour {
 				// Check for Objects covering player from view
 				if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, obstacleMask) ) {
 					visibleTargets.Add(target);
-					//Debug.Log("See target");
 				}
 			}
 			CheckTargetForSound(target);
@@ -156,7 +159,7 @@ public class WatcherNPC : MonoBehaviour {
 			playerMovement != null && 
 			!playerMovement.IsQuiet())
 		{
-			activityManager.StartBeingSuspicious(target);
+			activityManager.StartBeingSuspicious(target.position);
 		}
 	}
 

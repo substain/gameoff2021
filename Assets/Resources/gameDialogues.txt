@@ -10,8 +10,8 @@ C.R. Piller: I can't use these stairs.. I have to find different way to get upst
 ? finishLevel
 C.R. Piller: I found it! But it's impossible to move! It's too heavy to carry! We can't get it off the ship ourselves!
 C.R. Piller: There is no way this weapon can do good in the hands of the UG, they will rule the world.
-C.R. Piller: But if I destroy it, maybe the seas will continue to rise and more people will die. What do I do D:!
-C.R. Piller: What will I do ... ?
+C.R. Piller: But if I destroy it, maybe the seas will continue to rise and more people will die.
+C.R. Piller: What do I do ... ?
 
 # weaponDestroyed
 ? finishLevel
@@ -81,6 +81,41 @@ C.R. Piller: One moohhhuuaa… They’ve caught me! It wasn’t worth it.
 # anyoneSpeechless
 *
 %subject%: ...
+
+# buffet1
+*
+C.R. Piller: I'm not in the mood for garlic bread.
+
+# buffet2
+*
+C.R. Piller: How on earth did they get fried chicken substitute?
+C.R. Piller: I thought there was no more available since they could not grow the necessary fibers anymore.
+C.R. Piller: It's not like I ever wanted to eat this...
+
+# buffet3
+*
+C.R. Piller: Spinach rolls, giant tomatoes with white pepper, halved garlic cloves, fried chicken substitute?
+C.R. Piller: This is a bad day for a spy with decent functioning taste buds.
+
+# buffet4
+*
+C.R. Piller: This gravy smells like a delight.
+C.R. Piller: But I'm not eating this.
+C.R. Piller: I'm on a mission.
+
+# buffet5
+*
+C.R. Piller: I'm not hungry.
+
+# takeNap
+*
+C.R. Piller: I want to go sleep, but I'm also on this mission way to important to even think about sleeping.
+C.R. Piller: What am I even doing here?
+
+# tubes
+*
+? gotKey2
+C.R. Piller: These tubes look massive. Would they be able to support a medium-sized agent with a minor cheese stick addiction?
 
 # useTutorialMono
 UNUSED

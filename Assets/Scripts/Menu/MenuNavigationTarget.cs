@@ -1,4 +1,4 @@
 ﻿public enum MenuNavigationTarget
 {
-    RestartScene, MainMenu, Options, Quit, Parent, HideMenu
+    RestartScene, MainMenu, Options, Quit, Parent, HideMenu, Credits
 }

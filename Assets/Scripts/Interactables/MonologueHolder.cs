@@ -38,7 +38,8 @@ public class MonologueHolder : DialogueHolder
 
     IEnumerator StartMonologueDelayed()
     {
-        yield return new WaitForSeconds(SECONDS_TO_WAIT);
+        int secondsToWait = SECONDS_TO_WAIT + GameManager.GameInstance.GetFadeDelay();
+        yield return new WaitForSeconds(secondsToWait);
         StartMonologue();
     }
 

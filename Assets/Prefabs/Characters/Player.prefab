@@ -932,7 +932,7 @@ MonoBehaviour:
   dashForce: 28
   dashCutoffPoint: 0.9
   dashDecreaseFraction: 0.85
-  dashReloadDuration: 1
+  dashReloadDuration: 1.5
   footstepClips:
   - {fileID: 8300000, guid: cce9e6c306f2c104396d566f5777a80e, type: 3}
   - {fileID: 8300000, guid: d792d2c5354d92241821b99011e2b3a8, type: 3}
@@ -963,7 +963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionPosition: {fileID: 813864160}
-  interactionRadius: 2
+  interactionRadius: 1.75
   numberOfBugs: 3
   displayInteractionSphereGizmo: 1
 --- !u!81 &1781268069

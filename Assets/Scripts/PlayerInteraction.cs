@@ -24,7 +24,7 @@ public class PlayerInteraction : MonoBehaviour
     private bool displayInteractionSphereGizmo = true;
 
     [SerializeField]
-    private HashSet<int> obtainedKeyIds = new HashSet<int>();
+    private HashSet<int> obtainedKeyIds;
 
     private LayerMask layerToCheckFor;
     private PlayerMovement playerMovement;
@@ -52,6 +52,7 @@ public class PlayerInteraction : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         this.animator = GetComponentInChildren<Animator>();
         audioSource = GetComponentInChildren<AudioSource>();
+        obtainedKeyIds = new HashSet<int>(CheckpointManager.GetObtainedKeyIds());
     }
 
     void Start()
@@ -71,6 +72,11 @@ public class PlayerInteraction : MonoBehaviour
 
         obtainedKeyIds.UnionWith(availableKeys);
         HUDManager.HUDInstance.SetObtainedKeys(obtainedKeyIds);
+    }
+
+    public HashSet<int> GetObtainedKeyIds()
+    {
+        return obtainedKeyIds;
     }
 
     private void CheckForInteractables()
@@ -100,6 +106,11 @@ public class PlayerInteraction : MonoBehaviour
                 HUDManager.HUDInstance.UpdateActionHintText("");
             }
         }
+    }
+
+    internal bool JustAteCheese()
+    {
+        throw new NotImplementedException();
     }
 
     private List<IInteractable> FindInteractablesInRange()
@@ -347,6 +358,8 @@ public class PlayerInteraction : MonoBehaviour
             }
             bugStates[i] = BugState.bugEmpty;
         }
+
+
         HUDManager.HUDInstance.SetBugStates(bugStates);
     }
 

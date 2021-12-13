@@ -88,6 +88,10 @@ public class PlayerMovement : MonoBehaviour
     private Timer hideSliderTimer;
     private Vector3 lastMoveDir = new Vector3(1, 0, 0);
     private CanvasGroup dashSliderGroup;
+
+    private int numCheeseEaten = 0;
+    private Timer cheeseTimer;
+
     private Slider dashSlider;
 
     private bool isInBlockingDialogue = false;
@@ -103,6 +107,7 @@ public class PlayerMovement : MonoBehaviour
         this.dashTimer = gameObject.AddComponent<Timer>();
         this.footstepTimer = gameObject.AddComponent<Timer>();
         this.hideSliderTimer = gameObject.AddComponent<Timer>();
+        this.cheeseTimer = gameObject.AddComponent<Timer>();
         this.animator = GetComponentInChildren<Animator>();
         this.dashSlider = GetComponentInChildren<Slider>();
         this.dashSliderGroup = GetComponentInChildren<CanvasGroup>();
@@ -112,6 +117,11 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         HideDashSlider();
+        Vector3? startPos = GameManager.GameInstance.GetPlayerStartPos();
+        if (startPos.HasValue)
+        {
+            transform.position = startPos.Value;
+        }
     }
 
     void FixedUpdate()
@@ -138,6 +148,13 @@ public class PlayerMovement : MonoBehaviour
             velocity = Vector3.zero;
             return;
         }
+    }
+
+    public void AddCheeseEaten()
+    {
+        numCheeseEaten++;
+        float cheeseDuration = 0.75f + numCheeseEaten * 0.75f;
+        cheeseTimer.Init(cheeseDuration);
     }
 
     public void ProcessRunInput(InputAction.CallbackContext context)
@@ -237,13 +254,17 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void ProcessMovement()
-    {        
+    {
+        float slowdownFactor = cheeseTimer.IsRunning() ? cheeseTimer.GetRelativeProgress() : 1;
+
+        Vector3 usedMovement = slowdownFactor * currentMovement;
+
         //add a fraction of the movement to the velocity
-        velocity += velocityBuildupFraction * currentMovement;
+        velocity += velocityBuildupFraction * usedMovement;
         velocity = Vector3.ClampMagnitude(velocity, maxVelocity * movementModifier);
 
         //execute movement
-        rigidBody.velocity = Util.Vector3MinY(0.15f, Util.CombineVectorsXZandY(currentMovement + velocity, rigidBody.velocity));
+        rigidBody.velocity = Util.Vector3MinY(0.15f, Util.CombineVectorsXZandY(usedMovement + velocity, rigidBody.velocity));
 
     }
 
@@ -253,7 +274,7 @@ public class PlayerMovement : MonoBehaviour
         {
             return;
         }
-        if (isInBlockingDialogue || isDashing || dashTimer.IsRunning())
+        if (isInBlockingDialogue || isDashing || dashTimer.IsRunning() || cheeseTimer.IsRunning())
         {
             return;
         }
@@ -364,6 +385,11 @@ public class PlayerMovement : MonoBehaviour
             delay = 0.4f;
         }
         footstepTimer.Init(delay, PlayFootstepsRepeated);
+    }
+
+    public bool SlowedByCheese()
+    {
+        return cheeseTimer.IsRunning();
     }
 }
 

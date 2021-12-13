@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +19,8 @@ public class PursuePlayerActivity : AbstractActivity
     private NPCMovement npcMovement;
 
     private Vector3? updatedPos = null;
+
+    private Vector3? lastRealPos = null;
 
     private Timer timer;
 
@@ -58,7 +61,12 @@ public class PursuePlayerActivity : AbstractActivity
     {
         updatedPos = newPosition;
     }
-    
+
+    public Vector3? GetLastPosition()
+    {
+        return lastRealPos;
+    }
+
     public void UpdateDestinationFromTargetPosition()
     {
         if (!updatedPos.HasValue)
@@ -68,6 +76,7 @@ public class PursuePlayerActivity : AbstractActivity
             return;
         }
         npcMovement.SetMoveTarget(updatedPos.Value);
+        lastRealPos = updatedPos.Value;
         updatedPos = null;
         timer.Init(playerPosUpdateRate, UpdateDestinationFromTargetPosition);
     }
@@ -89,18 +98,17 @@ public class PursuePlayerActivity : AbstractActivity
                 npcMovement.SetMoveTarget(updatedPos.Value);
             }
         }
-
-        /*if (lostPlayer)
-        {
-            //Wait and look around for a short while?
-        }*/
-        
-        return lostPlayer;
+        return (TargetIsReached() || !TargetIsReachable()) && lostPlayer;
     }
 
     private bool TargetIsReached()
     {
         return npcMovement.IsWithinDistanceToDestination(TARGET_REACHED_RANGE);
+    }
+
+    private bool TargetIsReachable()
+    {
+        return npcMovement.GetPathStatus() == NavMeshPathStatus.PathComplete;
     }
 
     private bool PlayerIsReached()
@@ -123,4 +131,5 @@ public class PursuePlayerActivity : AbstractActivity
     {
         return listenTimeNeededForConstraint;
     }
+
 }

@@ -32,6 +32,15 @@ C.R. Piller: I should try to look around and use my bugging device to spy on peo
 C.R. Piller: To plant a device, I can use %interact% when I'm near a person.
 C.R. Piller: I can use %listenbug% to cycle through all planted devices and listen to them.
 
+# takeNap
+*
+C.R. Piller: I can't go sleeping now. This mission is too important!
+
+# desk
+*
+C.R. Piller: I've got too far to hold back now. 
+C.R. Piller: Time is limited. I have to make it to that ship.
+
 # shipReachedMono
 ? finishLevel
 C.R. Piller: Yes! I'm on the ship! Time to start this operation!

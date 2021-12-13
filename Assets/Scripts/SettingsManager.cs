@@ -8,17 +8,48 @@ using UnityEngine;
 public static class SettingsManager
 {
 	private const string PP_DIFFICULTY = "CruiseNoir_Difficulty";
+	private const string PP_PROGRESS = "CruiseNoir_Progress";
 
 	private const DifficultySetting defaultDifficulty = DifficultySetting.normal;
+	private const ProgressSetting defaultProgress = ProgressSetting.none;
 
 	public enum DifficultySetting
 	{
 		easy, normal
 	}
 
+	//use ascending order here
+	public enum ProgressSetting
+	{
+		none, tutorialFinished, chapterOneFinished
+	}
+
 	public static void SetDifficulty(DifficultySetting difficulty)
 	{
 		PlayerPrefs.SetInt(PP_DIFFICULTY, ToDifficultyInt(difficulty));
+	}
+
+	public static void SetSceneFinished(GameScene finishedScene)
+	{
+		ProgressSetting progressReached = SceneToProgress(finishedScene);
+		ProgressSetting maxProgress = GetMaxProgress(progressReached, GetProgress());
+		SetProgress(maxProgress);
+	}
+
+	public static void SetProgress(ProgressSetting progress)
+	{
+		PlayerPrefs.SetInt(PP_PROGRESS, ToProgressInt(progress));
+	}
+
+	public static ProgressSetting GetProgress()
+	{
+		if (!PlayerPrefs.HasKey(PP_PROGRESS))
+		{
+			PlayerPrefs.SetInt(PP_PROGRESS, ToProgressInt(defaultProgress));
+			return defaultProgress;
+		}
+
+		return ToProgress(PlayerPrefs.GetInt(PP_PROGRESS));
 	}
 
 	public static DifficultySetting GetDifficulty()
@@ -29,7 +60,7 @@ public static class SettingsManager
 			return defaultDifficulty;
 		}
 
-		return (DifficultySetting) PlayerPrefs.GetInt(PP_DIFFICULTY);
+		return ToDifficulty(PlayerPrefs.GetInt(PP_DIFFICULTY));
 	}
 
 	public static float GetSlightDifficultyModifier()
@@ -51,5 +82,37 @@ public static class SettingsManager
 	public static int ToDifficultyInt(DifficultySetting difficulty)
 	{
 		return (int)difficulty;
+	}
+	public static ProgressSetting SceneToProgress(GameScene scene)
+	{
+		switch (scene)
+		{
+			case GameScene.tutorial:
+				{
+					return ProgressSetting.tutorialFinished;
+				}
+			case GameScene.chapterOne:
+				{
+					return ProgressSetting.chapterOneFinished;
+				}
+			default:
+				{
+					return ProgressSetting.none;
+				}
+		}
+	}
+
+	public static ProgressSetting ToProgress(int progressInt)
+	{
+		return (ProgressSetting)progressInt;
+	}
+	public static int ToProgressInt(ProgressSetting progress)
+	{
+		return (int)progress;
+	}
+
+	public static ProgressSetting GetMaxProgress(ProgressSetting progress1, ProgressSetting progress2)
+	{
+		return ToProgress(Mathf.Max(ToProgressInt(progress1), ToProgressInt(progress2)));
 	}
 }

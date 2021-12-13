@@ -200,6 +200,15 @@ public class UIManager : MonoBehaviour
         "we'll wait here."
     };
 
+    private static readonly List<string> creditTitles = new List<string>() {
+        "credits",
+        "agency staff",
+        "retired agents",
+        "attributions",
+        "a random list of great people"
+    };
+
+
     public static string GetRandomMenuTitleByType(MenuType type, GameManager.GameOverReason? gor = null)
     {
         switch (type)
@@ -219,6 +228,10 @@ public class UIManager : MonoBehaviour
             case MenuType.gameover:
                 {
                     return gor.HasValue ? GameOverReasonToString(gor.Value) : "Game Over";
+                }
+            case MenuType.credits:
+                {
+                    return Util.ChooseRandomFromList(creditTitles);
                 }
         }
         return "Menu";

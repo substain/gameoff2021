@@ -58,7 +58,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
             if (currentActivity.GetActivityString().Length > 0)
             {
-                DisplayActivityString();
+                //DisplayActivityString();
             }
         }
     }
@@ -136,7 +136,7 @@ public class BugAttachment : MonoBehaviour, IInteractable
 
         if (currentActivity.GetActivityString().Length > 0)
         {
-            DisplayActivityString();
+            //DisplayActivityString();
         }
         bugIndicatorAnimator.SetBool("isActive", true);
 

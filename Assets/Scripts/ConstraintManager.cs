@@ -15,7 +15,8 @@ public class ConstraintManager : MonoBehaviour
 		gotKey1, gotKey2, gotKey3, gotKey4, gotKey5, gotKey6, gotKey7, gotKey8,
 		startUseTutorial, startDashTutorial, startAvoidTutorial, startBugTutorial, bugUsed,
 		cantUseStairs, finishLevelAlt, upperStairsReached, upperLevelReached, weaponXLocationRevealed,
-		lastCheeseStickUsed, ateCheeseStick1, ateCheeseStick2, ateCheeseStick3, ateCheeseStick4
+		lastCheeseStickUsed, ateCheeseStick1, ateCheeseStick2, ateCheeseStick3, ateCheeseStick4,
+		loadNextLevel
 	}
 
 	public enum ChoiceType
@@ -37,6 +38,7 @@ public class ConstraintManager : MonoBehaviour
 
 	private HashSet<GameConstraint> satisfiedConstraints = new HashSet<GameConstraint>();
 
+
 	public static ConstraintManager Instance = null;
 
 	public delegate void ConstraintsChanged();
@@ -53,6 +55,7 @@ public class ConstraintManager : MonoBehaviour
 			Debug.LogWarning("There is more than one ConstraintManager in this scene.");
 		}
 		Instance = this;
+		satisfiedConstraints = new HashSet<GameConstraint>(CheckpointManager.GetSavedSatisfiedConstraints());
 	}
 
 	void Start()
@@ -123,6 +126,10 @@ public class ConstraintManager : MonoBehaviour
 	{
 		return satisfiedConstraints.Where(sc => sc.ToString().StartsWith("gotKey")).ToList();		
 	}
+	public HashSet<GameConstraint> GetSatisfiedConstraints()
+	{
+		return satisfiedConstraints;
+	}
 
 	void OnDestroy()
 	{
@@ -131,6 +138,10 @@ public class ConstraintManager : MonoBehaviour
 
     public static string ConstraintToRewardString(GameConstraint value)
     {
+		if (value.ToString().StartsWith("gotKey"))
+		{
+			return "I've got a key!";
+		}
 		switch (value){
 			case GameConstraint.weaponXLocationRevealed:
 				{
@@ -138,7 +149,7 @@ public class ConstraintManager : MonoBehaviour
 				}
 			default:
 				{
-					return "I've got a key!";
+					return "";
 				}
 		}
 	}

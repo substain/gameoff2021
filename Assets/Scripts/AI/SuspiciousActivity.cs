@@ -56,9 +56,9 @@ public class SuspiciousActivity : AbstractActivity
         return false;
     }
 
-    public void SetTarget(Transform target)
+    public void SetTarget(Vector3 targetPos)
     {
-        targetDir = target.position - npcMovement.transform.position;
+        targetDir = targetPos - npcMovement.transform.position;
     }
 
     protected override void DoStartActivity()

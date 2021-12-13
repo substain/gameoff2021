@@ -15,7 +15,6 @@ public class Dialogue
     private readonly List<ConstraintManager.GameConstraint> constraints = new List<ConstraintManager.GameConstraint>();
     private readonly List<DialogueLine> dialogueLines = new List<DialogueLine>();
 
-    private bool wasCompleted = false;
     private int lineIndex = 0;
 
     public Dialogue(DialogueHolder.DialogueKey key, List<DialogueLine> dialogueLines, bool isOneShot, bool isBlocking, List<ConstraintManager.GameConstraint> constraints)
@@ -57,14 +56,17 @@ public class Dialogue
         ConstraintManager.GameConstraint? constraint = ToGameConstraint(key);
         if (constraint.HasValue)
         {
-            HUDManager.HUDInstance.DisplayMessage(ConstraintManager.ConstraintToRewardString(constraint.Value));
-            ConstraintManager.Instance.PlayRewardSound();
+            string rewardString = ConstraintManager.ConstraintToRewardString(constraint.Value);
+            if(rewardString.Length > 0)
+            {
+                HUDManager.HUDInstance.DisplayMessage(rewardString);
+                ConstraintManager.Instance.PlayRewardSound();
+            }
             ConstraintManager.Instance.SetSatisfied(constraint.Value);
         }
         if (isOneShot)
         {
-
-            wasCompleted = true;
+            DialogueManager.Instance.SetFinished(key);
         }
         Reset();
     }
@@ -76,8 +78,12 @@ public class Dialogue
 
     public bool IsAvailable()
     {
+        if (lineIndex > 0)
+        {
+            return false;
+        }
         bool constraintsSatisfied = ConstraintManager.Instance.AllConstraintsSatisfied(constraints);
-        return constraintsSatisfied && !wasCompleted;
+        return constraintsSatisfied && !DialogueManager.Instance.IsFinished(key);
     }
 
     public bool IsOneShot()
@@ -108,6 +114,11 @@ public class Dialogue
     public static ConstraintManager.GameConstraint? ToGameConstraint(DialogueHolder.DialogueKey dialogueKey)
     {
         switch (dialogueKey){
+            case DialogueHolder.DialogueKey.shipReachedMono:
+            case DialogueHolder.DialogueKey.weaponFound:
+            {
+                    return ConstraintManager.GameConstraint.loadNextLevel;
+                }
             case DialogueHolder.DialogueKey.firstMeetScarlet:
                 {
                     return ConstraintManager.GameConstraint.gotKey2;

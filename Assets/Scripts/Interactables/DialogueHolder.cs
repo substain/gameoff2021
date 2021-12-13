@@ -14,7 +14,9 @@ public class DialogueHolder : MonoBehaviour, IInteractable
         avoidTutorialMono, bugTutorialMono, //only tutorialDialogues.txt
         shipReachedMono, cantUseStairs, weaponDestroyed, weaponLeft,
         firstMeetScarlet, weaponFound, scarletHelpful, scarletNice, scarletRemember,
-        cheese1, cheese2, cheese3, cheese4, lastCheese
+        cheese1, cheese2, cheese3, cheese4, lastCheese,
+        buffet1, buffet2, buffet3, buffet4, buffet5,
+        takeNap, tubes, desk
     }
 
     [SerializeField]
@@ -174,7 +176,6 @@ public class DialogueHolder : MonoBehaviour, IInteractable
 
     public virtual bool IsInRange(Transform playerTransform)
     {
-        //Debug.Log("isinrange:" + (Vector3.Distance(this.transform.position, playerTransform.position) < Dialogue.INTERACTION_RANGE));
         return Vector3.Distance(this.transform.position, playerTransform.position) < Dialogue.INTERACTION_RANGE;
     }
 

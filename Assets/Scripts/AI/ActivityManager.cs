@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ActivityManager : MonoBehaviour
 {
+    private float SUSPICIOUS_SPOTTING_SPEED = 1.25f;
+    private float PURSUE_SPOTTING_SPEED = 2.5f;
+
     [SerializeField]
     private GameObject controlledObject;
 
@@ -15,6 +18,9 @@ public class ActivityManager : MonoBehaviour
 
     [SerializeField]
     private int afterPursueActivity;
+
+    [SerializeField]
+    private List<ConstraintManager.GameConstraint> pursueActivationConstraints;
 
     private List<AbstractActivity> orderedActivities = new List<AbstractActivity>();
 
@@ -30,10 +36,11 @@ public class ActivityManager : MonoBehaviour
     [SerializeField]
     private BugAttachment bugAttachment;
 
-    private bool isPaused = false;
-
+    private WatcherNPC watcherNPC;
+    //private bool isPaused = false;
     void Awake()
     {
+        watcherNPC = GetComponentInParent<WatcherNPC>();
         AbstractActivity[] activities = GetComponents<AbstractActivity>(); 
 
         //search for pursue player activities
@@ -78,20 +85,32 @@ public class ActivityManager : MonoBehaviour
         pursuePlayerActivity?.CheckActivationConstraints();
         suspiciousActivity?.CheckActivationConstraints();
         orderedActivities.ForEach(oa => oa.CheckActivationConstraints());
+        if (ConstraintManager.Instance.AnyConstraintsSatisfied(pursueActivationConstraints))
+        {
+            StartPursuePlayer(GameManager.GameInstance.GetPlayer().transform);
+        }
     }
 
     private void CheckActivityStatus()
     {
-        if (pursuingPlayer && pursuePlayerActivity.CheckIfFinished())
+        if (pursuingPlayer)
         {
-            StopFollowingPlayer();
+            if (pursuePlayerActivity.CheckIfFinished())
+            {
+                StopPursuing(pursuePlayerActivity.GetLastPosition());
+            }
             return;
         }
-        if (beingSuspicious && suspiciousActivity.CheckIfFinished())
+
+        if (beingSuspicious)
         {
-            StopBeingSuspicious();
+            if (suspiciousActivity.CheckIfFinished())
+            {
+                StopBeingSuspicious();
+            }
             return;
         }
+
         if (orderedActivities.Count == 0 || currentIndex < 0)
         {
             return;
@@ -161,37 +180,38 @@ public class ActivityManager : MonoBehaviour
         }
         beingSuspicious = false;
         pursuingPlayer = true;
+        watcherNPC.SetSpottingSpeedFactor(PURSUE_SPOTTING_SPEED);
         pursuePlayerActivity.SetPlayer(targetTransform);
         pursuePlayerActivity.SetTargetPosition(targetTransform.position);
         StartActivity(pursuePlayerActivity);
     }
 
-    public void StartBeingSuspicious(Transform targetTransform)
+    public void StartBeingSuspicious(Vector3 targetPos)
     {
         if (pursuingPlayer || suspiciousActivity == null)
         {
             return;
         }
-        suspiciousActivity.SetTarget(targetTransform);
+
+        suspiciousActivity.SetTarget(targetPos);
 
         if (!beingSuspicious)
         {
-            beingSuspicious = true;
+            beingSuspicious = true; 
+            watcherNPC.SetSpottingSpeedFactor(SUSPICIOUS_SPOTTING_SPEED);
             StartActivity(suspiciousActivity);
         }
     }
 
-    public void StopFollowingPlayer()
+    public void StopPursuing(Vector3? targetPos)
     {
         pursuingPlayer = false;
-        beingSuspicious = true;
 
-        if (suspiciousActivity == null){
+        if (suspiciousActivity == null || !targetPos.HasValue){
             StopBeingSuspicious();
             return;
         }
-
-        StartActivity(suspiciousActivity);
+        StartBeingSuspicious(targetPos.Value);
     }
 
     public void StopBeingSuspicious()
@@ -203,6 +223,7 @@ public class ActivityManager : MonoBehaviour
             return;
         }
         currentIndex = afterPursueActivity;
+        watcherNPC.SetSpottingSpeedFactor(1.0f);
         StartActivity(orderedActivities[currentIndex]);
     }
 
@@ -218,7 +239,6 @@ public class ActivityManager : MonoBehaviour
 
     private void StartActivity(AbstractActivity activity)
     {
-
         currentActivity?.StopActivity();
         activity.StartActivity();
         bugAttachment.SetCurrentActivity(activity);

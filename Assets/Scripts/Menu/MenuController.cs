@@ -10,7 +10,7 @@ public class MenuController : MonoBehaviour
 {
     public enum MenuType
     {
-        mainMenu, pause, gameover, options
+        mainMenu, pause, gameover, options, credits
     }
 
     [SerializeField]
@@ -167,6 +167,11 @@ public class MenuController : MonoBehaviour
             case MenuNavigationTarget.Options:
                 {
                     UIManager.Instance.SetMenuActive(MenuType.options, menuType);
+                    return;
+                }
+            case MenuNavigationTarget.Credits:
+                {
+                    UIManager.Instance.SetMenuActive(MenuType.credits, menuType);
                     return;
                 }
             case MenuNavigationTarget.Parent:

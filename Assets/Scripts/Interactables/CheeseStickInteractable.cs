@@ -8,11 +8,12 @@ public class CheeseStickInteractable : MonoBehaviour, IInteractable
 
     public string GetInteractionTypeString()
     {
-        return "eat a cheesestick";
+        return "eat";
     }
 
     public void Interact(PlayerInteraction interactingPlayer)
     {
+        interactingPlayer.GetComponent<PlayerMovement>().AddCheeseEaten();
         amountLeft--;
         switch (amountLeft)
         {
