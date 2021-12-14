@@ -220,12 +220,7 @@ public class PlayerMovement : MonoBehaviour
 
         moveDirection = moveDirection.normalized;
         lastMoveDir = moveDirection;
-
-        movementModifier = GetMovementModifier();
-        animator.speed = movementModifier;
-
-        float moveSpeed = baseMovementSpeed * movementModifier;
-        currentMovement = moveDirection * moveSpeed;
+        currentMovement = moveDirection;
         UpdateSpriteByMoveVector(currentMovement);
     }
 
@@ -256,8 +251,11 @@ public class PlayerMovement : MonoBehaviour
     private void ProcessMovement()
     {
         float slowdownFactor = cheeseTimer.IsRunning() ? cheeseTimer.GetRelativeProgress() : 1;
+        movementModifier = GetMovementModifier() * slowdownFactor;
+        animator.speed = movementModifier;
+        float moveSpeed = baseMovementSpeed * movementModifier;
 
-        Vector3 usedMovement = slowdownFactor * currentMovement;
+        Vector3 usedMovement = currentMovement * moveSpeed;
 
         //add a fraction of the movement to the velocity
         velocity += velocityBuildupFraction * usedMovement;

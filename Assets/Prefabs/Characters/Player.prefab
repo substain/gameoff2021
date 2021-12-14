@@ -963,8 +963,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactionPosition: {fileID: 813864160}
-  interactionRadius: 1.75
-  numberOfBugs: 3
+  interactionRadius: 1.6
+  numberOfBugs: 2
   displayInteractionSphereGizmo: 1
 --- !u!81 &1781268069
 AudioListener:
