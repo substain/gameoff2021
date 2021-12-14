@@ -32,19 +32,9 @@ public static class CheckpointManager
         obtainedKeyIds = new HashSet<int>();
     }
 
-    public static HashSet<ConstraintManager.GameConstraint> GetSavedSatisfiedConstraints()
-    {
-        return satisfiedConstraints;
-    }
-
-    public static HashSet<DialogueHolder.DialogueKey> GetFinishedDialogues()
-    {
-        return finishedDialogues;
-    }
-
     public static void SetCheckpointReached(int checkPointId, Vector3 checkpointPos, HashSet<int> obtainedKeys)
     {
-        if(checkPointId <= currentCheckPointId)
+        if (checkPointId <= currentCheckPointId)
         {
             return;
         }
@@ -53,6 +43,16 @@ public static class CheckpointManager
         satisfiedConstraints = new HashSet<ConstraintManager.GameConstraint>(ConstraintManager.Instance.GetSatisfiedConstraints());
         currentPosition = checkpointPos;
         obtainedKeyIds = new HashSet<int>(obtainedKeys);
+    }
+
+    public static HashSet<ConstraintManager.GameConstraint> GetSavedSatisfiedConstraints()
+    {
+        return satisfiedConstraints;
+    }
+
+    public static HashSet<DialogueHolder.DialogueKey> GetFinishedDialogues()
+    {
+        return finishedDialogues;
     }
 
     public static HashSet<int> GetObtainedKeyIds()

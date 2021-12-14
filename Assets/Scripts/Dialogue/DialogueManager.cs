@@ -44,8 +44,8 @@ public class DialogueManager : MonoBehaviour
 			Debug.LogWarning("There is more than one DialogueManager in this scene.");
 		}
 		Instance = this;
-		finishedDialogues = new HashSet<DialogueKey>(CheckpointManager.GetFinishedDialogues());
 		LoadDialogues();
+		finishedDialogues = new HashSet<DialogueKey>(CheckpointManager.GetFinishedDialogues());
 	}
 
 	public void SetFinished(DialogueKey dialogueKey)

@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using static MenuController;
 
-/// <summary>
-/// Super class for HUD Manager
-/// </summary>
 public class UIManager : MonoBehaviour
 {
     protected const int N_UI_AUDIO_SOURCES = 2;
@@ -41,7 +35,6 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private AudioClip uiBackgroundMusic;
 
-    //private MenuController activeMenu = null;
     private Dictionary<MenuType, MenuController> controlledMenus;
     private MenuType? activeMenu;
 
@@ -56,6 +49,7 @@ public class UIManager : MonoBehaviour
         }
         menuMusicAudioSource = audioSources[0];
         menuMusicAudioSource.clip = uiBackgroundMusic;
+        menuMusicAudioSource.loop = true;
         menuSoundAudioSource = audioSources[1];
     }
 
@@ -89,7 +83,6 @@ public class UIManager : MonoBehaviour
             {
                 PlayerMenuInput.Instance.SetEnabled(true);
                 MenuController mc = menuPair.Value;
-                //mc.SetEnabled(true);
                 mc.gameObject.SetActive(true);
                 mc.SetTitle(GetRandomMenuTitleByType(menuPair.Key, gameOverReason));
                 
@@ -101,7 +94,6 @@ public class UIManager : MonoBehaviour
             else
             {
                 menuPair.Value.gameObject.SetActive(false);
-                //menuPair.Value.SetEnabled(false);
             }
         }
         if (!newActiveMenu.HasValue && oldMenuHasValue)

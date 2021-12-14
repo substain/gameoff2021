@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -142,17 +139,6 @@ public class MenuController : MonoBehaviour
     public bool IsEnabledOnStart()
     {
         return activeOnStart;
-    }
-
-    public void SetEnabled(bool isEnabled)
-    {
-        /*foreach (Transform child in transform)
-        {
-            Debug.Log("child:" + child.name);
-            child.gameObject.SetActive(childrenActive);
-        }*/
-        //childrenButtons.ForEach(button => button.GetComponent<Button>().interactable = isEnabled);
-        //canvasGroup.alpha = isEnabled ? 1 : 0;
     }
 
     public void UseNavigationTarget(MenuNavigationTarget navTarget)

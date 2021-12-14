@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -16,7 +15,7 @@ public class DialogueHolder : MonoBehaviour, IInteractable
         firstMeetScarlet, weaponFound, scarletHelpful, scarletNice, scarletRemember,
         cheese1, cheese2, cheese3, cheese4, lastCheese,
         buffet1, buffet2, buffet3, buffet4, buffet5,
-        takeNap, tubes, desk
+        takeNap, tubes, desk, musicians1, musicians2
     }
 
     [SerializeField]
@@ -127,6 +126,7 @@ public class DialogueHolder : MonoBehaviour, IInteractable
         currentDialogue = null;
 
         HUDManager.HUDInstance.CloseDialogue();
+        CheckAvailableDialogues();
     }
 
     public virtual bool HasValidNewDialogue()

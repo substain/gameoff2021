@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class Dialogue
@@ -83,6 +80,7 @@ public class Dialogue
             return false;
         }
         bool constraintsSatisfied = ConstraintManager.Instance.AllConstraintsSatisfied(constraints);
+
         return constraintsSatisfied && !DialogueManager.Instance.IsFinished(key);
     }
 

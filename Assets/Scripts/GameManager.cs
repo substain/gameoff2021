@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -100,7 +97,7 @@ public class GameManager : MainManager
 
 	public int GetFadeDelay()
 	{
-		return (useOverlayFading && HUDManager.HUDInstance.IsFading()) ? Mathf.CeilToInt(HUDManager.FADE_DURATION) : 0;
+		return (useOverlayFading && HUDManager.HUDInstance.IsFading()) ? Mathf.FloorToInt(HUDManager.FADE_DURATION) : 0;
 	}
 
 	public void ReloadCurrentScene()

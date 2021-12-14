@@ -159,11 +159,41 @@ public class PlayerInteraction : MonoBehaviour
         unorderedInteractables.RemoveAll(ia => IsDialogueHolder(ia) && !((DialogueHolder)ia).HasValidNewDialogue());
 
         //prioritize dialogues
-        List<IInteractable> sortedInteractables = unorderedInteractables.OrderByDescending(ia => IsDialogueHolder(ia)).ToList();
+        List<IInteractable> sortedInteractables = unorderedInteractables.OrderByDescending(ia => InteractableToOrder(ia)).ToList();
 
         //remove dialogues without active dialog option
 
         return sortedInteractables;
+    }
+
+    private int InteractableToOrder(IInteractable interactable)
+    {
+        if (interactable.GetType() == typeof(WeaponChangerInteractable))
+        {
+            return 5;
+        }
+
+        if (interactable.GetType() == typeof(CheeseStickInteractable))
+        {
+            return 4;
+        }
+
+        if (interactable.GetType() == typeof(TakeableItem))
+        {
+            return 3;
+        }
+
+        if (IsDialogueHolder(interactable))
+        {
+            return 2;
+        }
+
+        if (interactable.GetType() == typeof(BugAttachment))
+        {
+            return 1;
+        }
+
+        return -1;
     }
 
     public void ProcessInteractInput(InputAction.CallbackContext context)

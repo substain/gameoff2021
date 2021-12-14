@@ -366,6 +366,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void StartPlayingFootsteps()
     {
+        if (playFootsteps)
+        {
+            return;
+        }
         playFootsteps = true;
         PlayFootstepsRepeated();
     }

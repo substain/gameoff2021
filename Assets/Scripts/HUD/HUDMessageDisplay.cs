@@ -89,9 +89,10 @@ public class HUDMessageDisplay : MonoBehaviour
         currentMessage = message;
 
         float typeDuration = duration - MESSAGE_KEEP_SHOWING_TIME;
-        if (!isTyping || typeDuration <= 0.5f)
+        if (!isTyping || typeDuration <= 0.05f)
         {
             messageText.text = message;
+            isTyping = false;
             return;
         }
         relTimePerLetter = 1 / (float) message.Length;

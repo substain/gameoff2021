@@ -6,7 +6,7 @@ public class WeaponChangerInteractable : MonoBehaviour, IInteractable
 {
     public string GetInteractionTypeString()
     {
-        return "find the weather changer";
+        return "inspect the weather changer";
     }
 
     public void Interact(PlayerInteraction interactingPlayer)

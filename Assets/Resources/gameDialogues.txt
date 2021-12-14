@@ -95,7 +95,7 @@ C.R. Piller: It's not like I ever wanted to eat this...
 # buffet3
 *
 C.R. Piller: Spinach rolls, giant tomatoes with white pepper, halved garlic cloves, fried chicken substitute?
-C.R. Piller: This is a bad day for a spy with decent functioning taste buds.
+C.R. Piller: This is a bad day for an agent with decent functioning taste buds.
 
 # buffet4
 *
@@ -116,6 +116,19 @@ C.R. Piller: What am I even doing here?
 *
 ? gotKey2
 C.R. Piller: These tubes look massive. Would they be able to support a medium-sized agent with a minor cheese stick addiction?
+
+# musicians1
+*
+C.R. Piller: I want to join them, but...
+C.R. Piller: After listening to others my whole life, I just have no idea how my own voice sounds anymore.
+
+# musicians2
+*
+Sara: *sings a dreamy melody*
+Anthony: *plays the keys virtuously*
+Mandy: *creates a rich rythm*
+...
+C.R. Piller: *stays silent*
 
 # useTutorialMono
 UNUSED
