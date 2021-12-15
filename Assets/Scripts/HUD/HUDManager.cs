@@ -5,9 +5,6 @@ public class HUDManager : UIManager
 {
     public const float FADE_DURATION = 1.5f;
 
-    [SerializeField]
-    private bool actionHintEnabled = false;
-
     public static HUDManager HUDInstance = null;
 
     private HUDActionHint hudActionHint;
@@ -40,10 +37,6 @@ public class HUDManager : UIManager
 
     public void UpdateActionHintText(string hintText)
     {
-        if (!actionHintEnabled)
-        {
-            return;
-        }
         hudActionHint.SetActionHint(hintText);
     }
     
